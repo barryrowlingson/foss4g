@@ -12,18 +12,17 @@ INTERNAL_IPS = ('127.0.0.1',)
 DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 
 ADMINS = (
-    ('Markus Zapke-Gruendemann', 'markus@de.pycon.org'),
-    ('Stephan Jaekel', 'steph@rdev.info')
+    ('Barry Rowlingson', 'b.rowlingson@gmail.com'),
 )
 MANAGERS = ADMINS
 
 EMAIL_SUBJECT_PREFIX = '[%s] ' % PROJECT_NAME
 
-DEFAULT_FROM_EMAIL = 'info@de.pycon.org'
-SERVER_EMAIL = 'info@de.pycon.org'
+DEFAULT_FROM_EMAIL = 'info@2013.foss4g.org'
+SERVER_EMAIL = 'info@2013.foss4g.org'
 
-TIME_ZONE = 'Europe/Berlin'
-LANGUAGE_CODE = 'de'
+TIME_ZONE = 'Europe/London'
+LANGUAGE_CODE = 'en'
 
 USE_I18N = True
 USE_L10N = True
@@ -32,8 +31,7 @@ SITE_ID = 1
 
 ugettext = lambda s: s
 LANGUAGES = (
-    ('de', ugettext('German')),
-    #('en', gettext_noop('English')),
+    ('en', 'English'),
 )
 
 MEDIA_URL = '/site_media/'
@@ -221,7 +219,6 @@ PROPOSALS_TYPED_SUBMISSION_FORMS = {
     'talk': 'pyconde.proposals.forms.TalkSubmissionForm',
 }
 PROPOSAL_LANGUAGES = (
-    ('de', ugettext('German')),
     ('en', ugettext('English')),
 )
 

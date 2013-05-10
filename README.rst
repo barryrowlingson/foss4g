@@ -6,8 +6,8 @@ Installation
 
 First you have to clone this repository and all its submodules::
 
-    git clone git@bitbucket.org:PySV/pycon_de_website.git
-    cd pycon_de_website
+    git clone git@github.com:barryrowlingson/foss4g.git
+    cd foss4g
     git submodule init
     git submodule update
 

@@ -1,5 +1,6 @@
-.. image:: https://secure.travis-ci.org/zerok/pyconde-website-mirror.png
-
+FOSS4G Flavour of PyConDE Conference System
+===========================================
+ 
 Installation
 ------------
 

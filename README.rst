@@ -14,11 +14,11 @@ First you have to clone this repository and all its submodules::
 Next create a virtualenv and install all the requirments into it. In this
 example we are using virtualenvwrapper to manage the virtualenv::
     
-    mkvirtualenv pyconde_website
-    workon pyconde_website
+    mkvirtualenv foss4g
+    workon foss4g
     pip install -r requirements.txt
 
-Now that this is complete, prepare the settings::
+Now that this is complete, prepare the settings. Don't change the pyconde name because its coded in lots of places::
 
     cd pyconde
     cp settings.py.dist settings.py
@@ -38,12 +38,12 @@ run following command::
     
     python manage.py syncdb --noinput --migrate
 
-For PyCONDE we have prepared a bunch of fixtures that provide some basic
-conference data::
+PyCONDE prepared a bunch of fixtures that provide some basic
+conference data, but we don't need these::
     
-    python manage.py loaddata fixtures/conference-setup.json
-    python manage.py loaddata tickets2012
-    python manage.py loaddata pyconde2012-tracks.json
+    # python manage.py loaddata fixtures/conference-setup.json
+    # python manage.py loaddata tickets2012
+    # python manage.py loaddata pyconde2012-tracks.json
 
 After this is done, you should already have a working site, but it is still
 empty. To change that we have to create an admin user in order to gain access

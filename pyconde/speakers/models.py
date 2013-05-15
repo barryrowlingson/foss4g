@@ -9,6 +9,7 @@ class Speaker(models.Model):
     related objects.
     """
     user = models.OneToOneField(User, related_name='speaker_profile')
+    affiliation = models.CharField(max_length=80, blank=True)
 
     def __unicode__(self):
         if self.user.first_name and self.user.last_name:

@@ -242,6 +242,9 @@ class Location(models.Model):
     name = models.CharField(_("name"), max_length=100)
     slug = models.SlugField(_("slug"))
     order = models.IntegerField(_("order"), default=0)
+    notes = models.TextField(blank=True, help_text="notes on this location")
+    directions = models.TextField(blank=True, help_text="how to get here (from where?)")
+    capacity = models.PositiveIntegerField(blank=True, help_text="maximum number of people")
     used_for_sessions = models.BooleanField(_("used for sessions"),
         default=True)
 

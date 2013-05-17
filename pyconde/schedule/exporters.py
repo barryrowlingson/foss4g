@@ -8,6 +8,8 @@ from . import models
 from pyconde.sponsorship import models as sponsorship_models
 from pyconde.conference import models as conference_models
 
+def total_seconds(td):
+    return td.seconds + td.days * 24 * 3600
 
 def _format_cospeaker(s):
     """
@@ -190,7 +192,7 @@ class SessionForEpisodesExporter(object):
             'name': title,
             'room': session.location.name,
             'start': session.start.isoformat(),
-            'duration': (session.end - session.start).total_seconds() / 60.0,
+            'duration': total_seconds(session.end - session.start) / 60.0,
             'end': session.end.isoformat(),
             'authors': [s.name for s in speakers],
             'contact': [s.email for s in speakers],

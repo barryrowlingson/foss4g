@@ -11,6 +11,8 @@ from . import models
 
 from django.core.cache import cache
 
+def total_seconds(td):
+    return td.seconds + td.days * 24 * 3600
 
 def proposal_is_scheduled(proposal):
     """
@@ -98,7 +100,7 @@ def create_section_schedule(section, row_duration=30, uncached=False):
     # key and fill it with events starting at that time.
     grid = _create_base_grid(start_time, end_time, row_duration)
     for evt in events:
-        cell = GridCell(evt, int((evt.end - evt.start).total_seconds() / (row_duration * 60)))
+        cell = GridCell(evt, int(total_seconds(evt.end - evt.start) / (row_duration * 60)))
         evt_cache[repr(cell)] = cell
         grid[evt.start].append(cell)
 
@@ -288,7 +290,7 @@ def _get_number_of_rows(all_events, row_duration=30):
 
 
 def _evt_start_cmp(a, b):
-    return int((a.start - b.start).total_seconds())
+    return int(total_seconds(a.start - b.start))
 
 
 def _gridcell_location_cmp(a, b):

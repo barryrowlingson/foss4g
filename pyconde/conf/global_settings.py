@@ -1,4 +1,4 @@
-# -*- encoding: UTF-8 -*-
+# 
 import os
 from django.conf.global_settings import (TEMPLATE_CONTEXT_PROCESSORS,
     STATICFILES_FINDERS)
@@ -64,7 +64,8 @@ ROOT_URLCONF = '%s.urls' % PROJECT_NAME
 
 INSTALLED_APPS = [
     # Skins
-    'pyconde.skins.pyconde2013',
+
+    'pyconde.skins.foss4g',
     'pyconde.skins.default',
 
     'django.contrib.admin',
@@ -206,8 +207,8 @@ WYM_TOOLS = ",\n".join([
     "{'name': 'Preview', 'title': 'Preview', 'css': 'wym_tools_preview'}",
 ])
 
-CMSPLUGIN_NEWS_FEED_TITLE = u'PyCon DE 2013-News'
-CMSPLUGIN_NEWS_FEED_DESCRIPTION = u'Neuigkeiten rund um die PyCon DE 2013 in Köln'
+CMSPLUGIN_NEWS_FEED_TITLE = u'FOSS4G 2013-News'
+CMSPLUGIN_NEWS_FEED_DESCRIPTION = u'FOSS4G 2013 Nottingham News'
 CONFERENCE_ID = 1
 
 ATTENDEES_CUSTOMER_NUMBER_START = 20000

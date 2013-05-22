@@ -2,12 +2,12 @@
 {% load adminmedia admin_list i18n %}
 {% block content %}
     <div id="info" style="float: left; padding: 10px; border: 1px dotted #417690; margin: 10px 250px 10px 0px; background: #DBF2FF">
-        <p>Diese Auflistung spiegelt Proposals wieder, wie sie ursprünglich durch den Benutzer
-            gemacht wurden. Sie sollten nur in Ausnahmefällen durch einen Admin modifiziert werden.
+        <p>
+This list reflects proposals again, as they were originally made by the user. They should be modified only in exceptional cases by an admin.
         </p>
-        <p>Sowohl während der Proposal- als auch während der Review-Phase hat der Benutzer die Möglichkeit, das
-            Proposal selbst zu modifizieren. Da jedoch während der Review-Phase jede Änderung protokolliert werden
-            sollte, existiert hierfür in der Reviews-App eine eigene Datenstruktur.</p>
+        <p>
+Both during the proposal as well as during the review period, the user has the option to modify the Proposal itself. However, since any change should be recorded during the review phase, exists in the reviews for this app its own data structure.
+</p>
     </div>
     {{ block.super }}
 {% endblock %}

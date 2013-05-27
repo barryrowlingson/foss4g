@@ -13,6 +13,7 @@ class Workshop(models.Model):
     capacity = models.PositiveIntegerField()
     cost = models.PositiveIntegerField()
     # this is NOT a full/spaces field. Its a lock for admin purposes.
+    # - so its for checking in public view code
     status = models.CharField(max_length=4,
                               choices=WORKSHOP_STATUS,
                               default="OPEN")
@@ -24,6 +25,15 @@ class Workshop(models.Model):
 
     def get_bookings(self):
         return self.booking_set.all()
+
+    def overlaps(self,ws):
+        r1=self.item
+        r2=ws.item
+        td = min(r1.end - r2.start, r2.end - r1.start)
+        if td.seconds + td.days * 24 * 3600 > 0:
+            return True
+        else:
+            return False
     
     def __unicode__(self):
         return self.item.title

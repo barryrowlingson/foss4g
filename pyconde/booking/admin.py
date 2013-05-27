@@ -11,14 +11,15 @@ class BookingAdmin(admin.ModelAdmin):
 
 class WorkshopperAdmin(admin.ModelAdmin):
     fields=('user','credits','spent','credits_left')
-    readonly_fields=('user','spent','credits_left')
+    readonly_fields=('spent','credits_left')
     list_display=('user','credits','spent','credits_left')
     inlines= [ BookingInline, ]
     pass
 class WorkshopAdmin(admin.ModelAdmin):
     fields = ('item','capacity','cost','status','spaces_left')
     readonly_fields = ('spaces_left',)
-    list_display=('item','cost','capacity','number_of_bookings')
+    list_editable = ('cost','capacity')
+    list_display=('item','status','cost','capacity','number_of_bookings')
     inlines= [ BookingInline, ]
 
 

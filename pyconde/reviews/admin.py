@@ -53,7 +53,7 @@ class UserAdmin(BaseUserAdmin):
     def is_reviewer(self, instance):
         return utils.can_review_proposal(instance)
     is_reviewer.boolean = True
-    is_reviewer.short_description = u'Kann bewerten'
+    is_reviewer.short_description = u'is reviewer'
 
 admin.site.unregister(auth_models.User)
 admin.site.register(auth_models.User, UserAdmin)

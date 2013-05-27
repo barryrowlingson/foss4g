@@ -1,0 +1,29 @@
+from django.contrib import admin
+
+from . import models
+
+class BookingInline(admin.TabularInline):
+    model = models.Booking
+
+class BookingAdmin(admin.ModelAdmin):
+    fields=('who','workshop','created','edited')
+    readonly_fields=fields
+
+class WorkshopperAdmin(admin.ModelAdmin):
+    fields=('user','credits','spent','credits_left')
+    readonly_fields=('user','spent','credits_left')
+    list_display=('user','credits','spent','credits_left')
+    inlines= [ BookingInline, ]
+    pass
+class WorkshopAdmin(admin.ModelAdmin):
+    fields = ('item','capacity','cost','status','spaces_left')
+    readonly_fields = ('spaces_left',)
+    list_display=('item','cost','capacity','number_of_bookings')
+    inlines= [ BookingInline, ]
+
+
+
+admin.site.register(models.Booking,BookingAdmin)
+admin.site.register(models.Workshopper,WorkshopperAdmin)
+admin.site.register(models.Workshop,WorkshopAdmin)
+

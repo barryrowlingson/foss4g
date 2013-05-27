@@ -119,6 +119,10 @@ INSTALLED_APPS = [
     'pyconde.schedule',
     'pyconde.search',
     'pyconde.helpers',
+
+    # foss4g booking
+    'pyconde.booking',
+
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -1,0 +1,29 @@
+{% extends "booking/booking_base.html" %}
+
+{% block content %}
+<h1>Workshop Booking Status</h1>
+
+{% for w in workshops %}
+<div class="workshop {{w.stateclass}}">
+<h2>
+{{w.item.title}} <span class="open-{{w.stateclass}}">
+{% if w.stateclass == "open" %}
+ - Places available
+{% endif %}
+{% if w.stateclass == "full" %}
+- Full
+{% endif %}
+{% if w.stateclass == "locked" %}
+- Closed
+{% endif %}
+</span></h2>
+
+<h3>{{w.item.speaker}}</h3>
+<p>
+{{w.item.description}}
+</p>
+<p>{{w.item.start}} to {{w.item.end}}</p>
+</div>
+{% endfor %}
+
+{% endblock %}

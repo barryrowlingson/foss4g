@@ -1,0 +1,77 @@
+body{
+    background: url("../images/arrows.png") no-repeat fixed left bottom #E2E2E2;
+    padding-bottom: 40px;
+    padding-top: 10px;
+}
+
+.tagtoggle,#showall {
+    cursor: pointer
+}
+
+
+.tagged {background-color: green;}
+
+.sidebar-nav {
+    padding: 9px 0;
+}
+
+.sidebar-nav-fixed {
+    position:fixed;
+    top:10px;
+    width:21.97%;
+}
+
+.presbox { background-color: rgba(255,255,255,0.88);}
+
+#intro {
+    background-color: white;
+margin-bottom: 1em;
+    }
+
+#allgone {display: none}
+
+#logo {
+    padding: 0.5em 0.5em 1em 0.5em;
+    margin-bottom: 1em;background-color: white;
+}
+
+#blurb {
+    padding: 0.5em 0.5em 1em 0.5em;
+
+margin-bottom: 1em;background-color: white;
+}
+
+@media (max-width: 767px) {
+    .sidebar-nav-fixed {
+        width:auto;
+    }
+}
+
+@media (max-width: 979px) {
+    .sidebar-nav-fixed {
+        position:static;
+        width: auto;
+    }
+}
+ 
+ /* for demo purposes (fixed top navbar placement in the fiddle. Ok to remove */
+ 
+@media (max-width: 767px) {
+    body {
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 979px) {
+    body {
+        padding-top: 0;
+    }
+}
+
+div.workshop {border: 1px solid black; padding: 0.5em; margin: 0.5em; color: grey}
+div.open {color: black !important;}
+div.workshop h1,h2,h3,h4,h5,h6 {font-size: 100%; padding: 0; margin: 0;}
+
+span.open-open {color: green}
+span.open-full {color: red}
+span.open-locked {color: grey}

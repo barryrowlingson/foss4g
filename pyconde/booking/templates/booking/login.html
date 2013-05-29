@@ -1,0 +1,17 @@
+{% extends "booking/booking_base.html" %}
+
+{% block content %}
+<h1>Login</h1>
+<form name="loginform" method="POST">{% csrf_token %}
+  {% if next %}
+  <input type="hidden" name="next" value="{{ next }}" />
+  {% endif %}
+  username:
+  <input type="text" name="username" value="{{ username}}" /><br />
+  password:
+  <input type="password" name="password" value="" /><br />
+  
+  <input type="submit" value="Log In" />
+</form>
+
+{% endblock %}

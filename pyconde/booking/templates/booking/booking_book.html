@@ -13,17 +13,13 @@
 <p>You have {{funds}} credits left.</p>
 
 {% for w in workshops %}
-<div class="workshop {{w.stateclass}}">
+<div class="workshop {{w.state}}">
 <h2>
-{{w.item.title}} <span class="open-{{w.stateclass}}">
-{% if w.stateclass == "open" %}
- - Places available
-{% endif %}
-{% if w.stateclass == "full" %}
+{{w.item.title}} <span class="open-{{w.spaceclassX}}">
+{% if w.spaceclassX == "open" %}
+- Places available
+{% elif w.spaceclassX == "full" %}
 - Full
-{% endif %}
-{% if w.stateclass == "locked" %}
-- Closed
 {% endif %}
 </span> ({{w.cost}} credits)</h2>
 
@@ -32,11 +28,7 @@
 {{w.item.description}}
 </p>
 <p>{{w.item.start}} to {{w.item.end}}</p>
-<form name="{{w.pk}}"  method="POST">{% csrf_token %}
-<input type="hidden" name="workshop" value="{{w.pk}}" />
-<input type="hidden" name="action" value="book" />
-<input type="submit" value="Book" />
-</form>
+{% include "booking/form.html" %}
 </div>
 {% endfor %}
 

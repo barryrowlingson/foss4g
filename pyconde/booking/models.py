@@ -26,11 +26,9 @@ class Workshop(models.Model):
     def get_bookings(self):
         return self.booking_set.all()
 
-    def stateclass(self):
+    def spaceclass(self):
         if self.spaces_left() < 1:
             return "full"
-        if self.status=="LOCK":
-            return "locked"
         return "open"
 
     def overlaps(self,ws):

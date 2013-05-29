@@ -1,0 +1,33 @@
+{% comment %}
+booked - give unbook button
+locked - 
+expensive
+full
+conflicts
+bookable - give book button
+{% endcomment %}
+<form name="worshop-{{w.pk}}"  method="POST">{% csrf_token %}
+{% if w.state == "bookable" %}
+<input type="hidden" name="workshop" value="{{w.pk}}" />
+<input type="hidden" name="action" value="book" />
+<input type="submit" value="Book" />
+{% elif w.state == "booked" %}
+<input type="hidden" name="workshop" value="{{w.pk}}" />
+<input type="hidden" name="action" value="unbook" />
+<input type="submit" value="Un-book" /> 
+<span>You are already booked for this session</span>
+{% elif w.state == "locked" %}
+<input type="submit" value="Locked" disabled />
+<span>New registration locked by admin</span>
+{% elif w.state == "expensive" %}
+<input type="submit" value="No credit" disabled />
+<span>Insufficient credit left for this workshop</span>
+{% elif w.state == "full" %}
+<input type="submit" value="Session full" disabled />
+<span>No space left in session</span>
+{% elif w.state == "conflicts" %}
+<input type="submit" value="Conflict" disabled />
+<span>Session conflicts with a booked session</span>
+{% endif %}
+
+</form>

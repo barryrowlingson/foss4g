@@ -1,16 +1,22 @@
 # Create your views here.
 
 from django.shortcuts import render_to_response, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.context_processors import csrf
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
+
+from pyconde.accounts.models import Profile
 
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login, logout
 
-from .models import Workshop
+from .models import Workshop, Workshopper
 from . import utils
+
+import sys
 
 def index(request):
     context  = {
@@ -85,3 +91,28 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect(".")
+
+@permission_required('booking.add_booking')
+def add_workshopper(request):
+    if request.method == "POST":
+        newU = User(
+            username = request.POST['user'],
+            password = make_password(request.POST['pass']),
+            email = request.POST['email'],
+            first_name = request.POST['firstname'],
+            last_name = request.POST['lastname']
+            )
+        try:
+            newU.save()
+        except:
+            e = str(sys.exc_info()[1])
+            html = "<html><body><p>Error: %s creating User</p></body></html>" % e
+            return HttpResponse(html)
+        credits = int(request.POST['credits'])
+        newP = Profile(user=newU)
+        newP.save()
+        newW = Workshopper(user=newU, credits=credits)
+        newW.save()
+        messages.add_message(request,messages.INFO, "Workshopper created")
+        return HttpResponseRedirect("")
+    return render_to_response("booking/add_ws.html",{},context_instance=RequestContext(request))

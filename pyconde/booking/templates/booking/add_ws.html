@@ -1,0 +1,29 @@
+{% extends "booking/booking_base.html" %}
+
+{% block content %}
+<h1>Add New Workshop User</h1>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form name="newform" method="POST"  autocomplete="off">{% csrf_token %}
+  username:
+  <input type="text" name="user" /><br />
+  password:
+  <input type="password" name="pass" /><br />
+  email:
+  <input type="text" name="email" value="" /><br />
+  first name:
+  <input type="text" name="firstname" value="" /><br />
+  last name:
+  <input type="text" name="lastname" value="" /><br />
+  credits:
+  <input type="text" name="credits" value="" /><br />
+
+  <input type="submit" value="Create" />
+</form>
+
+{% endblock %}

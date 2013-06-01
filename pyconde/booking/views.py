@@ -1,4 +1,5 @@
 # Create your views here.
+from django.core.mail import send_mail
 
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required, permission_required
@@ -118,10 +119,14 @@ def bookreport(request):
 @permission_required('booking.add_booking')
 def add_workshopper(request):
     if request.method == "POST":
+        sendmail = request.POST.has_key('sendmail')
+        email = request.POST['email']
+        username = request.POST['user'],
+        password = make_password(request.POST['pass']),
         newU = User(
-            username = request.POST['user'],
-            password = make_password(request.POST['pass']),
-            email = request.POST['email'],
+            username = username,
+            password = password,
+            email = email,
             first_name = request.POST['firstname'],
             last_name = request.POST['lastname']
             )
@@ -141,5 +146,18 @@ def add_workshopper(request):
         newW = Workshopper(user=newU, credits=credits)
         newW.save()
         messages.add_message(request,messages.INFO, "Workshopper created")
+        if sendmail:
+            msg = """
+
+Your account for booking workshop sessions for FOSS4G2013 has been created.
+
+Please go to http://2013.foss4g.org/conf/booking and log in as:
+
+Username: %s
+Password: %s
+
+""" % (username, password)
+            send_mail("FOSS4G2013 Workshop Booking",msg,'info@2013.foss4g.org',[email],fail_silently=False)
+            messages.add_message(request,messages.INFO, "Email sent")
         return HttpResponseRedirect("")
     return render_to_response("booking/add_ws.html",{},context_instance=RequestContext(request))

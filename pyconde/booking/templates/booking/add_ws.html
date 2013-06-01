@@ -5,7 +5,7 @@
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <li{% if message.tags %} class="{{ message.tags }} alert-danger"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
 {% endif %}
@@ -21,7 +21,7 @@
   last name:
   <input type="text" name="lastname" value="" /><br />
   credits:
-  <input type="text" name="credits" value="" /><br />
+  <input type="text" name="credits" value="" /> (1 day = 4 credits, 2 days = 8 credits)<br />
 
   <input type="submit" value="Create" />
 </form>

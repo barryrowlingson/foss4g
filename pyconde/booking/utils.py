@@ -35,7 +35,7 @@ def bookSession(user, workshopid):
     if code == "bookable":
         b = Booking(who=workshopper, workshop=w)
         b.save()
-        return "Booked"
+        return "Booked "+str(w)
     else:
         return "Problem booking session: %s" % code
     
@@ -50,5 +50,5 @@ def unbookSession(user, workshopid):
         return "Error - multiple identical bookings found"
     b=b[0]
     b.delete()
-    return "Removed booking"
+    return "Removed booking of "+str(w)
     

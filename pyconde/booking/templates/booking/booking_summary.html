@@ -1,0 +1,26 @@
+{% extends "booking/booking_base.html" %}
+
+{% block content %}
+<h2>Summary</h2>
+<p class="hidden-print">Print this page to keep a record of your bookings.</p>
+<ul>
+<li>User: {{request.user}}</li>
+<li>Name:  {{request.user.first_name}} {{request.user.last_name}}</li>
+<li>Credits Purchased: {{workshopper.credits}}</li>
+<li>Credits Left: {{credits_left}}</li>
+</ul>
+
+{% for w in booked %}
+<div class="workshop {{w.spaceclass}}">
+<h2>{{w.item.title}} ({{w.cost}} credits)</h2>
+<h3>{{w.item.speaker}}</h3>
+<p>{{w.item.start}} to {{w.item.end}}</p>
+<p>
+{{w.item.description}}
+</p>
+</div>
+{% empty %}
+<h2>No workshops booked</h2>
+{% endfor %}
+
+{% endblock %}

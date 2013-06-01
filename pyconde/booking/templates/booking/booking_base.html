@@ -20,19 +20,38 @@
  
  <div class="container-fluid">
    <div class="row-fluid">
-     <div class="span2">
+     <div class="span2 hidden-print">
        <div class="sidebar-nav sidebar-nav-fixed">
 <h3>Menu</h3>
+<ul>
+{% if user.is_authenticated %}
+<li><a href=".">Book/Unbook</a></li>
+<li><a href="summary">Booking Summary</a></li>
+<li><a href="logout">Logout</a></li>
+{% else %}
+<li><a href="login">Login</a></li>
+{% endif %}
+</ul>
+
+{% if perms.booking.can_add_user %}
+<h3>Admin</h3>
+<ul>
+<li><a href="adduser">Add Workshop Attendee</a></li>
+<li><a href="bookreport">Booking Report</a></li>
+<li><a href="/admin">Admin Interface</a></li>
+</ul>
+{% endif %}
        </div><!--/.well -->
      </div><!--/span-->
      <div class="span10">
 
        <div class="row-fluid heading" id="intro">
-	 <div class="span3" id="logo">
+	 <div class="span3 hidden-print" id="logo">
 	   <img src="{{ STATIC_URL }}booking/images/foss4g2013-white-300.png" />
 	 </div>
 	 <div class="span9" id="blurb">
-	   <h3>Workshop Booking</h3>
+	   <h1>FOSS4G2013 Workshop Booking</h1>
+	   <p>Check the <a href="http://2013.foss4g.org/provisional/workshops.html" target="new">FOSS4G web site</a> for the Workshop timetable and decide which workshops you want to book. Select them here. The system will not let you choose overlapping workshops.</p>
 	 </div>
        </div>
 

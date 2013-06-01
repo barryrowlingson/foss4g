@@ -1,11 +1,10 @@
 {% extends "booking/booking_base.html" %}
 
 {% block content %}
-<h1>Workshop Booking</h1>
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <li{% if message.tags %} class="{{ message.tags }} alert-danger"{% endif %}>{{ message }}</li>
     {% endfor %}
 </ul>
 {% endif %}
@@ -24,10 +23,10 @@
 </span> ({{w.cost}} credits)</h2>
 
 <h3>{{w.item.speaker}}</h3>
+<p>{{w.item.start}} to {{w.item.end}}</p>
 <p>
 {{w.item.description}}
 </p>
-<p>{{w.item.start}} to {{w.item.end}}</p>
 {% include "booking/form.html" %}
 </div>
 {% endfor %}

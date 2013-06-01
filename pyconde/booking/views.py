@@ -29,13 +29,14 @@ def index(request):
 
 def book(request):
     if not request.user.is_authenticated():
-        return redirect('login?next=%s' % request.path)
+        context  = {
+            "workshops":Workshop.objects.order_by("item__start"),
+            }
+        return render_to_response("booking/booking_index.html",
+                                  context,
+                                  context_instance=RequestContext(request))
     if request.method == "POST":
-        print "got a POST"
-        messages.add_message(request, messages.INFO, 'Got a POST.')
         # handle the action - book or unbook
-        print request.POST['workshop']
-        print request.POST['action']
         if request.POST['action']=="book":
             msg = utils.bookSession(request.user, request.POST['workshop'])
             messages.add_message(request, messages.INFO,msg)
@@ -44,7 +45,7 @@ def book(request):
             messages.add_message(request, messages.INFO,msg)
         else:
             messages.add_message(request,messages.INFO, "Unrecognised action")
-        return HttpResponseRedirect("book")
+        return HttpResponseRedirect("")
     else:
         pass
 
@@ -68,6 +69,18 @@ def book(request):
                               context,
                               context_instance=RequestContext(request))
 
+@login_required
+def summary(request):
+    workshopper = request.user.workshopper_profile
+    ctx = {
+        "workshopper":workshopper,
+        "credits_left":  workshopper.credits_left(),
+        "booked": workshopper.booked.all()
+        }
+    return render_to_response("booking/booking_summary.html",
+                              ctx,
+                              context_instance=RequestContext(request))
+
 def login_user(request):
     if request.method=="POST":
         username = request.POST['username']
@@ -76,7 +89,7 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect("book")
+                return HttpResponseRedirect(".")
             else:
                 messages.add_message(request,messages.INFO, "Account disabled")
                 return HttpResponseRedirect("login")
@@ -92,6 +105,16 @@ def logout_user(request):
     logout(request)
     return HttpResponseRedirect(".")
 
+from django.db import IntegrityError, transaction
+
+@permission_required('booking.add_booking')
+def bookreport(request):
+    workshops = Workshop.objects.select_related().order_by("item__start")
+    return render_to_response('booking/bookreport.html',
+                              {'workshops': workshops},
+                              context_instance=RequestContext(request))
+
+@transaction.commit_on_success
 @permission_required('booking.add_booking')
 def add_workshopper(request):
     if request.method == "POST":
@@ -106,8 +129,12 @@ def add_workshopper(request):
             newU.save()
         except:
             e = str(sys.exc_info()[1])
+            print e
             html = "<html><body><p>Error: %s creating User</p></body></html>" % e
-            return HttpResponse(html)
+            return render_to_response("booking/booking_adderror.html",
+                                      {'uname': request.POST['user'],
+                                       'error': e},
+                                      context_instance=RequestContext(request))
         credits = int(request.POST['credits'])
         newP = Profile(user=newU)
         newP.save()

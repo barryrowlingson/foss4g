@@ -160,4 +160,6 @@ Password: %s
             send_mail("FOSS4G2013 Workshop Booking",msg,'info@2013.foss4g.org',[email],fail_silently=False)
             messages.add_message(request,messages.INFO, "Email sent")
         return HttpResponseRedirect("")
-    return render_to_response("booking/add_ws.html",{},context_instance=RequestContext(request))
+
+    initp = utils.randompass()
+    return render_to_response("booking/add_ws.html",{'initp':initp},context_instance=RequestContext(request))

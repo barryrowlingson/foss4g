@@ -52,3 +52,11 @@ def unbookSession(user, workshopid):
     b.delete()
     return "Removed booking of "+str(w)
     
+from random import sample
+def randompass():
+    letters = "abcdefghijklmnopqrstuvwxyz"
+    numbers = "0123456789"
+    l1 = "".join(sample(letters,3))
+    n = "".join(sample(numbers,3))
+    l2 = "".join(sample(letters,3))
+    return l1+n+l2

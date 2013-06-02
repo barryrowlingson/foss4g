@@ -8,8 +8,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
+    url(r'^accounts/profile', 'django.views.defaults.page_not_found'),
     url(r'^accounts/register', 'django.views.defaults.page_not_found'),
-    url(r'^tickets/', include('pyconde.attendees.urls')),
+#    url(r'^tickets/', include('pyconde.attendees.urls')),
     url(r'^accounts/', include('pyconde.accounts.urls')),
     url(r'^accounts/', include('userprofiles.urls')),
 #    url(r'^reviews/', include('pyconde.reviews.urls')),

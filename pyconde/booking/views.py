@@ -121,8 +121,19 @@ def add_workshopper(request):
     if request.method == "POST":
         sendmail = request.POST.has_key('sendmail')
         email = request.POST['email']
-        username = request.POST['user'],
-        password = make_password(request.POST['pass']),
+
+        usersWithThat = User.objects.filter(email=email)
+        nwithemail = usersWithThat.count()
+        if nwithemail > 0:
+            return render_to_response("booking/emailexists.html",
+                                      {'email': email,
+                                       'who': usersWithThat},
+                                      context_instance=RequestContext(request))
+        
+
+        username = request.POST['user']
+        clearpass = request.POST['pass']
+        password = make_password(clearpass)
         newU = User(
             username = username,
             password = password,
@@ -156,7 +167,7 @@ Please go to http://2013.foss4g.org/conf/booking and log in as:
 Username: %s
 Password: %s
 
-""" % (username, password)
+""" % (username, clearpass)
             send_mail("FOSS4G2013 Workshop Booking",msg,'info@2013.foss4g.org',[email],fail_silently=False)
             messages.add_message(request,messages.INFO, "Email sent")
         return HttpResponseRedirect("")

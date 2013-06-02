@@ -1,0 +1,21 @@
+{% extends "booking/booking_base.html" %}
+
+{% block content %}
+<h1>Email exists</h1>
+
+<p>User(s) with email <code>{{email}}</code> exist!</p>
+
+<ul>
+{% for person in who %}
+<li><code>{{person}}</code></li>
+{% endfor %}
+</ul>
+
+<p>
+Use the Admin Interface, add a Workshopper item for the user. You may also need
+to email them when you've done that so they know they are registered for workshops.
+They can recover their password and log in using that email address.
+</p>
+
+
+{% endblock %}

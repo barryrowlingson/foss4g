@@ -131,7 +131,7 @@ def add_workshopper(request):
                                       context_instance=RequestContext(request))
         
 
-        username = request.POST['user']
+        username = "delegate"+request.POST['delegatenumber']
         clearpass = request.POST['pass']
         password = make_password(clearpass)
         newU = User(
@@ -148,7 +148,7 @@ def add_workshopper(request):
             print e
             html = "<html><body><p>Error: %s creating User</p></body></html>" % e
             return render_to_response("booking/booking_adderror.html",
-                                      {'uname': request.POST['user'],
+                                      {'uname': username,
                                        'error': e},
                                       context_instance=RequestContext(request))
         credits = int(request.POST['credits'])

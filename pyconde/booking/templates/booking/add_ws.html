@@ -9,23 +9,73 @@
     {% endfor %}
 </ul>
 {% endif %}
-<form name="newform" method="POST"  autocomplete="off">{% csrf_token %}
-  username:
-  <input type="text" name="user" /><br />
-  password:
-  <input type="text" name="pass" value="{{initp}}"/><br />
-  email:
-  <input type="text" name="email" value="" /><br />
-  first name:
-  <input type="text" name="firstname" value="" /><br />
-  last name:
-  <input type="text" name="lastname" value="" /><br />
-  credits:
-  <input type="text" name="credits" value="" /> (1 day = 4 credits, 2 days = 8 credits)<br />
 
-  Send confirmation email?
-  <input type="checkbox" name="sendmail" value="send" checked /><br />
-  <input type="submit" value="Create" />
+<form class="form-horizontal" name="newform" method="POST"  autocomplete="off">{% csrf_token %}
+
+<div class="control-group">
+  <label for="id_delegate" class="control-label requiredField">delegate number</label>
+  <div class="controls">
+  <input type="text" name="delegatenumber" id="id_delegate" />
+  </div>
+</div>
+
+<div class="control-group">
+<label for="id_password" class="control-label requiredField">password</label>
+<div class="controls">
+  <input id="id_password" type="text" name="pass" value="{{initp}}"/>
+</div>
+</div>
+
+<div class="control-group">
+<label for="id_email" class="control-label requiredField"> email</label>
+<div class="controls">
+  <input id="id_email" type="text" name="email" value="" />
+</div>
+</div>
+
+<div class="control-group">
+<label for="id_first" class="control-label requiredField">first name</label>
+<div class="controls">
+  <input id="id_first" type="text" name="firstname" value="" />
+</div>
+</div>
+
+<div class="control-group">
+<label for="id_last" class="control-label requiredField">last name</label>
+<div class="controls">
+  <input id="id_last" type="text" name="lastname" value="" />
+</div>
+</div>
+
+
+<div class="control-group">
+<div class="controls">
+<label class="radio inline ">
+  <input type="radio" name="credits" value="4" checked />1 day
+</label>
+<label class="radio inline ">
+  <input type="radio" name="credits" value="8" />2 days
+</label>
+</div>
+</div>
+
+<div class="control-group">
+<div class="controls"> 
+<label for="id_sendmail" class="checkbox requiredField">
+  <input id="id_sendmail" type="checkbox" name="sendmail" value="send" checked />
+Email details?</label>
+</div>
+</div>
+
+
+<div class="control-group">
+<div class="controls">
+<button type="submit" class="btn">Create</button>
+</div>
+</div>
+
 </form>
+
+
 
 {% endblock %}

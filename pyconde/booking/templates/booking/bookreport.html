@@ -9,7 +9,7 @@
 <p>{{w.item.start}} to {{w.item.end}}</p>
 <ul>
 {% for b in w.booking_set.all %}
-<li>{{b.who}}</li>
+<li>{{forloop.counter}} : {{b.who}}</li>
 {% endfor %}
 </ul>
 {{w.spaces_left}} spaces left.

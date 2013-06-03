@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% block sidebar %}
-       <div class="sidebar-nav sidebar-nav-fixed">
+       <div class="sidebar-nav ">
 <h3>Menu</h3>
+{% if user.is_staff %}
+<p>Note: staff users need a delegate (non-admin) account to book sessions</p>
+{% endif %}
 <ul>
 {% if user.is_authenticated %}
 <li><a href=".">Book/Unbook</a></li>

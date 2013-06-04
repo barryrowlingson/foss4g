@@ -29,6 +29,7 @@ def index(request):
 
 
 def book(request):
+
     if not request.user.is_authenticated():
         context  = {
             "workshops":Workshop.objects.order_by("item__start"),
@@ -36,6 +37,13 @@ def book(request):
         return render_to_response("booking/booking_index.html",
                                   context,
                                   context_instance=RequestContext(request))
+    try:
+        workshopper = request.user.workshopper_profile
+    except:
+        return render_to_response("booking/notaworkshopper.html",
+                                  {},
+                                  context_instance=RequestContext(request))
+                                  
     if request.method == "POST":
         # handle the action - book or unbook
         if request.POST['action']=="book":
@@ -72,6 +80,14 @@ def book(request):
 
 @login_required
 def summary(request):
+
+    try:
+        workshopper = request.user.workshopper_profile
+    except:
+        return render_to_response("booking/notaworkshopper.html",
+                                  {},
+                                  context_instance=RequestContext(request))
+
     workshopper = request.user.workshopper_profile
     ctx = {
         "workshopper":workshopper,

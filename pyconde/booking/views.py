@@ -146,12 +146,9 @@ def add_workshopper(request):
                                        'who': usersWithThat},
                                       context_instance=RequestContext(request))
         
-
-        username = "delegate"+request.POST['delegatenumber']
         clearpass = request.POST['pass']
         password = make_password(clearpass)
         newU = User(
-            username = username,
             password = password,
             email = email,
             first_name = request.POST['firstname'],
@@ -159,20 +156,22 @@ def add_workshopper(request):
             )
         try:
             newU.save()
+            username = "delegate"+str(newU.pk)
+            newU.username=username
+            newU.save()
         except:
             e = str(sys.exc_info()[1])
             print e
             html = "<html><body><p>Error: %s creating User</p></body></html>" % e
             return render_to_response("booking/booking_adderror.html",
-                                      {'uname': username,
-                                       'error': e},
+                                      {'error': e},
                                       context_instance=RequestContext(request))
         credits = int(request.POST['credits'])
         newP = Profile(user=newU)
         newP.save()
         newW = Workshopper(user=newU, credits=credits)
         newW.save()
-        messages.add_message(request,messages.INFO, "Workshopper created")
+        messages.add_message(request,messages.INFO, "Workshopper "+newU.username+" created")
         if sendmail:
             msg = """
 

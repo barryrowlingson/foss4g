@@ -1,13 +1,9 @@
 {% extends "booking/booking_base.html" %}
 
 {% block content %}
-<h2>Error Adding User {{uname}}</h2>
+<h2>Error Adding User</h2>
 
 <p>Error message was <code>{{error}}</code></p>
 
-<p>If user with that name exists ("username is not unique" error), check the <a href="/admin/auth/user">User</a> table. If its the same person, add
-them manually to the <a href="/admin/booking/workshopper/">Workshopper</a> table.
-
-<p>If it is a different person, choose a new username and <a href="adduser">re-enter details</a>.</p>
 
 {% endblock %}

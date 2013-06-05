@@ -13,13 +13,6 @@
 <form class="form-horizontal" name="newform" method="POST"  autocomplete="off">{% csrf_token %}
 
 <div class="control-group">
-  <label for="id_delegate" class="control-label requiredField">delegate number</label>
-  <div class="controls">
-  <input type="text" name="delegatenumber" id="id_delegate" />
-  </div>
-</div>
-
-<div class="control-group">
 <label for="id_password" class="control-label requiredField">password</label>
 <div class="controls">
   <input id="id_password" type="text" name="pass" value="{{initp}}"/>

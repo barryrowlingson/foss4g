@@ -1,0 +1,14 @@
+{% extends "booking/booking_base.html" %}
+
+{% block content %}
+<h1>Not a Workshop User</h1>
+
+<p>
+You seem to be logged in as {{user}} but are not a registered workshop attendee.
+</p>
+
+<p>
+If this is unexpected, please contact info@2013.foss4g.org with details.
+</p>
+
+{% endblock %}

@@ -10,9 +10,9 @@ class BookingAdmin(admin.ModelAdmin):
     readonly_fields=fields
 
 class WorkshopperAdmin(admin.ModelAdmin):
-    fields=('user','credits','spent','credits_left')
-    readonly_fields=('spent','credits_left')
-    list_display=('user','credits','spent','credits_left')
+    fields=('user','fullname','credits','spent','credits_left')
+    readonly_fields=('spent','credits_left','fullname')
+    list_display=('user','fullname','credits','spent','credits_left')
     inlines= [ BookingInline, ]
     pass
 class WorkshopAdmin(admin.ModelAdmin):

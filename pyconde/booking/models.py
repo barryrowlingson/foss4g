@@ -68,6 +68,9 @@ class Workshopper(models.Model):
     def credits_left(self):
         return self.credits - self.spent()
 
+    def fullname(self):
+        return self.user.first_name+" "+self.user.last_name
+
     def __unicode__(self):
         if self.user.first_name and self.user.last_name:
             return u"{0} {1}".format(self.user.first_name, self.user.last_name)
@@ -92,19 +95,16 @@ class Booking(models.Model):
         cost = ws.cost
         spaces = ws.spaces_left()
         funds = self.who.credits_left()
-        print "checking credit"
         # workshopper must have credit
         if spaces < 1:
             raise ValidationError("No space left in "+str(ws))
         # workshop must have a space
-        print "checking space"
         if funds < cost:
             raise ValidationError("Insufficient Funds")
 
 
     def save(self, *args, **kwargs):
-        print "Saving "+str(self)
         super(Booking, self).save(*args, **kwargs) 
 
     def __unicode__(self):
-        return str(self.who) +  " booked " + str(self.workshop)
+        return self.who.fullname() +  " booked " + self.workshop.item.title

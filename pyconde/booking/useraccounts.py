@@ -72,11 +72,12 @@ def checkandcreate(filepath):
             rec[FIRST].strip(),
             rec[LAST].strip(),
             rec[EMAIL].strip(),
-            getcredits(rec[BOOKED].strip())
+            getcredits(rec[BOOKED].strip()),
+            rec[ORG],
             )
         print "Created ",username," for ",rec[EMAIL]
 
-def createdelegate(first, last, email, credits, clearpassword=None):
+def createdelegate(first, last, email, credits, org, clearpassword=None):
     if not clearpassword:
         clearpassword = randompass()
         password = make_password(clearpassword)
@@ -94,4 +95,7 @@ def createdelegate(first, last, email, credits, clearpassword=None):
     p.save()
     w=Workshopper(user=u,credits=credits)
     w.save()
+    speaker = u.speaker_profile
+    speaker.affiliation=org
+    speaker.save()
     return username

@@ -19,7 +19,7 @@ def readcsv(filepath):
         reader = csv.reader(f)
         reader.next() # skip header
         for row in reader:
-            rowstrip = [r.strip() for r in row]
+            rowstrip = [r.strip() if isinstance(r,basestring) else u"%s" % r for r in row]
             yield rowstrip
 
 def getrecordlist(filepath):
@@ -59,9 +59,9 @@ def checkrecords(recordlist):
             raise ValueError, "Bad booking duration: "+str(hrs)
 
 def getcredits(hrs):
-    if hrs.startswith("8 "):
+    if hrs.startswith("8"):
         return 4
-    if hrs.startswith("16 "):
+    if hrs.startswith("16"):
         return 8
     return None
 

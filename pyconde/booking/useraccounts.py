@@ -14,6 +14,8 @@ ORG=3
 EMAIL=4
 BOOKED=5
 
+NCOLS=6
+
 import ucsv as csv
 def readcsv(filepath):
     with open(filepath, 'rb') as f:
@@ -46,8 +48,8 @@ def checkemails(records):
 def checkrecords(recordlist):
 
     for rec in recordlist:
-        if len(rec) != 5:
-            raise ValueError,"Incorrect length for "+str(rec)
+        if len(rec) != NCOLS:
+            raise ValueError,"Incorrect number of columns for "+str(rec)
         if rec[FIRST].strip()=="":
             raise ValueError, "No First name"
         if rec[LAST].strip()=="":
@@ -68,6 +70,7 @@ def getcredits(hrs):
 
 def checkandcreate(filepath):
     records=fullchecks(filepath)
+    emails=[]
     for rec in records:
         username = createdelegate(
             rec[FIRST].strip(),
@@ -77,6 +80,8 @@ def checkandcreate(filepath):
             rec[ORG],
             )
         print "Created ",username," for ",rec[EMAIL]
+        emails.append(rec[EMAIL])
+    print ",".join(emails)
 
 def createdelegate(first, last, email, credits, org, clearpassword=None):
     if not clearpassword:

@@ -9,9 +9,10 @@ from django.contrib.auth.hashers import make_password
 
 FIRST=0
 LAST=1
-ORG=2
-EMAIL=3
-BOOKED=4
+JOBTITLE=2
+ORG=3
+EMAIL=4
+BOOKED=5
 
 import ucsv as csv
 def readcsv(filepath):

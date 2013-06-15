@@ -156,23 +156,53 @@ def readspreadsheet(filepath, columns=COLS):
         allRecords.append(r)
     return allRecords
 
-def checkfullspreadsheet(filepath,columns=COLS):
+def checkfullspreadsheet(filepath,columns=COLS, showNos=True, addTo=False):
     ssRecords = readspreadsheet(filepath,columns=columns)
-    emailSet = set([w.user.email for w in Workshopper.objects.all()])
+    workshoppers = Workshopper.objects.all()
+    emailSet = set([w.user.email for w in workshoppers])
     fullNames = set([w.user.first_name + " " + w.user.last_name for w in Workshopper.objects.all()])
+    add=0
+    newEmails = []
     for rec in ssRecords:
-        print acceptSSRow(rec,emailSet,fullNames)
+        accept,why = acceptSSRow(rec,emailSet,fullNames)
+        if accept:
+            print "Yes: ",why
+            add = add+1
+            if addTo:
+                username = createdelegate(
+                    rec[FIRST].strip(),
+                    rec[LAST].strip(),
+                    rec[EMAIL].strip(),
+                    getcredits(rec[BOOKED].strip()),
+                    rec[ORG],
+                    )
+                print "Created ",username," for ",rec[EMAIL]
+                newEmails.append(rec[EMAIL])
+        else:
+            if showNos:
+                print "NO: ",why
+    print "Existing workshoppers %s " % len(workshoppers)
+    print "Adds: %s " % add
+    print "New Total to be: %s " % (len(workshoppers)+add)
+    
+    if addTo:
+        print ", ".join(newEmails)
+
 
 def acceptSSRow(rec,emailSet,fullNames):
     emailExists = hasEmail(rec,emailSet)
-    # if the email exists we can't accept it
+    nameExists = hasName(rec,fullNames)
+    # if the email exists we can't accept it, but check name anyway to inform the reason
     if emailExists:
-        return False, u"email %s exists" % rec[EMAIL]
-    if not emailExists:
-        nameExists = hasName(rec,fullNames)
         if nameExists:
-            return False, u"Name %s %s exists with different email " % (rec[FIRST],rec[LAST])
+            return False, u"email %s exists" % rec[EMAIL]
         else:
-            return True, u"New email %s and name %s %s"% (rec[EMAIL],rec[FIRST],rec[LAST])
+            return False, u"email %s exists with different name to %s %s" % (rec[EMAIL],rec[FIRST],rec[LAST])
+
+
+    if nameExists:
+        return False, u"Name %s %s exists with different email to %s " % (rec[FIRST],rec[LAST],rec[EMAIL])
+    else:
+        return True, u"New email %s and name %s %s"% (rec[EMAIL],rec[FIRST],rec[LAST])
 
 

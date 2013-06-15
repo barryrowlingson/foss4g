@@ -45,6 +45,24 @@ def checkemails(records):
     if len(edup)>0:
         raise ValueError,"duplicate emails in input csv"+str(edup)
 
+def hasEmail(record,emailSet=None):
+    if not emailSet:
+        emailSet = set([w.user.email for w in Workshopper.objects.all()])
+    if record[EMAIL] in emailSet:
+        return True
+    else:
+        return False
+
+def hasName(record, fullNames=None):
+    if not fullNames:
+        fullNames = set([w.user.first_name + " " + w.user.last_name for w in Workshopper.objects.all()])
+    if record[FIRST]+" "+record[LAST] in fullNames:
+        return True
+    else:
+        return False
+
+    
+
 def checkrecords(recordlist):
 
     for rec in recordlist:
@@ -83,6 +101,8 @@ def checkandcreate(filepath):
         emails.append(rec[EMAIL])
     print ",".join(emails)
 
+
+
 def createdelegate(first, last, email, credits, org, clearpassword=None):
     if not clearpassword:
         clearpassword = randompass()
@@ -105,3 +125,54 @@ def createdelegate(first, last, email, credits, org, clearpassword=None):
     speaker.affiliation=org
     speaker.save()
     return username
+
+import xlrd
+
+COLS={
+    "first":1,
+    "last":2,
+    "jobtitle":3,
+    "org":4,
+    "email":5,
+    "booked":6
+}
+
+def readspreadsheet(filepath, columns=COLS):
+    book = xlrd.open_workbook(filepath)
+    sheet = book.sheets()[0]
+    nrecs = sheet.nrows-1
+    row=1
+    allRecords = []
+    while row <= nrecs:
+        rowData=sheet.row(row)
+        r = NCOLS*[None]
+        r[FIRST]=rowData[columns["first"]].value.strip()
+        r[LAST]=rowData[columns["last"]].value.strip()
+        r[EMAIL]=rowData[columns["email"]].value.strip()
+        r[JOBTITLE]=rowData[columns["jobtitle"]].value.strip()
+        r[ORG]=rowData[columns["org"]].value.strip()
+        r[BOOKED]=(u"%s" % rowData[columns["booked"]].value).strip()
+        row=row+1
+        allRecords.append(r)
+    return allRecords
+
+def checkfullspreadsheet(filepath,columns=COLS):
+    ssRecords = readspreadsheet(filepath,columns=columns)
+    emailSet = set([w.user.email for w in Workshopper.objects.all()])
+    fullNames = set([w.user.first_name + " " + w.user.last_name for w in Workshopper.objects.all()])
+    for rec in ssRecords:
+        print acceptSSRow(rec,emailSet,fullNames)
+
+def acceptSSRow(rec,emailSet,fullNames):
+    emailExists = hasEmail(rec,emailSet)
+    # if the email exists we can't accept it
+    if emailExists:
+        return False, u"email %s exists" % rec[EMAIL]
+    if not emailExists:
+        nameExists = hasName(rec,fullNames)
+        if nameExists:
+            return False, u"Name %s %s exists with different email " % (rec[FIRST],rec[LAST])
+        else:
+            return True, u"New email %s and name %s %s"% (rec[EMAIL],rec[FIRST],rec[LAST])
+
+

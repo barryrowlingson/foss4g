@@ -276,3 +276,13 @@ ACCOUNTS_FALLBACK_TO_GRAVATAR = True
 #         'INDEX_NAME': 'pyconde2013',
 #     }
 # }
+
+# set this in your settings.py to obscure some URLs and don't 
+# check that file into a public repo
+
+# this happens here so that urls.py files that use it don't barf if you don't set
+# it
+import string
+import random
+OBSCURE = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(20))
+

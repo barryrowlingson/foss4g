@@ -131,6 +131,16 @@ def bookreport(request):
                               {'workshops': workshops},
                               context_instance=RequestContext(request))
 
+def secretbookreport(request):
+    """ an unprotected booking report, to be accessed via an obscure URL 
+    security through obscurity. Yes. """
+
+    workshops = Workshop.objects.select_related().order_by("item__start")
+    return render_to_response('booking/simplereport.html',
+                              {'workshops': workshops},
+                              context_instance=RequestContext(request))
+
+
 @transaction.commit_on_success
 @permission_required('booking.add_booking')
 def add_workshopper(request):

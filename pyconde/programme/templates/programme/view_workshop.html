@@ -22,7 +22,7 @@ Filling up
 
 <h3>{{w.item.speaker}} {% if w.item.speaker.affiliation %}({{w.item.speaker.affiliation}}){% endif %}</h3>
 
-<p><a href="{% url 'view-location' location_pk=w.item.location.pk %}">{{w.item.location}}</a> - {{w.item.start}} to {{w.item.end}}</p>
+<p><a href="{% url 'view-location' location_slug=w.item.location.slug %}">{{w.item.location}}</a> - {{w.item.start}} to {{w.item.end}}</p>
 
 <p>
 {{w.item.description}}

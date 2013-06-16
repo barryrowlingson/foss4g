@@ -123,6 +123,8 @@ INSTALLED_APPS = [
     # foss4g booking
     'pyconde.booking',
 
+    # my programme code
+    'pyconde.programme',
 ]
 
 MIDDLEWARE_CLASSES = [

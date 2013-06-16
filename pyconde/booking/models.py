@@ -31,6 +31,18 @@ class Workshop(models.Model):
             return "full"
         return "open"
 
+    def busy(self):
+        cap = self.capacity
+        booked = self.number_of_bookings()
+        if cap == 0:
+            return "full"
+        if cap == booked:
+            return "full"
+        fraction = float(booked)/float(cap)
+        if fraction < 0.7:
+            return "spaces"
+        return "busy"
+
     def overlaps(self,ws):
         r1=self.item
         r2=ws.item

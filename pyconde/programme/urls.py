@@ -17,5 +17,6 @@ urlpatterns = patterns('',
                        url(r'^workshops$', views.workshops, name='workshop-index'),
                        url(r'^workshops/(?P<workshop_pk>\d+)/$', views.view_workshop, name='view-workshop'),
                        url(r'^presentations/(?P<presentation_pk>\d+)/$', views.view_presentation, name='view-presentation'),
+                       url(r'^locations/(?P<location_slug>[-\w]+)/$', views.view_location, name='view-location'),
                        )
 

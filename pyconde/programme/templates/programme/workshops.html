@@ -1,9 +1,89 @@
 {% extends "base_programme.html" %}
+{% load url from future %}
 
 {% block content %}
 
-<h1>Full Workshop Programme Will Appear Here</h1>
+<h1>Workshop Programme</h1>
 
-<p>You may also want to see the <a href="{% url booking-index %}">Workshop Reservation</a> system.</p>
+<p>You may also want to see the <a href="{% url 'booking-index' %}">Workshop Reservation</a> system.</p>
+
+<style>
+td.cell1 {border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000}
+
+td.celltime { text-align: center;}
+
+td.lunch {background-color: #CCFFFF}
+
+td.w2 {background-color: #8DD3C7}
+td.w3 {background-color: #FFFFB3}
+td.w18 {background-color: #BEBADA}
+td.w17 {background-color: #FB8072}
+td.w14 {background-color: #80B1D3}
+td.w4 {background-color: #FDB462}
+td.w1 {background-color: #B3DE69}
+td.w11 {background-color: #FCCDE5}
+td.w12 {background-color: #D9D9D9}
+td.w13 {background-color: #BC80BD}
+
+
+td.w5 {background-color:#8DD3C7}
+td.w8 {background-color:#FFFFB3}
+td.w7 {background-color:#BEBADA}
+td.w6 {background-color:#FB8072}
+td.w16 {background-color:#80B1D3}
+td.w9 {background-color:#FDB462}
+td.w10{background-color:#B3DE69}
+td.w15{background-color:#FCCDE5}
+</style>
+
+
+
+{% regroup workshops by item.start.date as workshop_list %}
+
+
+{% for startdate in workshop_list %}
+    <h1>{{ startdate.grouper }}</h1>
+
+{% with startdate.grouper.day|stringformat:"s" as theday %}
+{% with "programme/timetable"|add:theday|add:".html" as template %}
+{% include template %}
+{% endwith %}
+{% endwith %}
+
+        {% for w in startdate.list %}
+
+<div class="workshop {{w.busycode}}" id="{{w.wcode}}">
+<h2>
+<a title="details" href="{% url 'view-workshop' w.pk %}">{{w.item.title}}</a> ({{w.capacity}} delegates) <span class="open-{{w.busycode}}">
+{% if w.busycode == "spaces" %}
+ - Places available
+{% endif %}
+{% if w.busycode == "full" %}
+- Full
+{% endif %}
+{% if w.busycode == "busy" %}
+- Filling up
+{% endif %}
+</span></h2>
+
+<h3 title="lead presenter">{{w.item.speaker}} {% if w.item.speaker.affiliation %}({{w.item.speaker.affiliation}}){% endif %}</h3>
+
+<p>
+{% if w.item.location %}
+<a href="{% url 'view-location' w.item.location.slug %}">{{w.item.location}}</a>
+{% else %}
+Location TBA
+{% endif %}
+ - {{w.item.start}} to {{w.item.end}}</p>
+
+<p>
+{{w.item.description}}
+</p>
+</div>
+
+        {% endfor %}
+{% endfor %}
+
+
 
 {% endblock %}

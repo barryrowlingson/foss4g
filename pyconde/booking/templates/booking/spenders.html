@@ -1,0 +1,21 @@
+{% extends "base_wide.html" %}
+
+{% block content %}
+<h2>Spending Report</h2>
+
+<p>This page categorises people by how many of their workshop credits they have spent. The list
+is given in an easy format to cut and paste into an email for reminders</p>
+
+<p>IMPORTANT REMINDER: paste them into a BCC field so people don't see everyone's email address</p>
+
+<h3>These people have spent NONE</h3>
+{% for w in none %}"{{w.fullname}}" &lt;{{w.user.email}}&gt;, {% endfor %}
+
+<h3>These people have spent SOME</h3>
+{% for w in some %}"{{w.fullname}}" &lt;{{w.user.email}}&gt;, {% endfor %}
+
+<h3>These people have spent ALL</h3>
+{% for w in all %}"{{w.fullname}}" &lt;{{w.user.email}}&gt;, {% endfor %}
+
+
+{% endblock %}

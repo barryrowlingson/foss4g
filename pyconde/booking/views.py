@@ -1,5 +1,6 @@
 # Create your views here.
 from django.core.mail import send_mail
+from django.db.models import Sum
 
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required, permission_required
@@ -139,6 +140,22 @@ def secretbookreport(request):
     return render_to_response('booking/simplereport.html',
                               {'workshops': workshops},
                               context_instance=RequestContext(request))
+
+def secretspending(request):
+    """ return who has spent all/some/none of their credits """
+    
+    ws=Workshopper.objects.select_related(depth=2).annotate(spending=Sum("booked__cost"))
+
+    spentNone = [w for w in ws if not w.spending]
+    spentAll = [w for w in ws if w.spending==w.credits]
+    spentSome = [w for w in ws if w.spending and w.spending<w.credits]
+
+    return render_to_response("booking/spenders.html",
+                              {'some': spentSome,
+                               'none': spentNone,
+                               'all': spentAll},
+                              context_instance=RequestContext(request))
+
 
 
 @transaction.commit_on_success

@@ -4,6 +4,7 @@ from django.db.models import Sum
 
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.context_processors import csrf
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponse
@@ -132,6 +133,7 @@ def bookreport(request):
                               {'workshops': workshops},
                               context_instance=RequestContext(request))
 
+@staff_member_required
 def secretbookreport(request):
     """ an unprotected booking report, to be accessed via an obscure URL 
     security through obscurity. Yes. """
@@ -141,6 +143,7 @@ def secretbookreport(request):
                               {'workshops': workshops},
                               context_instance=RequestContext(request))
 
+@staff_member_required
 def secretspending(request):
     """ return who has spent all/some/none of their credits """
     

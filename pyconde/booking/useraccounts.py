@@ -156,7 +156,36 @@ def readspreadsheet(filepath, columns=COLS):
         allRecords.append(r)
     return allRecords
 
-def checkfullspreadsheet(filepath,columns=COLS, showNos=True, addTo=False):
+def checkfullspreadsheet(filepath,columns=COLS, showNos=True, addTo=False, updateCredit=False):
+    """
+    Given a spreadsheet with:
+      heading row
+      one row per person, columns:
+           Update, First Name, Last Name, Job Title, Affiliation, Email, Wshop
+    Then check existing records, create new ones, update changed ones (under certain conditions)
+    
+    If the email from the spreadsheet exists in the database, do nothing. We're good.
+    If the email doesn't exist in the database but "first_name last_name" does, print a warning.
+    If neither email nor first/last name exist in the database, thats a new user.
+
+    If we find a user via email or first/last, then check their credits are the same as the spreadsheet.
+
+    Flags:
+
+    showNos: whether to show No-action items.
+    addTo: add the new users
+    updateCredit: whether to update the credit for changes
+
+    Usual usage:
+
+    useraccounts.checkfullspreadsheet("workshops/filename.xlsx",showNos=False)
+      
+    then check the counts are as expected. Then:
+
+    useraccounts.checkfullspreadsheet("workshops/filename.xlsx",showNos=False,updateCredit=True,addTo=True)
+
+
+    """
     ssRecords = readspreadsheet(filepath,columns=columns)
     workshoppers = Workshopper.objects.all()
     emailSet = set([w.user.email for w in workshoppers])
@@ -179,6 +208,19 @@ def checkfullspreadsheet(filepath,columns=COLS, showNos=True, addTo=False):
                 print "Created ",username," for ",rec[EMAIL]
                 newEmails.append(rec[EMAIL])
         else:
+            who = workshoppers.filter(user__email=rec[EMAIL].strip())
+            if len(who)!=1:
+                who = workshoppers.filter(user__first_name=rec[FIRST].strip() ,
+                                          user__last_name=rec[LAST].strip())
+            if len(who)!=1:
+                print "Non-unique email or username for ",rec
+            who=who[0]
+                
+            if who.credits != getcredits(rec[BOOKED].strip()):
+                print "CREDIT CHANGE: %s from %s to %s " % (who, who.credits,getcredits(rec[BOOKED].strip()))
+                if updateCredit:
+                    who.credits = getcredits(rec[BOOKED].strip())
+                    who.save()
             if showNos:
                 print "NO: ",why
     print "Existing workshoppers %s " % len(workshoppers)

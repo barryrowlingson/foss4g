@@ -3,15 +3,18 @@ from django.db import models
 # Create your models here.
 from pyconde.conference import models as conference_models
 from pyconde.tagging import TaggableManager
+from tinymce import models as tinymce_models
+
+
 
 class Person(models.Model):
     name = models.CharField(max_length=100)
     affiliation = models.CharField(max_length=100, blank=True)
     email = models.EmailField(blank=True)
     contact = models.TextField(blank=True)
-    biog = models.TextField(blank=True)
+    biog = tinymce_models.HTMLField(blank=True)    
     notes = models.TextField("Committee use only",blank=True)
-    
+
     def __unicode__(self):
         return self.name
 
@@ -28,9 +31,9 @@ class PSession(models.Model):
 
     def __unicode__(self):
         if self.location:
-            return u" in %s at %s " % (self.location, self.start)
+            return u"%s talks in %s at %s " % (self.slotcount,self.location, self.start)
         else:
-            return u" at % in unassigned room" % self.start
+            return u"%s talks at %s in unassigned room" % (self.slotcount,self.start)
 
 
 class Presentation(models.Model):
@@ -38,7 +41,7 @@ class Presentation(models.Model):
     copresenter = models.ManyToManyField(Person, blank=True, null=True)
     title = models.CharField(max_length=200)
     desc = models.TextField()
-    abstract = models.TextField()
+    abstract = tinymce_models.HTMLField()    
     insession = models.ForeignKey(PSession, blank=True, null=True)
     position = models.IntegerField(blank=True, null=True)
     tags = TaggableManager(blank=True)
@@ -51,7 +54,7 @@ class Presentation(models.Model):
 class Keynote(models.Model):
     speaker = models.ForeignKey(Person)
     title = models.CharField(max_length=200)
-    abstract = models.TextField()
+    abstract = tinymce_models.HTMLField()
     notes = models.TextField("Committee use only",blank=True)
     cancelled = models.BooleanField(default=False)
     tags = TaggableManager(blank=True)

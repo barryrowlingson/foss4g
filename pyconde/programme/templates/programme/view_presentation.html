@@ -2,6 +2,14 @@
 
 {% block content %}
 
-<h1>Presentation Details Will Appear Here</h1>
+<div class="presentation" style="width:40em;">
+<h1>{{pres.title}}</h1>
+<h2>{{pres.presenter}}</h2>
+{% autoescape off %}
+{{ pres.abstract }}
+{% endautoescape %}
+
+</div>
+
 
 {% endblock %}

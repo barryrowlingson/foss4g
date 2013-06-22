@@ -93,7 +93,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'helpdesk',
     'haystack',
-    #'tinymce', # If you want tinymce, add it in the settings.py file.
+    'tinymce', # If you want tinymce, add it in the settings.py file.
     'django_gravatar',
 
     'cms.plugins.inherit',
@@ -261,11 +261,25 @@ HAYSTACK_CONNECTIONS = {
 # Disable south migrations during unittests
 SOUTH_TESTS_MIGRATE = False
 
-TINYMCE_DEFAULT_CONFIG={
-    'theme': 'advanced',
-    'relative_urls': False,
+#'advlist autolink link image lists charmap print preview'
+TINYMCE_DEFAULT_CONFIG = {
+    'theme': "advanced",
+    'style_formats': [
+        {"title": 'Code', "inline": 'code'},
+        {"title": 'Small caps', "inline": 'span', "styles": {"font-variant": 'small-caps', "text-transform": 'capitalize'}}], 
+    'plugins': "table,lists,advlink,wordcount", #table,spellchecker,paste,searchreplace",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+    "theme_advanced_buttons1" : "styleprops,styleselect,forecolor,backcolor,bold,italic,underline,code,formatselect",
+    "theme_advanced_buttons2" : "bullist,numlist,separator,outdent,indent,separator,undo,redo,separator,link,unlink,separator,hr,removeformat,visualaid,separator,sub,sup,separator,charmap",
     'theme_advanced_resizing': True,
 }
+
+# TINYMCE_DEFAULT_CONFIG={
+#     'theme': 'advanced',
+#     'relative_urls': False,
+#     'theme_advanced_resizing': True,
+# }
 
 ACCOUNTS_FALLBACK_TO_GRAVATAR = True
 

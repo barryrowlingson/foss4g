@@ -38,3 +38,6 @@ Whoosh==2.4.1
 
 # for importing excel spreadsheets
 xlrd==0.9.2
+
+# editing fields
+django-tinymce

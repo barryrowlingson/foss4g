@@ -7,6 +7,7 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
+    (r'^tinymce/', include('tinymce.urls')),
     (r'^admin/', include(admin.site.urls)),
     url(r'^accounts/profile', 'django.views.defaults.page_not_found'),
     url(r'^accounts/register', 'django.views.defaults.page_not_found'),

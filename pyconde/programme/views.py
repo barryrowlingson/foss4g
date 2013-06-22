@@ -7,6 +7,8 @@ from django.template import RequestContext
 from pyconde.booking import models as booking_models
 from pyconde.conference import models as conference_models
 
+from models import Presentation
+
 def index(request):
     context = {}
     return render_to_response("programme/index.html",
@@ -40,7 +42,8 @@ def view_workshop(request, workshop_pk):
                               context_instance=RequestContext(request))
 
 def view_presentation(request, presentation_pk):
-    context = {}
+    pres = get_object_or_404(Presentation,pk = presentation_pk)
+    context = {'pres': pres}
     return render_to_response("programme/view_presentation.html",
                               context,
                               context_instance=RequestContext(request))

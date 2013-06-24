@@ -1,0 +1,14 @@
+{% extends "base_programme.html" %}
+{% load url from future %}
+
+{% block content %}
+
+{% for psesh in seshes %}
+
+<div class="psession" >
+<h1><a href="{% url 'view-psession' psession_pk=psesh.pk %}">{{psesh.title}}</a></h1>
+<h2>In: <a href="{% url 'view-location' location_slug=psesh.location.slug %}">{{psesh.location}}</a> Starting: {{psesh.start}}</h2>
+</div>
+{% endfor %}
+
+{% endblock %}

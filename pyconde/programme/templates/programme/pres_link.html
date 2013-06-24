@@ -1,0 +1,6 @@
+{% load url from future %}
+{% if not pres.cancelled %}
+<a href={% url 'view-presentation' presentation_pk=pres.pk %}>{{ pres }}</a>
+{% else %}
+Cancelled: <a href={% url 'view-presentation' presentation_pk=pres.pk %}>{{ pres }}</a>
+{% endif %}

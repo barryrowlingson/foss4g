@@ -11,8 +11,21 @@ from . import models
 #     inlines= [ BookingInline, ]
 
 
+class PSessionAdmin(admin.ModelAdmin):
+    pass
 
-admin.site.register(models.Person, admin.ModelAdmin)
-admin.site.register(models.Presentation,admin.ModelAdmin) 
-admin.site.register(models.PSession, admin.ModelAdmin)
+class PresentationAdmin(admin.ModelAdmin):
+    filter_horizontal = ('copresenter',)
+    list_display=('title','presenter','insession')
+    list_filter = ('insession',)
+    search_fields = ('presenter__name','title',)
+
+class PersonAdmin(admin.ModelAdmin):
+    list_display=('name','affiliation','email')
+    list_editable=('affiliation','email')
+    search_fields=('name','affiliation','email')
+
+admin.site.register(models.Person, PersonAdmin)
+admin.site.register(models.Presentation,PresentationAdmin) 
+admin.site.register(models.PSession, PSessionAdmin)
 admin.site.register(models.Keynote, admin.ModelAdmin)

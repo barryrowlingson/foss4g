@@ -1,10 +1,31 @@
 {% extends "base_programme.html" %}
+{% load url from future %}
 
 {% block content %}
 
-<div class="presentation" style="width:40em;">
+<div class="presentation {% if pres.cancelled %}cancelled{% endif %}" >
 <h1>{{pres.title}}</h1>
-<h2>{{pres.presenter}}</h2>
+<h2>{{pres.presenter}}
+{% with aff=pres.presenter.affiliation %}
+{% if aff %}
+({{aff}})
+{% endif %}
+{% endwith %}
+{% with cops=pres.copresenter.all %}
+{% if cops %}
+(with {{ cops|join:", " }})
+{% endif %}
+{% endwith %}
+</h2>
+{% if pres.cancelled %}
+<h3 class="cancelled">This presentation has been cancelled</h3>
+{% else %}
+{% if pres.insession %}
+<h3>{{pres.start}} in <a href="{% url 'view-psession' psession_pk=pres.insession.pk %}">{{pres.insession.title}}</a> ({{pres.insession.start}}, <a href="{% url 'view-location' location_slug=pres.insession.location.slug %}">{{pres.insession.location}}</a>)</h3>
+{% else %}
+<h3>Unscheduled</h3>
+{% endif %}
+{% endif %}
 {% autoescape off %}
 {{ pres.abstract }}
 {% endautoescape %}

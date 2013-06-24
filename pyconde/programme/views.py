@@ -7,7 +7,11 @@ from django.template import RequestContext
 from pyconde.booking import models as booking_models
 from pyconde.conference import models as conference_models
 
-from models import Presentation
+from models import Presentation,PSession
+
+from django.contrib.admin.views.decorators import staff_member_required
+
+import datetime
 
 def index(request):
     context = {}
@@ -40,15 +44,51 @@ def view_workshop(request, workshop_pk):
     return render_to_response("programme/view_workshop.html",
                               context,
                               context_instance=RequestContext(request))
-
+@staff_member_required
 def view_presentation(request, presentation_pk):
-    pres = get_object_or_404(Presentation,pk = presentation_pk)
+    try:
+        pres = Presentation.objects.select_related(depth=2).get(pk = presentation_pk)
+    except:
+        raise Http404
+    sesh = pres.insession
+    if sesh:
+        pres.start = sesh.start + (pres.position-1)*datetime.timedelta(minutes=sesh.talkduration)
+    else:
+        pres.start = "unscheduled"
     context = {'pres': pres}
     return render_to_response("programme/view_presentation.html",
                               context,
                               context_instance=RequestContext(request))
+@staff_member_required
+def view_psessions(request):
+    seshes = PSession.objects.select_related(depth=4).all().order_by("start")
+    context = {'seshes': seshes}
+    return render_to_response("programme/view_psessions.html",
+                              context,
+                              context_instance=RequestContext(request))
+    
+@staff_member_required
+def view_presentations(request):
+    presses = Presentation.objects.select_related(depth=3).all()
+    context = {"presentations": presses}
+    return render_to_response("programme/view_presentations.html",
+                              context,
+                              context_instance=RequestContext(request))
+   
+@staff_member_required
+def view_psession(request, psession_pk):
+    try:
+        psesh = PSession.objects.select_related(depth=2).get(pk = psession_pk)
+    except:
+        raise Http404
+    presses = psesh.presentation_set.all().select_related(depth=2).order_by("position")
+    context = {'psesh': psesh,
+               'presses': presses}
+    return render_to_response("programme/view_psession.html",
+                              context,
+                              context_instance=RequestContext(request))
 
-
+@staff_member_required
 def view_location(request,location_slug):
     loc = get_object_or_404(conference_models.Location,slug=location_slug)
     context={"loc":loc}

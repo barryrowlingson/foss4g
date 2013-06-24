@@ -1,0 +1,14 @@
+{% extends "base_programme.html" %}
+{% load url from future %}
+
+{% block content %}
+
+<ul>
+{% for pres in presentations %}
+
+<li><a href="{% url 'view-presentation' presentation_pk=pres.pk %}">{{pres.title}}</a> {{pres.presenter}}</li>
+
+{% endfor %}
+</ul>
+
+{% endblock %}

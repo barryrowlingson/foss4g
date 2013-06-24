@@ -31,9 +31,9 @@ class PSession(models.Model):
 
     def __unicode__(self):
         if self.location:
-            return u"%s talks in %s at %s " % (self.slotcount,self.location, self.start)
+            return u"%s: %s talks in %s at %s " % (self.title,self.slotcount,self.location, self.start)
         else:
-            return u"%s talks at %s in unassigned room" % (self.slotcount,self.start)
+            return u"%s: %s talks at %s in unassigned room" % (self.title,self.slotcount,self.start)
 
 
 class Presentation(models.Model):

@@ -141,14 +141,21 @@ def refundreport(request):
         w.spending=0
     refunds.extend([w for w in ws if w.spending and w.spending<w.credits])
     daycost = 75
-    total = 0
+    totalGenerous = 0
+    totalDay = 0
     for w in refunds:
-        w.amount = float(daycost) * (float(w.credits) - float(w.spending))/float(4)
-        total = total + w.amount
+        unspent = w.credits - w.spending
+        # round it to nearest 4 for day
+        w.unspentDay = 4 * unspent/4
+        w.amountDay = float(daycost)*(float(w.unspentDay)/float(4))
+        w.amountGenerous = float(daycost) * (float(w.credits) - float(w.spending))/float(4)
+        totalDay = totalDay + w.amountDay
+        totalGenerous = totalGenerous + w.amountGenerous
     refunds.sort(key=lambda x: x.user.last_name)
     return render_to_response("booking/refundreport.html",
                               {'refunds': refunds,
-                               'total': total,
+                               'totalGenerous': totalGenerous,
+                               'totalDay': totalDay,
                                'daycost': daycost},
                               context_instance=RequestContext(request))
     pass

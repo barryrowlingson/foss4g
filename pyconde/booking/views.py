@@ -146,7 +146,7 @@ def refundreport(request):
     for w in refunds:
         unspent = w.credits - w.spending
         # round it to nearest 4 for day
-        w.unspentDay = 4 * unspent/4
+        w.unspentDay = 4 * int(unspent)/4
         w.amountDay = float(daycost)*(float(w.unspentDay)/float(4))
         w.amountGenerous = float(daycost) * (float(w.credits) - float(w.spending))/float(4)
         totalDay = totalDay + w.amountDay

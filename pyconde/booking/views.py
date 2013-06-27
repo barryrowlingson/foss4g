@@ -134,6 +134,26 @@ def bookreport(request):
                               context_instance=RequestContext(request))
 
 @staff_member_required
+def refundreport(request):
+    ws=Workshopper.objects.select_related(depth=2).annotate(spending=Sum("booked__cost"))
+    refunds = [w for w in ws if not w.spending]
+    for w in refunds:
+        w.spending=0
+    refunds.extend([w for w in ws if w.spending and w.spending<w.credits])
+    daycost = 75
+    total = 0
+    for w in refunds:
+        w.amount = float(daycost) * (float(w.credits) - float(w.spending))/float(4)
+        total = total + w.amount
+    refunds.sort(key=lambda x: x.user.last_name)
+    return render_to_response("booking/refundreport.html",
+                              {'refunds': refunds,
+                               'total': total,
+                               'daycost': daycost},
+                              context_instance=RequestContext(request))
+    pass
+
+@staff_member_required
 def secretbookreport(request):
     """ an unprotected booking report, to be accessed via an obscure URL 
     security through obscurity. Yes. """

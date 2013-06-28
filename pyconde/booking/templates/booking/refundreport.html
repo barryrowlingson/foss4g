@@ -24,12 +24,12 @@ table tr.head {border-bottom: 1px solid black; font-weight: bold;}
 </style>
 
 <table >
-<tr class="head"><th>Name</th><th></th><th class="money">Refund Amount (Day)</th><th class="money">Refund Amount (Generous)</th><th class+"units">Paid Units</th><th class="units">Spent Units</th></tr>
+<tr class="head"><th>Name</th><th></th><th class="money">Full Day</th><th class="money">Half Day</th><th class="money">Unit</th><th class+"units">Paid Units</th><th class="units">Spent Units</th></tr>
 {% for w in refunds %}
-<tr><td>{{w.user.last_name}}</td><td>{{w.user.first_name}}</td><td class="money">£{{w.amountDay}}</td><td class="money">£{{w.amountGenerous}}</td><td class="units">{{w.credits}}</td><td class="units">{{w.spending}}</td></tr>
+<tr><td>{{w.user.last_name}}</td><td>{{w.user.first_name}}</td><td class="money">£{{w.amountDay}}</td><td class="money">£{{w.amountHalf}}</td><td class="money">£{{w.amountGenerous}}</td><td class="units">{{w.credits}}</td><td class="units">{{w.spending}}</td></tr>
 {% endfor %}
 
-<tr class="totals"><td>Total Refund</td><td></td><td class="money"> £{{totalGenerous}}</td><td class="money">£{{totalDay}}</td><td></td><td></td></tr>
+<tr class="totals"><td>Total Refund</td><td></td><td class="money"> £{{totalGenerous}}</td><td class="money">£{{totalHalf}}</td><td class="money">£{{totalDay}}</td><td></td><td></td></tr>
 
 </table>
 

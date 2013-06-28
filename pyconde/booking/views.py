@@ -143,12 +143,16 @@ def refundreport(request):
     daycost = 75
     totalGenerous = 0
     totalDay = 0
+    totalHalf = 0
     for w in refunds:
         unspent = w.credits - w.spending
         # round it to nearest 4 for day
         w.unspentDay = 4 * (int(unspent)/int(4))
+        w.unspentHalf = 2 * (int(unspent)/int(2))
+        w.amountHalf = float(daycost)*(float(w.unspentHalf)/float(4))
         w.amountDay = float(daycost)*(float(w.unspentDay)/float(4))
         w.amountGenerous = float(daycost) * (float(w.credits) - float(w.spending))/float(4)
+        totalHalf = totalHalf + w.amountHalf
         totalDay = totalDay + w.amountDay
         totalGenerous = totalGenerous + w.amountGenerous
     refunds.sort(key=lambda x: x.user.last_name)
@@ -156,6 +160,7 @@ def refundreport(request):
                               {'refunds': refunds,
                                'totalGenerous': totalGenerous,
                                'totalDay': totalDay,
+                               'totalHalf': totalHalf,
                                'daycost': daycost},
                               context_instance=RequestContext(request))
     pass

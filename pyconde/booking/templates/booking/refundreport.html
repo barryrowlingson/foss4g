@@ -11,7 +11,7 @@
 <table>
 <tr><th>Name</th><th></th><th>Refund Amount (Day)</th><th>Refund Amount (Generous)</th><th>Paid Units</th><th>Spent Units</th></tr>
 {% for w in refunds %}
-<tr><td>{{w.user.last_name}}</td><td>{{w.user.first_name}}</td><td>{{w.amountDay}}</td><td>{{w.amountGenerous}}</td><td>{{w.credits}}</td><td>{{w.spending}}  {{w.unspentDay}}</td></tr>
+<tr><td>{{w.user.last_name}}</td><td>{{w.user.first_name}}</td><td>£{{w.amountDay}}</td><td>£{{w.amountGenerous}}</td><td>{{w.credits}}</td><td>{{w.spending}}</td></tr>
 {% endfor %}
 </table>
 

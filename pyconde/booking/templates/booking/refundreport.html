@@ -3,16 +3,34 @@
 {% block content %}
 <h2>Refund Report</h2>
 
-<h3>Refund report based on daily rate of {{daycost}}</h3>
+<h3>Refund report based on daily rate of £{{daycost}}</h3>
 
-<h3>Total Refund - Generous:{{totalGenerous}} Day:{{totalDay}}</h3>
+<h3>Total Refund - Generous: £{{totalGenerous}} Day: £{{totalDay}}</h3>
 
+<p>For each person with unspent workshop credits, this lists the 
+"Generous" refund (based on unit credits) and the "Daily" refund based on
+whole unspent days only.
+</p>
 
-<table>
-<tr><th>Name</th><th></th><th>Refund Amount (Day)</th><th>Refund Amount (Generous)</th><th>Paid Units</th><th>Spent Units</th></tr>
+<style>
+table td{padding-left: 0.5em;}
+table td.money {text-align: right}
+table th.money {text-align: right}
+table td.units {text-align: right}
+table th.units {text-align: right}
+table th{padding-left: 0.5em; font-weight: bold}
+table tr.totals {border-top: 1px solid black}
+table tr.head {border-bottom: 1px solid black; font-weight: bold;}
+</style>
+
+<table >
+<tr class="head"><th>Name</th><th></th><th class="money">Refund Amount (Day)</th><th class="money">Refund Amount (Generous)</th><th class+"units">Paid Units</th><th class="units">Spent Units</th></tr>
 {% for w in refunds %}
-<tr><td>{{w.user.last_name}}</td><td>{{w.user.first_name}}</td><td>£{{w.amountDay}}</td><td>£{{w.amountGenerous}}</td><td>{{w.credits}}</td><td>{{w.spending}}</td></tr>
+<tr><td>{{w.user.last_name}}</td><td>{{w.user.first_name}}</td><td class="money">£{{w.amountDay}}</td><td class="money">£{{w.amountGenerous}}</td><td class="units">{{w.credits}}</td><td class="units">{{w.spending}}</td></tr>
 {% endfor %}
+
+<tr class="totals"><td>Total Refund</td><td></td><td class="money"> £{{totalGenerous}}</td><td class="money">£{{totalDay}}</td><td></td><td></td></tr>
+
 </table>
 
 {% endblock %}

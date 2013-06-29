@@ -111,4 +111,14 @@ def checkSessions(pseshes, save=False):
                 print "presentation %s not found " % pres
         print "------"
 
-
+def setPositions(pseshes):
+    for psesh in pseshes:
+        pos = 1
+        for prestitle in psesh.titles:
+            try:
+                pres = Presentation.objects.get(title=prestitle)
+                pres.position = pos
+                pos = pos + 1
+                pres.save()
+            except:
+                print "error ", sys.exc_info()

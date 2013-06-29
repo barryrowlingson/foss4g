@@ -82,7 +82,7 @@ class PSessionData():
 #import pickle
 import sys
 
-def checkSessions(pseshes):
+def checkSessions(pseshes, save=False):
 # note hack to read pickled sessions (in ipython?)
 # fake = __import__('__main__')
 # fake.__dict__['PSessionData']=PSessionData
@@ -96,7 +96,8 @@ def checkSessions(pseshes):
                           location=loc,
                           slotcount = psesh.nslots(),
                           talkduration = 30)
-            PS.save()
+            if save:
+                PS.save()
         except:
             print "Unexpected error:", sys.exc_info()
             #print "location %s not found" % psesh.room
@@ -104,7 +105,8 @@ def checkSessions(pseshes):
             try:
                 pres = Presentation.objects.get(title=pres)
                 pres.insession = PS
-                pres.save()
+                if save:
+                    pres.save()
             except:
                 print "presentation %s not found " % pres
         print "------"

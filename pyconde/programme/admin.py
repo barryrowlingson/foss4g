@@ -10,8 +10,18 @@ from . import models
 #     list_display=('item','status','cost','capacity','number_of_bookings')
 #     inlines= [ BookingInline, ]
 
+class PresInline(admin.StackedInline):
+    model = models.Presentation
+    fields = ('copresenter','desc','position')
+    readonly_fields = ('copresenter','desc','position')
+    ordering = ('position',)
+    can_delete = False
+    extra = 0
 
 class PSessionAdmin(admin.ModelAdmin):
+    inlines = [ 
+        PresInline,
+        ]
     pass
 
 class PresentationAdmin(admin.ModelAdmin):

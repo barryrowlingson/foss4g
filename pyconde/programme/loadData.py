@@ -1,5 +1,7 @@
 
-from models import Person, Presentation
+from pyconde.programme.models import Person, Presentation, PSession
+
+from pyconde.conference.models import Location
 
 import xlrd
 
@@ -61,3 +63,50 @@ def checkone(author,title,desc):
         print "%s = multiple people" % author
         return -2
     return 0
+
+class PSessionData():
+    def __init__(self, name, slots):
+        self.slots = slots
+        self.name = name
+    def setstart(self,start):
+        self.start = start
+    def setroom(self,room):
+        self.room = room
+    def settitles(self,titles):
+        self.titles = titles
+    def nslots(self):
+        return len(self.slots)
+    def __repr__(self):
+        return "%s at %s in %s : %s %s" % (self.name, self.start, self.room, self.slots, self.titles)
+
+#import pickle
+import sys
+
+def checkSessions(pseshes):
+# note hack to read pickled sessions (in ipython?)
+# fake = __import__('__main__')
+# fake.__dict__['PSessionData']=PSessionData
+    for psesh in pseshes:
+        print "-----"
+        print "Checking %s " % psesh.name
+        try:
+            loc = Location.objects.get(name=psesh.room)
+            PS = PSession(start=psesh.start,
+                          title=psesh.name,
+                          location=loc,
+                          slotcount = psesh.nslots(),
+                          talkduration = 30)
+            PS.save()
+        except:
+            print "Unexpected error:", sys.exc_info()
+            #print "location %s not found" % psesh.room
+        for pres in psesh.titles:
+            try:
+                pres = Presentation.objects.get(title=pres)
+                pres.insession = PS
+                pres.save()
+            except:
+                print "presentation %s not found " % pres
+        print "------"
+
+

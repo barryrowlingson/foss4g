@@ -4,7 +4,9 @@
 {% block content %}
 
 <div class="psession" >
-<h1>{{psesh.title}}</h1>
+<h1>{{psesh.title}}{% if user.is_staff %}
+<a class="btn btn-warning btn-mini" href="{% url 'admin:programme_psession_change' psesh.pk %}" target="_edit">edit</a>
+{% endif %}</h1>
 <h2>Chair:
 {% if psesh.chair %}
 <a href="{% url 'view-person' person_pk=psesh.chair.pk%}">{{psesh.chair}}</a>

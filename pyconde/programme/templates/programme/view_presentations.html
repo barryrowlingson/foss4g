@@ -7,12 +7,9 @@
 
 {% for pres in presentations %}
 
-<div class="pres">
-<h2><a href="{% url 'view-presentation' presentation_pk=pres.pk %}">{{pres.title}}</a> {{pres.presenter}}</h2>
+<div class="pres"><h2>{% if user.is_staff %}<a class="btn btn-warning btn-mini" href="{% url 'admin:programme_presentation_change' pres.pk %}" target="_edit">edit</a> {% endif %}<a href="{% url 'view-presentation' presentation_pk=pres.pk %}">{{pres.title}}</a> {{pres.presenter}}</h2>
 <p>{{pres.desc}}</p>
-{% if user.is_authenticated %}
-<a href="{% url 'admin:programme_presentation_change' pres.pk %}" target="_edit">edit</a>
-{% endif %}
+
 </div>
 {% endfor %}
 

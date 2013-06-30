@@ -7,7 +7,7 @@ from django.template import RequestContext
 from pyconde.booking import models as booking_models
 from pyconde.conference import models as conference_models
 
-from models import Presentation,PSession
+from models import Presentation,PSession,Person
 
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -95,3 +95,35 @@ def view_location(request,location_slug):
     return render_to_response("programme/view_location.html",
                                context,
                                context_instance=RequestContext(request))
+
+@staff_member_required
+def view_people(request):
+    peeps = Person.objects.all()
+    context = {'people': peeps}
+    return render_to_response("programme/view_people.html",
+                              context,
+                              context_instance=RequestContext(request))
+
+
+@staff_member_required
+def view_person(request,person_pk):
+    try:
+        person = Person.objects.select_related(depth=2).get(pk=person_pk)
+    except:
+        raise Http404
+    context = {'person': person}
+    return render_to_response("programme/view_person.html",
+                              context,
+                              context_instance=RequestContext(request))
+ 
+    pass
+
+from utils import useless
+@staff_member_required
+def rolecounts(request):
+    p = useless()
+    context = {"people": p}
+    return render_to_response("programme/rolecounts.html",
+                               context,
+                               context_instance=RequestContext(request))
+   

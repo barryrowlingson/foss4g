@@ -22,6 +22,9 @@ urlpatterns = patterns('',
                        url(r'^presentations/$', views.view_presentations, name='view-presentations'),
                        url(r'^sessions/$', views.view_psessions, name='view-psessions'),
                        url(r'^sessions/(?P<psession_pk>\d+)/$', views.view_psession, name='view-psession'),
+                       url(r'^people/$', views.view_people, name='view-people'),
+                       url(r'^people/(?P<person_pk>\d+)/$', views.view_person, name='view-person'),
                        url(r'^locations/(?P<location_slug>[-\w]+)/$', views.view_location, name='view-location'),
+                       url(r'^admin/rolecounts/$',views.rolecounts,name='view-rolecount'),
                        )
 

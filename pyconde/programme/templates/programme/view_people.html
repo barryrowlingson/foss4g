@@ -1,0 +1,14 @@
+{% extends "base_programme.html" %}
+{% load url from future %}
+
+{% block content %}
+
+<h1>All the People</h1>
+
+
+<ul>
+{% for person in people %}
+<li><a href="{% url 'view-person' person_pk=person.pk %}">{{person.name}}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

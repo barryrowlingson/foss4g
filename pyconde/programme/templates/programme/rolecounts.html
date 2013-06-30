@@ -1,0 +1,21 @@
+{% extends "base_programme.html" %}
+{% load url from future %}
+
+{% block content %}
+
+<h1>Role Counts</h1>
+
+<table>
+<tr><th>Name</th><th>Presentations</th><th>Co-Pres</th><th>Chairs</th><th>Helps</th><th>Total</th></tr>
+{% for p in people %}
+<tr>
+<td><a href="{% url 'view-person' person_pk=p.pk %}">{{p.name}}</a></td>
+<td>{{p.num_pres}}</td>
+<td>{{p.num_cops}}</td>
+<td>{{p.num_chair}}</td>
+<td>{{p.num_help}}</td>
+<td>{{p.total}}</td>
+{% endfor %}
+</table>
+
+{% endblock %}

@@ -5,10 +5,22 @@
 
 <div class="psession" >
 <h1>{{psesh.title}}</h1>
-<h2>Chair: {{psesh.chair}}</h2>
-<h2>Help: {{psesh.helper}}</h2>
+<h2>Chair:
+{% if psesh.chair %}
+<a href="{% url 'view-person' person_pk=psesh.chair.pk%}">{{psesh.chair}}</a>
+{% else %}
+Unassigned
+{% endif %}
+</h2>
+<h2>Help: 
+{% if psesh.helper %}
+<a href="{% url 'view-person' person_pk=psesh.helper.pk %}">{{psesh.helper}}</a>
+{% else %}
+Unassigned
+{% endif %}
+</h2>
 <h2>In: <a href="{% url 'view-location' location_slug=psesh.location.slug %}">{{psesh.location}}</a></h2>
-<h2>Starting: {{psesh.start}}</h2>
+<h2>Starting at: {{psesh.start.time}} on {{psesh.start|date:"l jS F"}}</h2>
 <h2>Talks last: {{psesh.talkduration}}m</h2>
 
 <ul>

@@ -5,7 +5,8 @@
 
 <h1>Workshop Programme</h1>
 
-<p>You may also want to see the <a href="{% url 'booking-index' %}">Workshop Reservation</a> system.</p>
+<p>Conference registration is now closed for new workshop attenders. If you have already registered 
+you can still use the <a href="{% url 'booking-index' %}">Workshop Reservation</a> system to check availability and add or change your reservations.</p>
 
 <style>
 td.cell1 {border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000}
@@ -36,10 +37,7 @@ td.w10{background-color:#B3DE69}
 td.w15{background-color:#FCCDE5}
 </style>
 
-
-
 {% regroup workshops by item.start.date as workshop_list %}
-
 
 {% for startdate in workshop_list %}
     <h1>{{ startdate.grouper }}</h1>
@@ -52,19 +50,10 @@ td.w15{background-color:#FCCDE5}
 
         {% for w in startdate.list %}
 
-<div class="workshop {{w.busycode}}" id="{{w.wcode}}">
+<div class="workshop" id="{{w.wcode}}">
 <h2>
-<a title="details" href="{% url 'view-workshop' w.pk %}">{{w.item.title}}</a> ({{w.capacity}} delegates) <span class="open-{{w.busycode}}">
-{% if w.busycode == "spaces" %}
- - Places available
-{% endif %}
-{% if w.busycode == "full" %}
-- Full
-{% endif %}
-{% if w.busycode == "busy" %}
-- Filling up
-{% endif %}
-</span></h2>
+<a title="details" href="{% url 'view-workshop' w.pk %}">{{w.item.title}}</a> ({{w.capacity}} delegates)
+</h2>
 
 <h3 title="lead presenter">{{w.item.speaker}} {% if w.item.speaker.affiliation %}({{w.item.speaker.affiliation}}){% endif %}</h3>
 

@@ -22,7 +22,6 @@ def index(request):
 def workshops(request):
     ws = booking_models.Workshop.objects.select_related(depth=4).order_by("item__start")
     for w in ws:
-        w.busycode = w.busy()
         w.wcode = w.item.title.split(":")[0]
 
     context = {

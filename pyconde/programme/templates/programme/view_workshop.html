@@ -7,20 +7,7 @@
 
 <div class="workshop">
 
-<h2>
-<span class="open-{{w.busycode}}">
-{% if w.busycode == "spaces" %}
-Places available
-{% endif %}
-{% if w.busycode == "full" %}
-Full
-{% endif %}
-{% if w.busycode == "busy" %}
-Filling up
-{% endif %}
-</span></h2>
-
-<h3>{{w.item.speaker}} {% if w.item.speaker.affiliation %}({{w.item.speaker.affiliation}}){% endif %}</h3>
+<h3>Lead Presenter: {{w.item.speaker}} {% if w.item.speaker.affiliation %}({{w.item.speaker.affiliation}}){% endif %}</h3>
 
 <p><a href="{% url 'view-location' location_slug=w.item.location.slug %}">{{w.item.location}}</a> - {{w.item.start}} to {{w.item.end}}</p>
 

@@ -1,0 +1,35 @@
+{% extends "base_programme.html" %}
+{% load url from future %}
+
+{% block content %}
+
+<style>
+div.timetableblock {}
+h1.timetabletitle {font-size: 1em}
+div.session {display: inline; }
+table.timet td {vertical-align: top; font-size: 0.8em; line-height: 1.1em}
+table.timet li {line-height: 0.9em; padding-bottom: 0.5em;}
+</style>
+
+<h1>Timetable Test</h1>
+
+{% regroup sessions by start as session_list %}
+<table class="timet">
+{% for this_times in session_list %}
+<tr><td>Start {{ this_times.grouper }}</td></tr>
+<tr>
+{% for session in this_times.list %}
+<td>
+<h1 class="timetabletitle">{{session.title}}</h1>
+
+<ul>
+{% for pres in session.presentation_set.all %}
+<li>{{pres.title}} {{pres.presenter.name}}</li>
+{% endfor %}
+</ul>
+</td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

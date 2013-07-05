@@ -127,3 +127,13 @@ def rolecounts(request):
                                context,
                                context_instance=RequestContext(request))
    
+
+@staff_member_required
+def timetable1(request):
+    sessions = PSession.objects.all().order_by("start").select_related("presentation")#.order_by("location")
+    context = {"sessions": sessions}
+    return render_to_response("programme/time1.html",
+                              context,
+                              context_instance=RequestContext(request)
+                              )
+

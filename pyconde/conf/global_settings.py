@@ -125,6 +125,10 @@ INSTALLED_APPS = [
 
     # my programme code
     'pyconde.programme',
+    
+    # pledge system
+    'pyconde.pledge',
+
 ]
 
 MIDDLEWARE_CLASSES = [

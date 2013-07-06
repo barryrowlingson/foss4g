@@ -21,6 +21,7 @@ urlpatterns = patterns('',
 #    url(r'^search/', include('pyconde.search.urls')),
     url(r'^booking/', include('pyconde.booking.urls')),
     url(r'^programme/', include('pyconde.programme.urls')),
+    url(r'^pledge/', include('pyconde.pledge.urls')),
 #    url(r'^', include('cms.urls')),
 )
 

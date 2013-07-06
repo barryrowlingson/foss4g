@@ -40,18 +40,18 @@ class AcceptedManager(models.Manager):
         return super(AcceptedManager,self).get_query_set().filter(status="ACC")
 
 class Pledge(models.Model):
-    text = models.CharField('state your pledge',max_length=100)
-    handle = models.CharField('a handle to display',max_length=50)
-    contact = models.CharField('a contact (not for display)',max_length=50, blank=True, null=True)
+    text = models.CharField('What is your pledge?',max_length=100)
+    handle = models.CharField('Enter a name or nickname for display',max_length=50)
+    contact = models.CharField('Optional contact (not for display)',max_length=50, blank=True, null=True)
     
-    difficulty = models.CharField('how hard is this?',
+    difficulty = models.CharField('How difficult is this?',
                                   max_length=4,
                                   choices=DIFFS,
                                   default="TRKY")
     status = models.CharField(max_length=4,
                               choices=STATUS,
                               default="NEW")
-    doby = models.CharField('when will you do this by?',
+    doby = models.CharField('When will you do this by?',
                             max_length=4,
                             choices=DOBY,
                             default="EN13")
@@ -65,8 +65,10 @@ class Pledge(models.Model):
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from simplemathcaptcha.fields import MathCaptchaField
 
 class PledgeForm(ModelForm):
+    captcha = MathCaptchaField()
     class Meta:
         model=Pledge
         fields = ['text','handle','contact','difficulty','doby']
@@ -74,7 +76,7 @@ class PledgeForm(ModelForm):
         super(PledgeForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_id = 'id-pledgeForm'
-        self.helper.form_class = 'blueForms'
+        self.helper.form_class = 'form-horizontal'
         self.helper.form_method = 'post'
         #self.helper.form_action = 'submit_survey'
 

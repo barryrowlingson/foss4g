@@ -22,7 +22,8 @@ urlpatterns = patterns('',
     url(r'^booking/', include('pyconde.booking.urls')),
     url(r'^programme/', include('pyconde.programme.urls')),
     url(r'^pledge/', include('pyconde.pledge.urls')),
-#    url(r'^', include('cms.urls')),
+    url(r'^likes/', include('likes.urls')),
+
 )
 
 

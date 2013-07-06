@@ -5,5 +5,6 @@ from . import views
 
 urlpatterns = patterns('',
                        url(r'^$', views.pledgelist, name='pledge-list'),
+                       url(r'^create$', views.pledgecreate, name='pledge-create'),
     )
 

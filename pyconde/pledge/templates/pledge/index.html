@@ -1,7 +1,22 @@
 {% extends "base_programme.html" %}
 {% load url from future %}
+{% load likes_inclusion_tags %}
 
 {% block content %}
 <h1>Pledges</h1>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% for pledge in pledges %}
+<div class="pledge {{pledge.difficulty}}">
+{% likes pledge %}
+<div class="handle">{{pledge.handle}}</div>
+<div class="pledgetext">{{pledge.text}}</div>
+</div>
+{% endfor %}
 
 {% endblock %}

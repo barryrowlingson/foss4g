@@ -28,3 +28,5 @@ admin.site.register(models.Booking,BookingAdmin)
 admin.site.register(models.Workshopper,WorkshopperAdmin)
 admin.site.register(models.Workshop,WorkshopAdmin)
 
+from secretballot import models as secret
+admin.site.register(secret.Vote, admin.ModelAdmin)

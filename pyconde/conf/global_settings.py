@@ -128,6 +128,8 @@ INSTALLED_APPS = [
     
     # pledge system
     'pyconde.pledge',
+    'secretballot',
+    'likes',
 
 ]
 
@@ -142,6 +144,7 @@ MIDDLEWARE_CLASSES = [
     'cms.middleware.user.CurrentUserMiddleware',
     #'cms.middleware.toolbar.ToolbarMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    "likes.middleware.SecretBallotUserIpUseragentMiddleware",
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS += (

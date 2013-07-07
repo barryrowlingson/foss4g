@@ -9,7 +9,9 @@
 <link href='http://fonts.googleapis.com/css?family=Allura' rel='stylesheet' type='text/css'-->
 <link href='http://fonts.googleapis.com/css?family=Montez' rel='stylesheet' type='text/css'>
 <style>
-div.pledge {background-color: white;  padding: 0.5em 1em; border: 1px solid green; margin: 0.2em}
+div.pledge {background-color: white;  padding: 0.5em 1em;
+            border: 3px solid green; border-radius: 10px; margin: 0.2em;
+            overflow: hidden;}
 div.EASY { }
 div.TRKY { }
 div.IMPO div.pledgetext {font-weight: bold }
@@ -21,9 +23,13 @@ div.s3 {width: 25em}
 div.s4 {width: 30em}
 
 div.pledgetext {font-size: 250%; line-height: 110%; margin: 0.5em 0em;}
+span.ptext { }
 div.title {font-variant: small-caps; margin-bottom: 1em;}
 span.handle {font-style: italic; font-weight: normal}
 div.likes {display: inline}
+span.doby {float: right; font-size: 75%; font-variant: small-caps}
+div.pledgenow {font-size: 150%;  background-color: white;border: 3px solid green;border-radius: 10px; }
+div.pledgenow span {margin: 1em 1em; width: 50%; display: block;}
 </style>
 <h1>Pledges</h1>
 {% if messages %}
@@ -36,13 +42,18 @@ div.likes {display: inline}
 
 <div id="container" class="jsx-masonry">
 {% for pledge in pledges %}
-<div class="item pledge {{pledge.difficulty}} {% cycle 's1' 's1' 's1' 's4' %} ">
-<div class="title">FOSS4G Pledge Card</div>
-<div class="pledgetext {% cycle 'f1' 'f2' %}">{{pledge.text}} - <span class="handle {% cycle 'f2' 'f1' %}">{{pledge.handle}}</span></div>
-<span>{% likes pledge %} - {{ pledge.get_difficulty_display }}</span>
+<div class="item pledge {{pledge.difficulty}} {% cycle 's1' 's1' 's1' 's1' %} ">
+<div class="title">FOSS4G {{ pledge.get_difficulty_display }} Pledge Card</div>
+<div class="pledgetext {% cycle 'f1' 'f2' %}"><span class="ptext">{{pledge.text}}</span> - <span class="handle {% cycle 'f2' 'f1' %}">{{pledge.handle}}</span></div>
+<div class="pfoot">
+<span>{% likes pledge "pledge/mylike.html" %}</span>
+<span class="doby">{{ pledge.get_doby_display }}</span>
+</div>
 </div>
 {% endfor %}
 </div>
+
+<div class="pledgenow"><span>Now <a href="create">make your pledge.</a></span></div>
 
 <script src="{{ STATIC_URL }}js/masonry.pkgd.min.js"></script>
 <script>

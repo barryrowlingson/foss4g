@@ -1,0 +1,28 @@
+{% if import_js %}
+<script type="text/javascript" src="{{ STATIC_URL }}likes/includes/likes.js"></script>
+{% endif %}
+
+{% if likes_enabled %}
+
+{% with tot=content_obj.vote_total %}
+<div class="likes" title="{{tot}} like{{tot|pluralize}}">
+{% if can_vote %}            
+<a class="liker" title="CLick to like me!?" href="{% url like content_type content_obj.id 1 %}" rel="nofollow">
+{% endif %}
+
+♥
+{% if tot > 1 %}
+♥
+{% endif %}
+{% if tot > 5 %}
+♥♥♥♥♥
+{% endif %}<sup>{{tot}}</sup> 
+{% if can_vote %}            
+</a>
+{% endif %}
+        <span>
+
+        </span>
+    </div>
+{% endwith %}
+{% endif %}

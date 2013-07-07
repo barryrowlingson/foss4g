@@ -12,7 +12,7 @@ from django.core.mail import send_mail
 from . import models
 
 def pledgelist(request):
-    pledges = models.Pledge.objects.filter(status="ACC")
+    pledges = models.Pledge.objects.filter(status="ACC").order_by("?")[:20] # dont use accepted Manager
     context={'pledges': pledges}
     return render_to_response("pledge/index.html",
                               context,

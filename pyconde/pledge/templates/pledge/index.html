@@ -5,12 +5,11 @@
 
 
 {% block content %}
-<script src="{{ STATIC_URL }}js/masonry.pkgd.min.js"></script>
 <!--link href='http://fonts.googleapis.com/css?family=Meddon' rel='stylesheet' type='text/css'-->
 <!--link href='http://fonts.googleapis.com/css?family=Allura' rel='stylesheet' type='text/css'-->
 <link href='http://fonts.googleapis.com/css?family=Montez' rel='stylesheet' type='text/css'>
 <style>
-div.pledge {background-color: #fec; width: 20em;  padding: 0.5em 1em; border: 1px solid green; margin: 0.2em}
+div.pledge {background-color: #fec; width: 15em;  padding: 0.5em 1em; border: 1px solid green; margin: 0.2em}
 div.EASY { }
 div.TRKY { }
 div.IMPO { }
@@ -25,7 +24,7 @@ div.pledgetext {font-size: 200%; line-height: 110%; font-family: 'Montez', cursi
 </ul>
 {% endif %}
 
-<div id="container" class="js-masonry">
+<div id="container" class="jsx-masonry">
 {% for pledge in pledges %}
 <div class="item pledge {{pledge.difficulty}}">
 <div class="pledgetext">{{pledge.text}} - {{pledge.handle}}</div>
@@ -33,4 +32,11 @@ div.pledgetext {font-size: 200%; line-height: 110%; font-family: 'Montez', cursi
 </div>
 {% endfor %}
 </div>
+
+<script src="{{ STATIC_URL }}js/masonry.pkgd.min.js"></script>
+<script>
+$( window ).load(function() {
+$('#container').masonry({});
+});
+</script>
 {% endblock %}

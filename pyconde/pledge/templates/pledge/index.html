@@ -6,14 +6,24 @@
 
 {% block content %}
 <!--link href='http://fonts.googleapis.com/css?family=Meddon' rel='stylesheet' type='text/css'-->
-<!--link href='http://fonts.googleapis.com/css?family=Allura' rel='stylesheet' type='text/css'-->
+<link href='http://fonts.googleapis.com/css?family=Allura' rel='stylesheet' type='text/css'-->
 <link href='http://fonts.googleapis.com/css?family=Montez' rel='stylesheet' type='text/css'>
 <style>
-div.pledge {background-color: #fec; width: 15em;  padding: 0.5em 1em; border: 1px solid green; margin: 0.2em}
+div.pledge {background-color: white;  padding: 0.5em 1em; border: 1px solid green; margin: 0.2em}
 div.EASY { }
 div.TRKY { }
-div.IMPO { }
-div.pledgetext {font-size: 200%; line-height: 110%; font-family: 'Montez', cursive;}
+div.IMPO div.pledgetext {font-weight: bold }
+.f1 {font-family: 'Montez', cursive}
+.f2 {font-family: 'Allura', cursive}
+div.s1 {width: 15em}
+div.s2 {width: 20em}
+div.s3 {width: 25em}
+div.s4 {width: 30em}
+
+div.pledgetext {font-size: 250%; line-height: 110%; margin: 0.5em 0em;}
+div.title {font-variant: small-caps; margin-bottom: 1em;}
+span.handle {font-style: italic; font-weight: normal}
+div.likes {display: inline}
 </style>
 <h1>Pledges</h1>
 {% if messages %}
@@ -26,9 +36,10 @@ div.pledgetext {font-size: 200%; line-height: 110%; font-family: 'Montez', cursi
 
 <div id="container" class="jsx-masonry">
 {% for pledge in pledges %}
-<div class="item pledge {{pledge.difficulty}}">
-<div class="pledgetext">{{pledge.text}} - {{pledge.handle}}</div>
-{% likes pledge %}
+<div class="item pledge {{pledge.difficulty}} {% cycle 's1' 's1' 's1' 's4' %} ">
+<div class="title">FOSS4G Pledge Card</div>
+<div class="pledgetext {% cycle 'f1' 'f2' %}">{{pledge.text}} - <span class="handle {% cycle 'f2' 'f1' %}">{{pledge.handle}}</span></div>
+<span>{% likes pledge %} - {{ pledge.get_difficulty_display }}</span>
 </div>
 {% endfor %}
 </div>

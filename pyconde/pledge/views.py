@@ -8,11 +8,12 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from django.core.mail import send_mail
+from django.conf import settings 
 
 from . import models
 
 def pledgelist(request):
-    pledges = models.Pledge.objects.filter(status="ACC").order_by("?")[:20] # dont use accepted Manager
+    pledges = models.Pledge.objects.filter(status="ACC").order_by("?")[:10] # dont use accepted Manager
     context={'pledges': pledges}
     return render_to_response("pledge/index.html",
                               context,
@@ -39,9 +40,8 @@ def pledgecreate(request):
 New Pledge: "%s" from "%s" (%s) \n %s
 """ % (form.cleaned_data['text'],form.cleaned_data['handle'],form.cleaned_data['contact'],change_url)
 #
-# TODO: add the django admin url to the email
 #
-            send_mail("New FOSS4G Pledge",msg,"noreply@2013.foss4g.org",['b.rowlingson@gmail.com'],fail_silently=False)
+            send_mail("New FOSS4G Pledge",msg,"noreply@2013.foss4g.org",settings.PLEDGE_NOTIFY,fail_silently=False)
             return HttpResponseRedirect(reverse('pledge-list')) # Redirect after POST
     else:
         form = models.PledgeForm() # An unbound form

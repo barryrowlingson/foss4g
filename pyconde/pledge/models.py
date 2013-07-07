@@ -1,5 +1,6 @@
 from django.db import models
 from django.forms import ModelForm
+import django.forms
 
 # Create your models here.
 
@@ -72,6 +73,13 @@ class PledgeForm(ModelForm):
     class Meta:
         model=Pledge
         fields = ['text','handle','contact','difficulty','doby']
+    def clean_text(self):
+        data = self.cleaned_data['text']
+        if data.lower().startswith("i pledge to "):
+            return data
+        if data.lower().startswith("we pledge to "):
+            return data
+        raise django.forms.ValidationError,"Pledge must start 'I pledge to' or 'We pledge to'"
     def __init__(self, *args, **kwargs):
         super(PledgeForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()

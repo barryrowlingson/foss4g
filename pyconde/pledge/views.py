@@ -35,7 +35,7 @@ def pledgecreate(request):
             change_url = reverse('admin:pledge_pledge_change', args=(pledge.id,))
             o = urlparse.urlparse(request.build_absolute_uri())
             change_url = urlparse.urlunparse(urlparse.ParseResult(o.scheme,o.netloc,change_url,None,None,None))
-            messages.add_message(request, messages.INFO,'Thanks, your pledge will appear soon!')
+            messages.add_message(request, messages.INFO,"<strong>Thanks!</strong> We'll check that out and put it up!")
             msg = """
 New Pledge: "%s" from "%s" (%s) \n %s
 """ % (form.cleaned_data['text'],form.cleaned_data['handle'],form.cleaned_data['contact'],change_url)

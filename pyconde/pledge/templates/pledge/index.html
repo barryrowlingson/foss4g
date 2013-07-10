@@ -33,11 +33,9 @@ div.pledgenow span {margin: 1em 1em; width: 50%; display: block;}
 </style>
 <h1>Pledges</h1>
 {% if messages %}
-<ul class="messages">
     {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    <div class="alert alert-info">{{ message|safe }}</div>
     {% endfor %}
-</ul>
 {% endif %}
 
 <div id="container" class="jsx-masonry">

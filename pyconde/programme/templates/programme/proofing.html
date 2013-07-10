@@ -8,6 +8,19 @@ span.person {border: 1px solid black; padding: 0 0.5em}
 h2 {font-size: 120%}
 div.presentation {background-color: white; padding: 1em; margin-bottom: 1em; border: 1px solid grey}
 </style>
+
+<h1>Presentation Listing for Proofreading</h1>
+<p>
+This page shows the presentations as stored in the database. Please note any corrections 
+including spelling, grammar, missing presenters or co-presenters and so on, and email
+corrections to info@2013.foss4g.org
+</p>
+
+<p>Note: this is just the short description that will be going to the printers. There is 
+also a long abstract that will be used for web display only, that is not shown here.
+</p>
+
+
 {% for p in P %}
 <div class="presentation">
 <h2>{{p.id}} : {{p.title}}</h2>

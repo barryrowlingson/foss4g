@@ -136,3 +136,13 @@ def timetable1(request):
                               context_instance=RequestContext(request)
                               )
 
+
+
+def proofing(request):
+    P = Presentation.objects.filter(insession__gt=0).order_by("id").prefetch_related("presenter","copresenter") #.values("title","copresenter__name","presenter__name","id","abstract")
+    context = {"P": P}
+    return render_to_response("programme/proofing.html",
+                              context,
+                              context_instance=RequestContext(request)
+                              )
+

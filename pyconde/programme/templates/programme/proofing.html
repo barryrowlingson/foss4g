@@ -1,0 +1,23 @@
+{% extends "base_programme.html" %}
+{% load url from future %}
+
+{% block content %}
+
+<style>
+span.person {border: 1px solid black; padding: 0 0.5em}
+h2 {font-size: 120%}
+div.presentation {background-color: white; padding: 1em; margin-bottom: 1em; border: 1px solid grey}
+</style>
+{% for p in P %}
+<div class="presentation">
+<h2>{{p.id}} : {{p.title}}</h2>
+<h3>Presenter: <span class="person">{{p.presenter}} ({{p.presenter.affiliation|default:"no affiliation"}})</span></h3>
+{% for cp in p.copresenter.all %}
+<h3>Copresenter: <span class="person">{{cp}} ({{cp.affiliation|default:"no affiliation"}})</span></h3>
+{% endfor %}
+
+<p>{{p.abstract}}</p>
+</div>
+{% endfor %}
+
+{% endblock %}

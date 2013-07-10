@@ -18,6 +18,7 @@ urlpatterns = patterns('',
                        url(r'^$', views.index, name='programme-index'), 
 
                        url(r'^time1$',views.timetable1,name='timetable1'),
+                       url(r'^proof$',views.proofing,name='proofing'),
 
                        url(r'^workshops$', views.workshops, name='workshop-index'),
                        url(r'^workshops/(?P<workshop_pk>\d+)/$', views.view_workshop, name='view-workshop'),

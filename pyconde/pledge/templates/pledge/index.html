@@ -2,11 +2,12 @@
 {% load url from future %}
 {% load likes_inclusion_tags %}
 
-
-
 {% block content %}
+
+
+
 <!--link href='http://fonts.googleapis.com/css?family=Meddon' rel='stylesheet' type='text/css'-->
-<link href='http://fonts.googleapis.com/css?family=Allura' rel='stylesheet' type='text/css'-->
+<link href='http://fonts.googleapis.com/css?family=Allura' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Montez' rel='stylesheet' type='text/css'>
 <style>
 div.pledge {background-color: white;  padding: 0.5em 1em;
@@ -22,6 +23,8 @@ div.s2 {width: 20em}
 div.s3 {width: 25em}
 div.s4 {width: 30em}
 
+span.hearts {color: #A00000}
+
 div.pledgetext {font-size: 250%; line-height: 110%; margin: 0.5em 0em;}
 span.ptext { }
 div.title {font-variant: small-caps; margin-bottom: 1em;}
@@ -31,7 +34,7 @@ span.doby {float: right; font-size: 75%; font-variant: small-caps}
 div.pledgenow {font-size: 150%;  background-color: white;border: 3px solid green;border-radius: 10px; }
 div.pledgenow span {margin: 1em 1em; width: 50%; display: block;}
 </style>
-<h1>Pledges</h1>
+<h1>Pledges - <a href="create">make yours!</a></h1>
 {% if messages %}
     {% for message in messages %}
     <div class="alert alert-info">{{ message|safe }}</div>
@@ -44,7 +47,7 @@ div.pledgenow span {margin: 1em 1em; width: 50%; display: block;}
 <div class="title">FOSS4G {{ pledge.get_difficulty_display }} Pledge Card</div>
 <div class="pledgetext {% cycle 'f1' 'f2' %}"><span class="ptext">{{pledge.text}}</span> - <span class="handle {% cycle 'f2' 'f1' %}">{{pledge.handle}}</span></div>
 <div class="pfoot">
-<span>{% likes pledge "pledge/mylike.html" %}</span>
+<span>{% likes pledge  %}</span>
 <span class="doby">{{ pledge.get_doby_display }}</span>
 </div>
 </div>
@@ -58,5 +61,20 @@ div.pledgenow span {margin: 1em 1em; width: 50%; display: block;}
 $( window ).load(function() {
 $('#container').masonry({});
 });
+$('a.liker').live('click', function(event){
+    event.preventDefault();
+    var el = $(this);
+    var replace_selector = el.attr('replace_selector');
+    if (!replace_selector)
+        var replace_target = el.parents('.likes:first');
+    else
+        var replace_target = $(replace_selector);
+    $.get(el.attr('href'), {}, function(data){
+        replace_target.html('<div class="likes">Your love added!</div>'); 
+    });
+});
 </script>
+
+
+
 {% endblock %}

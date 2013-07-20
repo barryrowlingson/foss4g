@@ -1,0 +1,16 @@
+
+
+{% if likes_enabled %}
+
+{% with tot=content_obj.vote_total|default:0 %}
+<div class="likes" title="{{tot}} like{{tot|pluralize}}">
+<span class="hearts">♥{% if tot > 1 %}♥{% endif %}{% if tot > 5 %}♥♥♥{% endif %}</span> {{tot}}
+{% if can_vote %}            
+<a class="liker" title="Click to like this!" href="{% url like content_type content_obj.id 1 %}" rel="nofollow">Like this
+</a>
+{% else %}
+like{{tot|pluralize}}
+{% endif %}
+    </div>
+{% endwith %}
+{% endif %}

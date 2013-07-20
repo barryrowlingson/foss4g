@@ -1,6 +1,6 @@
 {% extends "base_programme.html" %}
 {% load url from future %}
-
+{% load programme_tags %}
 {% block content %}
 
 <style>
@@ -21,16 +21,25 @@ also a long abstract that will be used for web display only, that is not shown h
 </p>
 
 
-{% for p in P %}
-<div class="presentation">
-<h2>{{p.id}} : {{p.title}}</h2>
-<h3>Presenter: <span class="person">{{p.presenter}} ({{p.presenter.affiliation|default:"no affiliation"}})</span></h3>
-{% for cp in p.copresenter.all %}
-<h3>Copresenter: <span class="person">{{cp}} ({{cp.affiliation|default:"no affiliation"}})</span></h3>
-{% endfor %}
 
-<p>{{p.desc}}</p>
+
+<h1>Sessions</h1>
+{% for s in S %}
+<h2>{{s}}</h2>
+<ul>
+{% for p in s.presentation_set.all %}
+{% with pres=Phash|get_item:p.pk %}
+<li>{{pres.title}}
+<ul><li><strong>{{pres.presenter}}</strong> ({{pres.presenter.affiliation}})</li>
+{% for cop in pres.copresenter.all %}<li>{{cop}} ({{cop.affiliation}})</li>{% endfor %}
+</ul>
+<div class="presbox" style="margin-left: 5em; width: 30em; font-size: 9px; line-height: 120%">
+{{pres.desc}}
 </div>
+{% endwith %}
+{% endfor %}
+</ul>
+
 {% endfor %}
 
 {% endblock %}

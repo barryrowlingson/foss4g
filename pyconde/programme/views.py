@@ -129,7 +129,7 @@ def rolecounts(request):
 
 @staff_member_required
 def timetable1(request):
-    sessions = PSession.objects.all().order_by("start").select_related("presentation")#.order_by("location")
+    sessions = PSession.objects.all().order_by("start").prefetch_related("presentation_set")#.order_by("location")
     context = {"sessions": sessions}
     return render_to_response("programme/time1.html",
                               context,
@@ -139,8 +139,11 @@ def timetable1(request):
 
 
 def proofing(request):
-    P = Presentation.objects.filter(insession__gt=0).order_by("id").prefetch_related("presenter","copresenter") #.values("title","copresenter__name","presenter__name","id","abstract")
-    context = {"P": P}
+    P = Presentation.objects.filter(insession__gt=0).order_by("insession").prefetch_related("presenter","copresenter") #.values("title","copresenter__name","presenter__name","id","abstract")
+    Phash = dict((p.id, p) for p in P)
+    S = PSession.objects.all().order_by("start").prefetch_related("location","presentation_set")
+    context = {"Phash": Phash,
+               "S": S}
     return render_to_response("programme/proofing.html",
                               context,
                               context_instance=RequestContext(request)

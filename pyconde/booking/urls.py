@@ -18,6 +18,7 @@ urlpatterns = patterns('',
                        url(r'^logout$', views.logout_user, name='booking-logout'),
                        url(r'^login$', views.login_user, name='booking-login'),
                        url(r'^adduser$', views.add_workshopper, name='booking-adduser'),
+                       url(r'^regdesk$', views.registrationreport, name='booking-regreport'),
                        
     )
 

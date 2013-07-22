@@ -176,6 +176,19 @@ def secretbookreport(request):
                               context_instance=RequestContext(request))
 
 @staff_member_required
+def registrationreport(request):
+    """ produce a report for the registration desk
+    for each half day, list people expected
+    order by surname
+    list workshops they are going to
+    """
+    who = Workshopper.objects.all()
+    byday = daytable(who)
+    return render_to_response('booking/regreport.html',
+                              {'byday': byday},
+                              context_instance=RequestContext(request))
+
+@staff_member_required
 def secretspending(request):
     """ return who has spent all/some/none of their credits """
     
@@ -191,7 +204,20 @@ def secretspending(request):
                                'all': spentAll},
                               context_instance=RequestContext(request))
 
+from collections import defaultdict
+def daytable(wshoppers):
+    d = defaultdict( list )
+    for who in wshoppers:
+        for wshop in who.booked.all():
+            d[wshop.item.start.date()].append(who)
+    return [{k:surnamesort(list(set(d[k])))} for k in sorted(d) ]
+            
 
+def lastnamesort(w):
+    return w.user.last_name
+
+def surnamesort(w):
+    return sorted(w,key=lastnamesort)
 
 @transaction.commit_on_success
 @permission_required('booking.add_booking')

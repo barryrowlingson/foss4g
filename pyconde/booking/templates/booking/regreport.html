@@ -1,0 +1,43 @@
+{% extends "base_wide.html" %}
+
+{% block content %}
+
+<style>
+table.reglist {}
+table.reglist tr {border-bottom: 1px solid grey;}
+table.reglist td,th {padding: 0 1em;}
+table.reglist td { vertical-align:top;}
+table.reglist th { font-weight: bold;}
+table.reglist td.tickbox { border: 1px solid grey;}
+</style>
+<h2>Registration Desk Sheet</h2>
+
+<h3>Day List</h3>
+
+{% for day in byday %}
+
+{% for dd,shoppers in day.items %}
+<h3>{{dd}}</h3> 
+<table class="reglist">
+<tr><th>Count</th><th>Last Name</th><th>First name</th><th>Registered For This Day:</th><th>Arrived</th></tr>
+{% for shopper in shoppers %}
+<tr><td>{{forloop.counter}}</td>
+<td>{{shopper.user.last_name}}</td>
+<td>{{shopper.user.first_name}}</td>
+<td>
+{% for shop in shopper.booked.all %}
+{% if shop.item.start.date == dd %}
+{{shop.item.title}}<br/>
+{% endif %}
+{% endfor %}
+</td>
+<td class="tickbox">&nbsp;</td>
+</tr>
+{% endfor %}
+</table>
+{% endfor %}
+
+{% endfor %}
+
+
+{% endblock %}

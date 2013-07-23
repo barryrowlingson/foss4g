@@ -155,8 +155,9 @@ def nameindex(request):
         p.pres = sorted(list(set(p.pres)))
         p.copres = sorted(list(set(p.copres)))
         p.sum=len(p.pres)+len(p.copres)
-
-    people=sorted(people,key=lambda x: x.lastname)
+    import locale
+    locale.setlocale(locale.LC_ALL, "")
+    people=sorted(people,key=lambda x: x.lastname, cmp=locale.strcoll)
     people = filter(lambda x: x.sum>0, people)
     return render_to_response("programme/nameindex.html",
                               {"people":people},

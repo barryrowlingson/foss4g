@@ -35,5 +35,6 @@ urlpatterns = patterns('',
                        url(r'^locations/(?P<location_slug>[-\w]+)/$', views.view_location, name='view-location'),
 
                        url(r'^admin/rolecounts/$',views.rolecounts,name='view-rolecount'),
+                       url(r'^admin/nameindex/$',views.nameindex,name='view-nameindex'),
                        )
 

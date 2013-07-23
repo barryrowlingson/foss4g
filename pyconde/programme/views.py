@@ -137,6 +137,38 @@ def timetable1(request):
                               )
 
 
+@staff_member_required
+def nameindex(request):
+    people = Person.objects.all().prefetch_related("presentation_set","presenter")
+    for p in people:
+        splitname = p.name.split()
+        p.lastname = splitname[-1]
+        p.firstname = " ".join(splitname[:-1])
+        p.pres=[]
+        p.copres=[]
+        for pres in p.presenter.all():
+            if pres.insession:
+                p.pres.append(pres.insession.title)
+        for pres in p.presentation_set.all():
+            if pres.insession:
+                p.copres.append(pres.insession.title)
+        p.pres = sorted(list(set(p.pres)))
+        p.copres = sorted(list(set(p.copres)))
+        p.sum=len(p.pres)+len(p.copres)
+
+    people=sorted(people,key=lambda x: x.lastname)
+    people = filter(lambda x: x.sum>0, people)
+    return render_to_response("programme/nameindex.html",
+                              {"people":people},
+                              context_instance=RequestContext(request)
+                              )
+
+
+def lastname(p):
+    return p.name.split()[-1]
+
+def lastnamesort(ps):
+    return sorted(ps,key=lastname)
 
 def proofing(request):
     P = Presentation.objects.filter(insession__gt=0).order_by("insession").prefetch_related("presenter","copresenter") #.values("title","copresenter__name","presenter__name","id","abstract")

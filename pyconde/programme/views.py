@@ -137,7 +137,6 @@ def timetable1(request):
                               )
 
 
-@staff_member_required
 def nameindex(request):
     people = Person.objects.all().prefetch_related("presentation_set","presenter")
     for p in people:
@@ -148,10 +147,10 @@ def nameindex(request):
         p.copres=[]
         for pres in p.presenter.all():
             if pres.insession:
-                p.pres.append(pres.insession.title)
+                p.pres.append(seshstrip(pres.insession.title))
         for pres in p.presentation_set.all():
             if pres.insession:
-                p.copres.append(pres.insession.title)
+                p.copres.append(seshstrip(pres.insession.title))
         p.pres = sorted(list(set(p.pres)))
         p.copres = sorted(list(set(p.copres)))
         p.sum=len(p.pres)+len(p.copres)
@@ -163,6 +162,9 @@ def nameindex(request):
                               {"people":people},
                               context_instance=RequestContext(request)
                               )
+def seshstrip(s):
+    """ remove 'Session ' from session title to get the number """
+    return s.replace("Session","").strip()
 
 
 def lastname(p):
@@ -170,6 +172,11 @@ def lastname(p):
 
 def lastnamesort(ps):
     return sorted(ps,key=lastname)
+
+def destimetable(request):
+    pass
+def fulllisting(request):
+    pass
 
 def proofing(request):
     P = Presentation.objects.filter(insession__gt=0).order_by("insession").prefetch_related("presenter","copresenter") #.values("title","copresenter__name","presenter__name","id","abstract")

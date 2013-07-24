@@ -2,20 +2,19 @@
 {% block content %}
 <style>
 th {font-size: 120%; border-bottom: 1px solid black;}
+td,th{padding-right: 0.5em}
 </style>
 <h1>Alphabetical index of presenters</h1>
 <table>
-<tr><th>Last Name</th><th>First Names</th><th><strong>main presenter</strong> and co-presenters</th></tr>
+<tr><th>Last Name</th><th>First Names</th><th>Presenting in</th><th>Co-presenting in</th></tr>
 {% for p in people %}
 <tr>
 <td>{{p.lastname}}</td><td>{{p.firstname}}</td>
 <td>
-{% for pres in p.pres %}
-<span class="presenter" style="font-weight: bold">{{pres}}</span>
-{% endfor %}
-{% for copres in p.copres %}
-<span class="copresenter">{{copres}}</span>
-{% endfor %}
+<strong>{{p.pres|join:","}}</strong>
+</td>
+<td>
+{{p.copres|join:","}}
 </td>
 
 </tr>

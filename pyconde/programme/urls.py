@@ -35,6 +35,11 @@ urlpatterns = patterns('',
                        url(r'^locations/(?P<location_slug>[-\w]+)/$', views.view_location, name='view-location'),
 
                        url(r'^admin/rolecounts/$',views.rolecounts,name='view-rolecount'),
-                       url(r'^admin/nameindex/$',views.nameindex,name='view-nameindex'),
+
+                       url(r'^designer/nameindex/$',views.nameindex,name='view-nameindex'),
+                       url(r'^designer/timetable/$',views.destimetable,name='view-destimetable'),
+                       url(r'^designer/fulllisting/$',views.fulllisting,name='view-fullisting'),
+
+
                        )
 

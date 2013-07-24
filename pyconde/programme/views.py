@@ -174,7 +174,16 @@ def lastnamesort(ps):
     return sorted(ps,key=lastname)
 
 def destimetable(request):
-    pass
+    P = Presentation.objects.filter(insession__gt=0).order_by("insession").prefetch_related("presenter","copresenter").select_related("tags")
+    Phash = dict((p.id, p) for p in P)
+    S = PSession.objects.all().order_by("start").prefetch_related("location","presentation_set")
+    context = {"Phash": Phash,
+               "S": S}
+    return render_to_response("programme/destimetable.html",
+                              context,
+                              context_instance=RequestContext(request)
+                              )
+
 def fulllisting(request):
     P = Presentation.objects.filter(insession__gt=0).order_by("insession").prefetch_related("presenter","copresenter").select_related("tags") #.values("title","copresenter__name","presenter__name","id","abstract")
     Phash = dict((p.id, p) for p in P)

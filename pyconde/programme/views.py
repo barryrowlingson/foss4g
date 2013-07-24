@@ -173,8 +173,12 @@ def lastname(p):
 def lastnamesort(ps):
     return sorted(ps,key=lastname)
 
+from taggit.models import Tag
 def destimetable(request):
     P = Presentation.objects.filter(insession__gt=0).order_by("insession").prefetch_related("presenter","copresenter").select_related("tags")
+    newb = Tag.objects.get(name="newbie")
+    for p in P:
+        p.newb = newb in p.tags.all()
     Phash = dict((p.id, p) for p in P)
     S = PSession.objects.all().order_by("start").prefetch_related("location","presentation_set")
     context = {"Phash": Phash,

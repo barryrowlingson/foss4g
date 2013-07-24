@@ -1,0 +1,38 @@
+ {% extends "base_programme.html" %}
+{% load url from future %}
+{% load programme_tags %}
+{% block content %}
+
+<style>
+span.person {border: 1px solid black; padding: 0 0.5em}
+h2 {font-size: 120%}
+div.presentation {background-color: white; padding: 1em; margin-bottom: 1em; border: 1px solid grey}
+</style>
+
+<h1>Full Listing for Printed Brochure</h1>
+
+<h1>Sessions</h1>
+{% for s in S %}
+<div class="session">
+<h2 style="border-bottom: 1px solid black">{{s.title}}, {{s.location}}</h2>
+<h2>{{s.start|date:"l dS, H:i"}} to {{s.end|date:"H:i"}}</h2>
+{% for p in s.presentation_set.all %}
+<div class="presentation">
+{% with pres=Phash|get_item:p.pk %}
+<h3 style="border-bottom: 1px solid black; line-height: 110%;">{{pres.title}}</h3>
+<ul><li><strong>{{pres.presenter}}</strong> ({{pres.presenter.affiliation}})</li>
+{% for cop in pres.copresenter.all %}<li>{{cop}} ({{cop.affiliation}})</li>{% endfor %}
+</ul>
+<div class="presbox" style="padding: 1em; width: 60em; line-height: 120%">
+{{pres.desc}}
+</div>
+<div>Tags: {{ pres.tags.all|join:"," }}</div>
+<div>URL: <code>/p/{{pres.pk}}</code></div>
+
+{% endwith %}
+</div>
+{% endfor %}
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,36 @@
+ {% extends "base_programme.html" %}
+{% load url from future %}
+{% load programme_tags %}
+{% block content %}
+
+<style>
+span.person {border: 1px solid black; padding: 0 0.5em}
+h2 {font-size: 120%}
+div.presentation {background-color: white; padding: 1em; margin-bottom: 1em; border: 1px solid grey}
+</style>
+
+<h1>Text for timetable boxes</h1>
+
+<p>Session titles, presentation titles, lead presenters.</p>
+<p><strong>N</strong> denotes 'newbie' session for highlight on timetable (with colour or stars or something)</p>
+
+
+{% for s in S %}
+<div class="session">
+<h2 style="border-bottom: 1px solid black">{{s.title}}</h2>
+
+{% for p in s.presentation_set.all %}
+<div>
+{% with pres=Phash|get_item:p.pk %}
+{% if pres.newb %}
+<strong>N</strong>
+{% endif %}
+{{pres.title}}
+<strong>{{pres.presenter}}</strong>
+{% endwith %}
+</div>
+{% endfor %}
+</div>
+{% endfor %}
+
+{% endblock %}

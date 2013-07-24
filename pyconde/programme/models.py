@@ -5,7 +5,7 @@ from pyconde.conference import models as conference_models
 from pyconde.tagging import TaggableManager
 from tinymce import models as tinymce_models
 
-
+import datetime
 
 class Person(models.Model):
     name = models.CharField(max_length=100)
@@ -28,6 +28,9 @@ class PSession(models.Model):
     title = models.CharField(max_length=200)
     tags = TaggableManager(blank=True)
     notes = models.TextField("Committee use only",blank=True)
+
+    def end(self):
+        return self.start + datetime.timedelta(minutes=self.talkduration)*self.slotcount
 
     def __unicode__(self):
         if self.location:

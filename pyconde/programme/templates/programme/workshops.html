@@ -58,7 +58,9 @@ td.w15{background-color:#FCCDE5}
 </h2>
 
 <h3 title="lead presenter">{{w.item.speaker}} {% if w.item.speaker.affiliation %}({{w.item.speaker.affiliation}}){% endif %}</h3>
-
+{% if w.item.additional_speakers.all %}
+<h3 title="additional presenter">with {{w.item.additional_speakers.all|join:", "}}</h3>
+{% endif %}
 <p>
 {% if w.item.location %}
 <a href="{% url 'view-location' w.item.location.slug %}">{{w.item.location}}</a>

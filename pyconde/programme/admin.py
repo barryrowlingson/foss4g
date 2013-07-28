@@ -35,6 +35,25 @@ class PersonAdmin(admin.ModelAdmin):
     list_editable=('affiliation','email')
     search_fields=('name','affiliation','email')
 
+class ItemInline(admin.StackedInline):
+    model=models.PlenaryItem
+    ordering = ('position',)
+    extra = 1
+
+class PlenarySessionAdmin(admin.ModelAdmin):
+    list_display=('pk','title','start','duration')
+    list_editable=('title','start','duration')
+    inlines = [ItemInline,]
+
+class PlenaryItemAdmin(admin.ModelAdmin):
+    list_display=('pk','title','session','position','duration','details','link')
+    list_editable=('title','session','position','duration','details','link')
+    
+
+admin.site.register(models.PlenaryItem, PlenaryItemAdmin)
+
+admin.site.register(models.PlenarySession, PlenarySessionAdmin)
+
 admin.site.register(models.Person, PersonAdmin)
 admin.site.register(models.Presentation,PresentationAdmin) 
 admin.site.register(models.PSession, PSessionAdmin)

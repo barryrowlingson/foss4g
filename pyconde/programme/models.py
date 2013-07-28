@@ -54,7 +54,54 @@ class Presentation(models.Model):
     def __unicode__(self):
         return u"%s (%s)" % (self.title, self.presenter)
 
+class PlenarySession(models.Model):
+    """PlenarySession objects are containers for plenary sessions,
+    when we all get together and there's a few items for business.
+    It has no location because it happens in all the plenary places."""
+    start = models.DateTimeField()
+    duration = models.IntegerField("Duration in minutes")
+    title = models.CharField(max_length=100)
+    def end(self):
+        return self.start + datetime.timedelta(minutes=self.duration)
+    def __unicode__(self):
+        return u"%s" % (self.title)
+
+class PlenaryItem(models.Model):
+    """A PlenaryItem is within a PlenarySession. Timings may be approximate"""
+    title = models.CharField(max_length=200)
+    session = models.ForeignKey(PlenarySession, blank=True, null=True)
+    position = models.IntegerField("Position in session", blank=True, null=True)
+    duration = models.IntegerField("Time for this, in minutes")
+    details = tinymce_models.HTMLField(blank=True, null=True)
+    link = models.URLField("Link if NO details",blank=True,null=True)
+    def __unicode__(self):
+        return u"%s" % (self.title)
+
+class GlobalEvent(models.Model):
+    """ A GlobalEvent happens everywhere, like lunch or coffee breaks, or parties """
+    name = models.CharField(max_length=200)
+    start = models.DateTimeField()
+    duration = models.IntegerField("Duration in minutes")
+    details = tinymce_models.HTMLField(blank=True, null=True)
+    link = models.URLField("Link if NO details",blank=True,null=True)
+    def end(self):
+        return self.start + datetime.timedelta(minutes=self.duration)
+  
+    def __unicode__(self):
+        return "%s" % (self.name)
+
+class SpecialEvent(models.Model):
+    """ These are highlighted on the day of the programme, eg unconference, map gallery """
+    name = models.CharField(max_length=200)
+    details = tinymce_models.HTMLField(blank=True, null=True)
+    link = models.URLField("Link if NO details",blank=True,null=True)
+    start = models.DateField() # give full timing details in link or details
+    location = models.CharField(max_length=200) # could be anywhere...
+    def __unicode__(self):
+        return "%s" % (self.name)
+
 class Keynote(models.Model):
+    """ probably not using this now..."""
     speaker = models.ForeignKey(Person)
     title = models.CharField(max_length=200)
     abstract = tinymce_models.HTMLField()

@@ -7,7 +7,7 @@ from django.template import RequestContext
 from pyconde.booking import models as booking_models
 from pyconde.conference import models as conference_models
 
-from models import Presentation,PSession,Person
+from models import Presentation,PSession,Person,PlenarySession
 
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -66,6 +66,17 @@ def view_psessions(request):
                               context,
                               context_instance=RequestContext(request))
     
+
+def view_plenary(request,pk):
+    try:
+        plenary = PlenarySession.objects.select_related(depth=2).get(pk=pk)
+    except:
+        raise Http404
+    context = {'plenary': plenary}
+    return render_to_response("programme/view_plenary.html",
+                              context,
+                              context_instance=RequestContext(request))
+
 @staff_member_required
 def view_presentations(request):
     presses = Presentation.objects.select_related(depth=3).all()

@@ -58,3 +58,6 @@ admin.site.register(models.Person, PersonAdmin)
 admin.site.register(models.Presentation,PresentationAdmin) 
 admin.site.register(models.PSession, PSessionAdmin)
 admin.site.register(models.Keynote, admin.ModelAdmin)
+
+admin.site.register(models.GlobalEvent, admin.ModelAdmin)
+admin.site.register(models.SpecialEvent, admin.ModelAdmin)

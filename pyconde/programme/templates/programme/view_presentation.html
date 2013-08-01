@@ -3,6 +3,13 @@
 
 {% block content %}
 
+<style>
+div.description {margin: 2em 0 ;}
+span.desclabel {font-weight: bold; font-size: 120%}
+div.abstract {}
+span.abslabel {font-weight: bold; font-size: 140%}
+</style>
+
 <div class="presentation {% if pres.cancelled %}cancelled{% endif %}" >
 <h1>{{pres.title}}</h1>{% if user.is_staff %}
 <a class="btn btn-warning btn-mini" href="{% url 'admin:programme_presentation_change' pres.pk %}" target="_edit">edit</a>
@@ -15,7 +22,9 @@
 {% endwith %}
 {% with cops=pres.copresenter.all %}
 {% if cops %}
-(with {% for cop in cops %}<a href="{% url 'view-person' person_pk=cop.pk%}">{{cop}}</a>{% if forloop.revcounter0 > 0 %}, {%endif %}{% endfor %})
+with {% for cop in cops %}<a href="{% url 'view-person' person_pk=cop.pk%}">{{cop}}</a>
+{% with copaff=cop.affiliation %}
+{% if copaff %}({{copaff}}){% endif %}{% endwith %}{% if forloop.revcounter0 > 0 %}, {%endif %}{% endfor %}
 {% endif %}
 {% endwith %}
 </h2>
@@ -23,15 +32,21 @@
 <h3 class="cancelled">This presentation has been cancelled</h3>
 {% else %}
 {% if pres.insession %}
-<h3>{{pres.start.time}} on {{pres.start|date:"l jS F"}} (in <a href="{% url 'view-psession' psession_pk=pres.insession.pk %}">{{pres.insession.title}}</a>, starting at {{pres.insession.start.time}}, <a href="{% url 'view-location' location_slug=pres.insession.location.slug %}">{{pres.insession.location}}</a>)</h3>
+<h3>{{pres.start.time|date:"H:i"}} on {{pres.start|date:"l jS F"}} (in <a href="{% url 'view-psession' psession_pk=pres.insession.pk %}">{{pres.insession.title}}</a>, starting at {{pres.insession.start.time}}, <a href="{% url 'view-location' location_slug=pres.insession.location.slug %}">{{pres.insession.location}}</a>)</h3>
 {% else %}
 <h3>Unscheduled</h3>
 {% endif %}
 {% endif %}
+
+<div class="description">
+<span class="desclabel">Description:</span> {{ pres.desc }}
+</div>
+<div class="abstract">
+<span class="abslabel">Abstract:</span>
 {% autoescape off %}
 {{ pres.abstract }}
 {% endautoescape %}
-
+</div>
 
 </div>
 

@@ -43,7 +43,7 @@ def view_workshop(request, workshop_pk):
     return render_to_response("programme/view_workshop.html",
                               context,
                               context_instance=RequestContext(request))
-@staff_member_required
+
 def view_presentation(request, presentation_pk):
     try:
         pres = Presentation.objects.select_related(depth=2).get(pk = presentation_pk)
@@ -58,7 +58,7 @@ def view_presentation(request, presentation_pk):
     return render_to_response("programme/view_presentation.html",
                               context,
                               context_instance=RequestContext(request))
-@staff_member_required
+
 def view_psessions(request):
     seshes = PSession.objects.select_related(depth=4).all().order_by("start")
     context = {'seshes': seshes}
@@ -77,7 +77,6 @@ def view_plenary(request,pk):
                               context,
                               context_instance=RequestContext(request))
 
-@staff_member_required
 def view_presentations(request):
     presses = Presentation.objects.select_related(depth=3).all()
     context = {"presentations": presses}
@@ -85,7 +84,6 @@ def view_presentations(request):
                               context,
                               context_instance=RequestContext(request))
    
-@staff_member_required
 def view_psession(request, psession_pk):
     try:
         psesh = PSession.objects.select_related(depth=2).get(pk = psession_pk)
@@ -98,7 +96,6 @@ def view_psession(request, psession_pk):
                               context,
                               context_instance=RequestContext(request))
 
-@staff_member_required
 def view_location(request,location_slug):
     loc = get_object_or_404(conference_models.Location,slug=location_slug)
     context={"loc":loc}
@@ -106,7 +103,7 @@ def view_location(request,location_slug):
                                context,
                                context_instance=RequestContext(request))
 
-@staff_member_required
+
 def view_people(request):
     peeps = Person.objects.all()
     context = {'people': peeps}
@@ -115,7 +112,6 @@ def view_people(request):
                               context_instance=RequestContext(request))
 
 
-@staff_member_required
 def view_person(request,person_pk):
     try:
         person = Person.objects.select_related(depth=2).get(pk=person_pk)
@@ -138,7 +134,6 @@ def rolecounts(request):
                                context_instance=RequestContext(request))
    
 
-@staff_member_required
 def timetable1(request):
     sessions = PSession.objects.all().order_by("start").prefetch_related("presentation_set")#.order_by("location")
     context = {"sessions": sessions}

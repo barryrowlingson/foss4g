@@ -5,26 +5,35 @@
 
 <style>
 div.timetableblock {}
-h1.timetabletitle {font-size: 1em}
+h1.timetabletitle {font-size: 1em; margin:0; padding: 0.5em 0 0 0.5em; line-height: 110%}
+h2.timetabletitle {font-size: 1em; margin:0; padding: 0.5em 0 0.5em 0.5em; line-height: 110%}
 div.session {display: inline; }
 table.timet td {vertical-align: top; font-size: 0.8em; line-height: 1.1em}
-table.timet li {line-height: 0.9em; padding-bottom: 0.5em;}
+table.timet li {line-height: 110%; padding-bottom: 0.5em;}
+tr.dayhead {font-size: 2em; margin-top: 0.5em}
+td.odd {background-color: #F0FFF0}
+td.even {background-color: white}
+ul.preslist {margin-left: 0.5em; margin-right: 0.5em}
+td.sessionstart {padding-top: 0.5em}
+span.prestitle {color: #15c}
+span.presname {color: green}
 </style>
 
-<h1>Timetable Test</h1>
+<h1>Presentation Timetable</h1>
 
 {% regroup sessions by start as session_list %}
 <table class="timet">
 {% for this_times in session_list %}
-<tr><td>Start {{ this_times.grouper }}</td></tr>
+<tr class="dayhead"><td class="sessionstart" colspan="5">{{this_times.grouper.time|date:"H:i"}} on {{this_times.grouper|date:"l jS F"}}</td></tr>
 <tr>
 {% for session in this_times.list %}
-<td>
-<h1 class="timetabletitle">{{session.title}}</h1>
+<td class="{% cycle 'odd' 'even' %}">
+<h1 class="timetabletitle"><a href="{% url 'view-psession' psession_pk=session.pk %}">{{session.title}}</a></h1>
+<h2 class="timetabletitle">{{session.location}}</h2>
 
-<ul>
+<ul class="preslist">
 {% for pres in session.presentation_set.all %}
-<li>{{pres.title}} {{pres.presenter.name}}</li>
+<li><a href="{% url 'view-presentation' presentation_pk=pres.pk %}"><span class="prestitle">{{pres.title}}</span></a> <span class="presname">{{pres.presenter.name}}</span></li>
 {% endfor %}
 </ul>
 </td>

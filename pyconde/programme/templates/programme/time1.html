@@ -1,6 +1,6 @@
 {% extends "base_programme.html" %}
 {% load url from future %}
-
+{% load programme_tags %}
 {% block content %}
 
 <style>
@@ -20,7 +20,8 @@ span.presname {color: green}
 </style>
 
 <h1>Presentation Timetable</h1>
-<p>This is the current state of affairs for the presentations. Each talk is 30 minutes, session durations vary.</p>
+<p>This is the current state of affairs for the presentations. Each talk is 30 minutes, session durations vary. This 
+page only shows main presenters, co-presenters are listed on the presentation page and affiliations will be added.</p>
 <p>A properly gridded timetable with rooms across and time down will be available soon, including
 plenary sessions and other activities.</p>
 {% regroup sessions by start as session_list %}
@@ -34,8 +35,10 @@ plenary sessions and other activities.</p>
 <h2 class="timetabletitle">{{session.location}}</h2>
 
 <ul class="preslist">
-{% for pres in session.presentation_set.all %}
+{% for p in session.presentation_set.all %}
+{% with pres=Phash|get_item:p.pk %}
 <li><a href="{% url 'view-presentation' presentation_pk=pres.pk %}"><span class="prestitle">{{pres.title}}</span></a> <span class="presname">{{pres.presenter.name}}</span></li>
+{% endwith %}
 {% endfor %}
 </ul>
 </td>

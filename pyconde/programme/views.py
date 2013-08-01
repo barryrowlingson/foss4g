@@ -135,8 +135,11 @@ def rolecounts(request):
    
 
 def timetable1(request):
-    sessions = PSession.objects.all().order_by("start").prefetch_related("presentation_set")#.order_by("location")
-    context = {"sessions": sessions}
+    """ The presentation timetable """
+    P = Presentation.objects.filter(insession__gt=0).order_by("insession").prefetch_related("presenter","copresenter") # and select tags?
+    Phash = dict((p.id, p) for p in P)
+    sessions = PSession.objects.all().order_by("start").prefetch_related("location","presentation_set")
+    context = {"sessions": sessions, "Phash": Phash}
     return render_to_response("programme/time1.html",
                               context,
                               context_instance=RequestContext(request)

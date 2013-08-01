@@ -15,9 +15,9 @@ from . import views
 # TODO URL for session
 
 urlpatterns = patterns('',
-                       url(r'^$', views.index, name='programme-index'), 
+                       # url(r'^$', views.index, name='programme-index'), # was default index page
 
-                       url(r'^time1$',views.timetable1,name='timetable1'),
+                       url(r'^$',views.timetable1,name='programme-index'), # new index page
                        url(r'^proof$',views.proofing,name='proofing'),
 
                        url(r'^workshops$', views.workshops, name='workshop-index'),

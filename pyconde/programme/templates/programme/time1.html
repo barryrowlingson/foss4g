@@ -20,7 +20,9 @@ span.presname {color: green}
 </style>
 
 <h1>Presentation Timetable</h1>
-
+<p>This is the current state of affairs for the presentations. Each talk is 30 minutes, session durations vary.</p>
+<p>A properly gridded timetable with rooms across and time down will be available soon, including
+plenary sessions and other activities.</p>
 {% regroup sessions by start as session_list %}
 <table class="timet">
 {% for this_times in session_list %}

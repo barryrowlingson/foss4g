@@ -230,3 +230,17 @@ def proofing(request):
                               context_instance=RequestContext(request)
                               )
 
+@staff_member_required
+def presenterdetails(request):
+    P = Presentation.objects.filter(insession__gt=0).select_related("presenter") # all presentations in sessions
+    presenters = []
+    for presentation in P:
+        presenterP = presentation.presenter
+        presenters.append((presenterP.name, presenterP.email))
+    presenters = list(set(presenters))
+    presenters.sort()
+    context = {'presenters': presenters}
+    return render_to_response("programme/presenterdetails.html",
+                              context,
+                              context_instance=RequestContext(request)
+                              )

@@ -1,0 +1,21 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <title>Presenter Details</title>
+</head>
+<body>
+<h1>Main Presenter Name/Email Table</h1>
+<table>
+<tr><th>Name</th><th>email</th></tr>
+{% for presenter in presenters %}
+<tr><td>{{presenter.0}}</td><td>{{presenter.1}}</td></tr>
+{% endfor %}
+</table>
+
+<h1>Email list in comma-separated form bulk email</h1>
+<pre>
+{% for presenter in presenters %}{{presenter.1}},
+{% endfor %}
+</pre>
+</body>
+</html>

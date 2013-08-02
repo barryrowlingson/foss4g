@@ -45,6 +45,6 @@ urlpatterns = patterns('',
                        url(r'^designer/timetable/$',views.destimetable,name='view-destimetable'),
                        url(r'^designer/fulllisting/$',views.fulllisting,name='view-fullisting'),
 
-
+                       url(r'^presenterdetails/$', views.presenterdetails,name='presenter-details'),
                        )
 

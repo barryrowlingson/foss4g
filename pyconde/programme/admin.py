@@ -50,6 +50,11 @@ class PlenaryItemAdmin(admin.ModelAdmin):
     list_editable=('title','session','position','duration','details','link')
     
 
+class CWAdmin(admin.ModelAdmin):
+    filter_horizontal = ('copresenter',)
+
+admin.site.register(models.CWorkshop,CWAdmin)
+
 admin.site.register(models.PlenaryItem, PlenaryItemAdmin)
 
 admin.site.register(models.PlenarySession, PlenarySessionAdmin)

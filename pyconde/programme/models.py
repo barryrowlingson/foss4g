@@ -29,6 +29,9 @@ class PSession(models.Model):
     tags = TaggableManager(blank=True)
     notes = models.TextField("Committee use only",blank=True)
 
+    class Meta:
+        verbose_name="Presentation Session"
+
     def end(self):
         return self.start + datetime.timedelta(minutes=self.talkduration)*self.slotcount
 
@@ -53,6 +56,28 @@ class Presentation(models.Model):
 
     def __unicode__(self):
         return u"%s (%s)" % (self.title, self.presenter)
+
+class CWorkshop(models.Model):
+    """ a free community workshop """
+    presenter = models.ForeignKey(Person, related_name="cw_presenter")
+    copresenter = models.ManyToManyField(Person, blank=True, null=True, related_name="cw_copresenter")
+    helper = models.ForeignKey(Person, blank=True, null=True,related_name="community_helper", help_text="FOSS4G Volunteer")
+    title = models.CharField("Workshop title",max_length=200)
+    start = models.DateTimeField("Start date/time")
+    desc = models.TextField("Description")
+    location = models.ForeignKey(conference_models.Location,blank=True, null=True)
+    maxdelegates = models.IntegerField("Max delegates - may also be limited by room")
+    duration = models.IntegerField("Duration in minutes")
+    notes = models.TextField("Committee use only")
+
+    def __unicode__(self):
+        return u"%s (%s)" % (self.title, self.presenter)
+
+    class Meta:
+        verbose_name="Community Workshop"
+    
+    def end(self):
+        return self.start + datetime.timedelta(minutes=self.duration)
 
 class PlenarySession(models.Model):
     """PlenarySession objects are containers for plenary sessions,

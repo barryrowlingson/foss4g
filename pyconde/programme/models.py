@@ -59,10 +59,10 @@ class Presentation(models.Model):
 
 class CWorkshop(models.Model):
     """ a free community workshop """
+    title = models.CharField("Workshop title",max_length=200)
     presenter = models.ForeignKey(Person, related_name="cw_presenter")
     copresenter = models.ManyToManyField(Person, blank=True, null=True, related_name="cw_copresenter")
     helper = models.ForeignKey(Person, blank=True, null=True,related_name="community_helper", help_text="FOSS4G Volunteer")
-    title = models.CharField("Workshop title",max_length=200)
     start = models.DateTimeField("Start date/time")
     desc = models.TextField("Description")
     location = models.ForeignKey(conference_models.Location,blank=True, null=True)

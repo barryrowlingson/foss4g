@@ -1,0 +1,40 @@
+{% extends "base_programme.html" %}
+{% load admin_urls %}
+{% load url from future %}
+
+{% block content %}
+
+{% for fwork in fworkshops %}
+<div class="fwork">
+<h2>{{fwork.title}}</h2>
+<h3><a href="{% url 'view-person' person_pk=fwork.presenter.pk%}">{{fwork.presenter}}</a>
+{% with aff=fwork.presenter.affiliation %}
+{% if aff %}
+({{aff}})
+{% endif %}
+{% endwith %}
+{% with cops=fwork.copresenter.all %}
+{% if cops %}
+with {% for cop in cops %}<a href="{% url 'view-person' person_pk=cop.pk%}">{{cop}}</a>
+{% with copaff=cop.affiliation %}
+{% if copaff %}({{copaff}}){% endif %}{% endwith %}{% if forloop.revcounter0 > 0 %}, {%endif %}{% endfor %}
+{% endif %}
+{% endwith %}
+</h3>
+<ul>
+<li>Start: {{fwork.start}}</li>
+<li>End: {{fwork.end}}</li>
+<li>Location: {{fwork.location}}</li>
+<li>Max Delegates: {{fwork.maxdelegates}}</li>
+<li>Roomsize: {{fwork.location.capacity}}</li>
+<li>Capacity: {{fwork.capacity}}</li>
+</ul>
+<p>
+{{fwork.desc}}
+</p>
+</div>
+{% endfor %}
+
+
+
+{% endblock %}

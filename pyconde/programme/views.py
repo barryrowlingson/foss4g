@@ -7,7 +7,7 @@ from django.template import RequestContext
 from pyconde.booking import models as booking_models
 from pyconde.conference import models as conference_models
 
-from models import Presentation,PSession,Person,PlenarySession
+from models import Presentation,PSession,Person,PlenarySession,CWorkshop
 
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -43,6 +43,16 @@ def view_workshop(request, workshop_pk):
     return render_to_response("programme/view_workshop.html",
                               context,
                               context_instance=RequestContext(request))
+
+def freeworkshops(request):
+    fws = CWorkshop.objects.all()
+    context = {'fworkshops': fws}
+    return render_to_response("programme/freeworkshops.html",
+                              context,
+                              context_instance=RequestContext(request))
+
+def freeworkshop(request,pk):
+    raise Http404
 
 def view_presentation(request, presentation_pk):
     try:

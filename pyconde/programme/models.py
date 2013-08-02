@@ -70,6 +70,9 @@ class CWorkshop(models.Model):
     duration = models.IntegerField("Duration in minutes")
     notes = models.TextField("Committee use only")
 
+    def capacity(self):
+        return min(self.maxdelegates, self.location.capacity)
+
     def __unicode__(self):
         return u"%s (%s)" % (self.title, self.presenter)
 

@@ -74,7 +74,7 @@ class CWorkshop(models.Model):
         return u"%s (%s)" % (self.title, self.presenter)
 
     class Meta:
-        verbose_name="Community Workshop"
+        verbose_name="Free Workshop"
     
     def end(self):
         return self.start + datetime.timedelta(minutes=self.duration)

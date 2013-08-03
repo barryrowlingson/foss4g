@@ -12,8 +12,13 @@ def daterange(start_datetime, end_datetime, delta):
 
 def time1(day, grain=30):
     #presentations = Presentation.objects.all()
-    sessions = PSession.objects.all()
-    sessions = filter(lambda x: x.start.date() == day, sessions)
+
+    #1 add the global events
+    #2 add the plenaries
+    #3 add the sessions
+
+    sessions = PSession.objects.filter(start__contains=day)
+    #sessions = filter(lambda x: x.start.date() == day, sessions)
     locs = getallsessionlocations(sessions)
     start = min([s.start for s in sessions])
     end = max([s.end() for s in sessions])

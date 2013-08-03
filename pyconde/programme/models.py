@@ -54,6 +54,13 @@ class Presentation(models.Model):
     notes = models.TextField("Committee use only",blank=True)
     cancelled = models.BooleanField(default=False)
 
+    @property
+    def start(self):
+        return self.insession.start + (self.position-1)*datetime.timedelta(minutes=self.insession.talkduration)
+    @property
+    def end(self):
+        return self.start + datetime.timedelta(minutes = self.insession.talkduration)
+
     def __unicode__(self):
         return u"%s (%s)" % (self.title, self.presenter)
 

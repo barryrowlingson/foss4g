@@ -52,6 +52,7 @@ class PlenaryItemAdmin(admin.ModelAdmin):
 
 class CWAdmin(admin.ModelAdmin):
     filter_horizontal = ('copresenter',)
+    list_display=('title','presenter','start')
 
 admin.site.register(models.CWorkshop,CWAdmin)
 
@@ -64,5 +65,9 @@ admin.site.register(models.Presentation,PresentationAdmin)
 admin.site.register(models.PSession, PSessionAdmin)
 admin.site.register(models.Keynote, admin.ModelAdmin)
 
-admin.site.register(models.GlobalEvent, admin.ModelAdmin)
+class GlobalEventAdmin(admin.ModelAdmin):
+    list_display=('name','start','duration')
+    ordering = ('start',)
+
+admin.site.register(models.GlobalEvent, GlobalEventAdmin)
 admin.site.register(models.SpecialEvent, admin.ModelAdmin)

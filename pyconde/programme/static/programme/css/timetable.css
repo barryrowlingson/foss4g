@@ -1,0 +1,26 @@
+span.prestitle {color: #15c}
+span.presname {color: green}
+table.timet {
+    background-color: white;
+}
+table.timet th {
+    font-size: 0.8em;
+    line-height: 1.1em;
+    width: 10em;
+    font-weight: bold;
+    padding-top: 1em;
+}
+table.timet td {vertical-align: top; font-size: 0.8em; line-height: 1.1em; padding: 0.5em 0.5em 0 0.5em; border: 1px solid grey; height: 2em;}
+
+table.timet td.presentation {
+    border-left: 1px solid grey;
+    border-right: 1px solid grey;
+    border-top: none;
+    border-bottom: 1px dotted #EEE;
+}
+
+
+
+table.timet td.first {border-top: 1px solid grey}
+
+h1.sessiontitle {font-size: 1em; margin:0; padding: 0.2em 0 0.2em 0; line-height: 110%}

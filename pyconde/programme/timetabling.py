@@ -76,17 +76,24 @@ class TimeTable():
         
         body="<tbody>"
         for ts in self.times:
-            body=body+"<tr><td>%s</td>" % ts
+            body=body+'<tr><td class="datelabel">%s</td>' % ts.strftime("%H:%M")
             it = self.timeLookup[ts]
             for loc in self.rooms:
                 il = self.roomLookup[loc]
                 if not self.table[it][il].spanned:
                     T = self.table[it][il]
-                    body=body+'<td colspan="%s" rowspan="%s">%s</td>' % (T.colspan,T.rowspan,str(T.item))
+                    body=body+td(T) # '<td colspan="%s" rowspan="%s">%s</td>' % (T.colspan,T.rowspan,str(T.item))
             body=body+"</tr>\n"
         body=body+"</tbody>\n"
-        table = "<table>"+head+body+"</table>"
+        table = '<table class="timet">'+head+body+"</table>"
         return table
+
+def td(T):
+    try:
+        cellData = T.item.cellValue()
+        return '<td colspan="%s" rowspan="%s" class="%s">%s</td>' % (T.colspan,T.rowspan,cellData['class'],cellData['content'])
+    except AttributeError:
+        return '<td colspan="%s" rowspan="%s">%s</td>' % (T.colspan,T.rowspan,str(T.item))
 
 class TableItem():
     def __init__(self,item):

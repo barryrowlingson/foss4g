@@ -1,0 +1,7 @@
+{% load url from future %}
+<h1 class="sessiontitle">
+<a href="{% url 'view-psession' psession_pk=s.pk %}">
+{{s.title}}
+</a>
+</h1>
+

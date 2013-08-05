@@ -60,10 +60,10 @@ def view_presentation(request, presentation_pk):
     except:
         raise Http404
     sesh = pres.insession
-    if sesh:
-        pres.start = sesh.start + (pres.position-1)*datetime.timedelta(minutes=sesh.talkduration)
-    else:
-        pres.start = "unscheduled"
+    # if sesh:
+    #     pres.start = sesh.start + (pres.position-1)*datetime.timedelta(minutes=sesh.talkduration)
+    # else:
+    #     pres.start = "unscheduled"
     context = {'pres': pres}
     return render_to_response("programme/view_presentation.html",
                               context,
@@ -244,3 +244,19 @@ def presenterdetails(request):
                               context,
                               context_instance=RequestContext(request)
                               )
+import timetables
+
+def timetabletest(request,daynumber):
+    # foss4g 2013 local code here, maybe should go in settings
+    try:
+        daynumber=int(daynumber)
+    except:
+        raise Http404,"Day number not found"
+    if daynumber < 1 or daynumber > 3:
+        raise Http404,"Day not found"
+    day = datetime.date(2013,9,18+daynumber)
+    t = timetables.time1(day,30)
+    context = {'t':t}
+    return render_to_response("programme/timetabletest.html",
+                              context,
+                              context_instance=RequestContext(request))

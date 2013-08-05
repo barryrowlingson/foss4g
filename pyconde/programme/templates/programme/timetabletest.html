@@ -1,0 +1,9 @@
+{% extends "base_programme.html" %}
+{% block content %}
+
+<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
+
+<h1>Timetable</h1>
+{{t.plaintable|safe}}
+{% endblock %}
+

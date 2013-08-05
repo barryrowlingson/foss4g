@@ -4,7 +4,7 @@ from django.db import models
 from pyconde.conference import models as conference_models
 from pyconde.tagging import TaggableManager
 from tinymce import models as tinymce_models
-
+from django.template.loader import render_to_string
 import datetime
 
 class Person(models.Model):
@@ -56,10 +56,25 @@ class Presentation(models.Model):
 
     @property
     def start(self):
-        return self.insession.start + (self.position-1)*datetime.timedelta(minutes=self.insession.talkduration)
+        if self.insession:
+            return self.insession.start + (self.position-1)*datetime.timedelta(minutes=self.insession.talkduration)
+        else:
+            return None
     @property
     def end(self):
         return self.start + datetime.timedelta(minutes = self.insession.talkduration)
+
+    def cellValue(self):
+        contents = render_to_string("programme/presentation_cell.html",{'pres':self})
+        if self.position == 1:
+            stitle = render_to_string("programme/session_head.html",{'s':self.insession})
+            contents = '%s %s' % (stitle,contents)
+            klass="first"
+        else:
+            klass="next"
+        return {'content':"%s" % contents,
+                'class':"presentation %s" % klass
+                }
 
     def __unicode__(self):
         return u"%s (%s)" % (self.title, self.presenter)

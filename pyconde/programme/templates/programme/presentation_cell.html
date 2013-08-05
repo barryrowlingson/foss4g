@@ -1,0 +1,4 @@
+{% load url from future %}
+<a href="{% url 'view-presentation' presentation_pk=pres.pk %}">
+<span class="prestitle">{{pres.title}}</span>
+</a> :  <a href="{% url 'view-person' person_pk=pres.presenter.pk %}"><span class="presname">{{pres.presenter.name}}</span></a>

@@ -1,4 +1,4 @@
-from models import Presentation,PSession,Person,PlenarySession,CWorkshop
+from models import Presentation,PSession,Person,PlenarySession,CWorkshop,GlobalEvent,SpecialEvent
 
 from timetabling import TimeTable
 
@@ -18,16 +18,32 @@ def time1(day, grain=30):
     #3 add the sessions
 
     sessions = PSession.objects.filter(start__contains=day)
+    globalevents = GlobalEvent.objects.filter(start__contains=day)
+    plenaries = PlenarySession.objects.filter(start__contains=day)
     #sessions = filter(lambda x: x.start.date() == day, sessions)
     locs = getallsessionlocations(sessions)
-    start = min([s.start for s in sessions])
-    end = max([s.end() for s in sessions])
+    start = min([s.start for s in sessions]+[s.start for s in plenaries]+[s.start for s in globalevents])
+    end = max([s.end() for s in sessions]+[s.end() for s in plenaries]+[s.end() for s in globalevents])
 
     times = list(daterange(start,end,datetime.timedelta(minutes=grain)))
 
     t = TimeTable()
     t.setCells(locs,times)
     
+    for g in globalevents:
+        slot = g.start
+        while slot < g.end():
+            t.addGlobalItem(slot,g)
+            slot = slot + datetime.timedelta(minutes=grain)
+
+    for p in plenaries:
+        slot = p.start
+        while slot < p.end():
+            t.addGlobalItem(slot,p)
+            slot = slot + datetime.timedelta(minutes=grain)
+
+
+
     for s in sessions:
         for p in s.presentation_set.all():
             slot = p.start

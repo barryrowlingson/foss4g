@@ -69,5 +69,9 @@ class GlobalEventAdmin(admin.ModelAdmin):
     list_display=('name','start','duration')
     ordering = ('start',)
 
+class SpecialEventAdmin(admin.ModelAdmin):
+    list_display=('pk','name','start','link')
+    list_editable=('name','start','link')
+
 admin.site.register(models.GlobalEvent, GlobalEventAdmin)
-admin.site.register(models.SpecialEvent, admin.ModelAdmin)
+admin.site.register(models.SpecialEvent, SpecialEventAdmin)

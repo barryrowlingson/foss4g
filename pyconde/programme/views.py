@@ -7,7 +7,7 @@ from django.template import RequestContext
 from pyconde.booking import models as booking_models
 from pyconde.conference import models as conference_models
 
-from models import Presentation,PSession,Person,PlenarySession,CWorkshop
+from models import Presentation,PSession,Person,PlenarySession,CWorkshop, SpecialEvent
 
 from django.contrib.admin.views.decorators import staff_member_required
 
@@ -52,7 +52,15 @@ def freeworkshops(request):
                               context_instance=RequestContext(request))
 
 def freeworkshop(request,pk):
-    raise Http404
+    try:
+        fw = CWorkshop.objects.get(pk=pk)
+    except:
+        raise Http404,"error getting workshop"
+    context={'fwork': fw}
+    return render_to_response("programme/freeworkshop.html",
+                              context,
+                              context_instance=RequestContext(request))
+
 
 def view_presentation(request, presentation_pk):
     try:
@@ -246,17 +254,28 @@ def presenterdetails(request):
                               )
 import timetables
 
+# foss4g local code, should probably go in settings...
+first_day = datetime.date(2013,9,19)
+num_days = 3
+all_days = [first_day + datetime.timedelta(days=x) for x in range(num_days)]
+
 def timetabletest(request,daynumber):
-    # foss4g 2013 local code here, maybe should go in settings
+
     try:
         daynumber=int(daynumber)
     except:
         raise Http404,"Day number not found"
-    if daynumber < 1 or daynumber > 3:
+    if daynumber < 1 or daynumber > num_days:
         raise Http404,"Day not found"
-    day = datetime.date(2013,9,18+daynumber)
-    t = timetables.time1(day,30)
-    context = {'t':t}
+    day = all_days[daynumber-1]
+    t = timetables.time1(day,30) # 30 minute resolution timetable
+    specials = SpecialEvent.objects.filter(start=day)
+    freews = CWorkshop.objects.filter(start__contains=day).order_by("start")
+    context = {'t':t,
+               'all_days': all_days,
+               'day': day,
+               'specials': specials,
+               'freews': freews}
     return render_to_response("programme/timetabletest.html",
                               context,
                               context_instance=RequestContext(request))

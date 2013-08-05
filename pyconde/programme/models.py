@@ -113,6 +113,12 @@ class PlenarySession(models.Model):
     title = models.CharField(max_length=100)
     def end(self):
         return self.start + datetime.timedelta(minutes=self.duration)
+    def cellValue(self):
+        contents = render_to_string("programme/plenary_cell.html",{'plenary': self})
+        return {'content': contents,
+                'class': "plenary"
+                }
+                                    
     def __unicode__(self):
         return u"%s" % (self.title)
 
@@ -136,6 +142,11 @@ class GlobalEvent(models.Model):
     link = models.URLField("Link if NO details",blank=True,null=True)
     def end(self):
         return self.start + datetime.timedelta(minutes=self.duration)
+    def cellValue(self):
+        contents = render_to_string("programme/global_cell.html",{'event': self})
+        return {'content': contents,
+                'class': "global"
+                }
   
     def __unicode__(self):
         return "%s" % (self.name)

@@ -1,0 +1,29 @@
+{% extends "base_programme.html" %}
+{% load url from future %}
+
+{% block content %}
+
+<div class="fwork">
+<h1>{{fwork.title}}</h1>
+<h2><a href="{% url 'view-person' person_pk=fwork.presenter.pk%}">{{fwork.presenter}}</a>
+{% with aff=fwork.presenter.affiliation %}
+{% if aff %}
+({{aff}})
+{% endif %}
+{% endwith %}
+{% with cops=fwork.copresenter.all %}
+{% if cops %}
+with {% for cop in cops %}<a href="{% url 'view-person' person_pk=cop.pk%}">{{cop}}</a>
+{% with copaff=cop.affiliation %}
+{% if copaff %}({{copaff}}){% endif %}{% endwith %}{% if forloop.revcounter0 > 0 %}, {%endif %}{% endfor %}
+{% endif %}
+{% endwith %}
+</h2>
+<h3>{{fwork.start|date:"l jS H:i"}} to {{fwork.end|date:"H:i"}} in <a href="{% url 'view-location' location_slug=fwork.location.slug %}">{{fwork.location}}</a></h3>
+<p>
+{{fwork.desc}}
+</p>
+</div>
+
+
+{% endblock %}

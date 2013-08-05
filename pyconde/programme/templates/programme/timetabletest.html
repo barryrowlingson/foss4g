@@ -1,9 +1,48 @@
 {% extends "base_programme.html" %}
+{% load url from future %}
 {% block content %}
 
 <link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
 
-<h1>Timetable</h1>
+Goto: <ul class="daymenu">
+{% for dayT in all_days %}
+<li><a href="{% url 'view-timetable' daynumber=forloop.counter %}">{{dayT|date:"l"}}</a></li>
+{% endfor %}
+</ul>
+<p>
+Jump to <a href="#freews">Free Workshops</a>, <a href="#events">Events</a>
+</p>
+
+<h1>{{day|date:"l jS F "}}</h1>
+<h2>Main Timetable</h2>
 {{t.plaintable|safe}}
+
+Goto: <ul class="daymenu">
+{% for dayT in all_days %}
+<li><a href="{% url 'view-timetable' daynumber=forloop.counter %}">{{dayT|date:"l"}}</a></li>
+{% endfor %}
+</ul>
+
+<h2><a id="freews">Today's Free Workshops</a></h2>
+<ul>
+{% for w in freews %}
+<li>{{w.start|date:"H:i"}} to {{w.end|date:"H:i"}} <a href="{% url 'freeworkshop' pk=w.pk %}">{{w.title}}</a> in {{w.location}}</li>
+{% empty %}
+<li>None</li>
+{% endfor %}
+</ul>
+
+<h2><a id="events">Today's Events</a></h2>
+<dl>
+{% for w in specials %}
+<li>{{w.name}}
+<p>{{w.details|safe}}</p>
+</li>
+{% empty %}
+<li>None</li>
+{% endfor %}
+</ul>
+
+
 {% endblock %}
 

@@ -69,11 +69,11 @@ class TimeTable():
             print
 
     def plaintable(self):
-        head = "<thead><tr><th></th>"
+        head = '<thead><tr><th class="firstcol"></th>'
         for loc in self.rooms:
             head = head + "<th>%s</th>" % str(loc)
         head = head + "</tr></thead>\n"
-        
+        foot = head.replace("head>","foot>") # oh lordy its a hack. You don't have locations with 'head>' in them, right?
         body="<tbody>"
         for ts in self.times:
             body=body+'<tr><td class="datelabel">%s</td>' % ts.strftime("%H:%M")
@@ -85,7 +85,7 @@ class TimeTable():
                     body=body+td(T) # '<td colspan="%s" rowspan="%s">%s</td>' % (T.colspan,T.rowspan,str(T.item))
             body=body+"</tr>\n"
         body=body+"</tbody>\n"
-        table = '<table class="timet">'+head+body+"</table>"
+        table = '<table class="timet">'+head+body+foot+"</table>"
         return table
 
 def td(T):

@@ -23,7 +23,7 @@ Goto: <ul class="daymenu">
 {% endfor %}
 </ul>
 
-<h2><a id="freews">Today's Free Workshops</a></h2>
+<h2><a id="freews"></a>Today's Free Workshops</h2>
 <ul>
 {% for w in freews %}
 <li>{{w.start|date:"H:i"}} to {{w.end|date:"H:i"}} <a href="{% url 'freeworkshop' pk=w.pk %}">{{w.title}}</a> in {{w.location}}</li>
@@ -32,7 +32,7 @@ Goto: <ul class="daymenu">
 {% endfor %}
 </ul>
 
-<h2><a id="events">Today's Events</a></h2>
+<h2><a id="events"></a>Today's Events</h2>
 <dl>
 {% for w in specials %}
 <li>{{w.name}}

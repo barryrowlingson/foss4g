@@ -93,7 +93,10 @@ def td(T):
         cellData = T.item.cellValue()
         return '<td colspan="%s" rowspan="%s" class="%s">%s</td>' % (T.colspan,T.rowspan,cellData['class'],cellData['content'])
     except AttributeError:
-        return '<td colspan="%s" rowspan="%s">%s</td>' % (T.colspan,T.rowspan,str(T.item))
+        pass
+    if T.item is None:
+        return '<td colspan="%s" rowspan="%s" class="empty">%s</td>' % (T.colspan,T.rowspan,"")
+    return '<td colspan="%s" rowspan="%s">%s</td>' % (T.colspan,T.rowspan,str(T.item))
 
 class TableItem():
     def __init__(self,item):

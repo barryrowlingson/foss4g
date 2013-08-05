@@ -1,6 +1,7 @@
 from models import Presentation,PSession,Person,PlenarySession,CWorkshop,GlobalEvent,SpecialEvent
 
 from timetabling import TimeTable
+from collections import defaultdict
 
 import datetime
 
@@ -17,7 +18,11 @@ def time1(day, grain=30):
     #2 add the plenaries
     #3 add the sessions
 
-    sessions = PSession.objects.filter(start__contains=day)
+    sessions = PSession.objects.filter(start__contains=day).select_related("location","chair","helper")
+    presses = Presentation.objects.filter(insession__in=sessions).select_related("insession","presenter")
+    Phash = defaultdict(list)
+    for p in presses:
+        Phash[p.insession].append(p)
     globalevents = GlobalEvent.objects.filter(start__contains=day)
     plenaries = PlenarySession.objects.filter(start__contains=day)
     #sessions = filter(lambda x: x.start.date() == day, sessions)
@@ -42,10 +47,8 @@ def time1(day, grain=30):
             t.addGlobalItem(slot,p)
             slot = slot + datetime.timedelta(minutes=grain)
 
-
-
     for s in sessions:
-        for p in s.presentation_set.all():
+        for p in Phash[s]: 
             slot = p.start
             while slot < p.end:
                 t.addItem(s.location,slot,p)

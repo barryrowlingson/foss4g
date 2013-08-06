@@ -21,6 +21,7 @@ def time1(day, grain=30):
 
     sessions = PSession.objects.filter(start__contains=day).select_related("location","chair","helper")
     presses = Presentation.objects.filter(insession__in=sessions).select_related("insession","presenter")
+
     Phash = defaultdict(list)
     for p in presses:
         Phash[p.insession].append(p)

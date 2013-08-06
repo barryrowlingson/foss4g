@@ -48,5 +48,7 @@ urlpatterns = patterns('',
                        url(r'^presenterdetails/$', views.presenterdetails,name='presenter-details'),
 
                        url(r'^timetest/(?P<daynumber>\d+)/$',views.timetabletest,name='view-timetable'),
+
+                       url(r'^tags/(?P<slug>[-\w]+)/$', views.taggedpresentations, name='tagged-pres'),
                        )
 

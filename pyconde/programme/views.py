@@ -9,7 +9,9 @@ from pyconde.conference import models as conference_models
 
 from models import Presentation,PSession,Person,PlenarySession,CWorkshop, SpecialEvent
 
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.admin.views.decorators import staff_member_required
+from taggit.models import Tag
 
 import datetime
 
@@ -200,7 +202,6 @@ def lastname(p):
 def lastnamesort(ps):
     return sorted(ps,key=lastname)
 
-from taggit.models import Tag
 def destimetable(request):
     P = Presentation.objects.filter(insession__gt=0).order_by("insession").prefetch_related("presenter","copresenter").select_related("tags")
     newb = Tag.objects.get(name="newbie")
@@ -279,3 +280,18 @@ def timetabletest(request,daynumber):
     return render_to_response("programme/timetabletest.html",
                               context,
                               context_instance=RequestContext(request))
+
+def taggedpresentations(request,slug):
+    try:
+        tag = Tag.objects.get(slug=slug)
+    except:
+        raise Http404,"tag not found"
+    presses = Presentation.objects.filter(tags=tag)
+
+    context = {'presentations':presses,
+               'tag': tag,
+               }
+    return render_to_response("programme/taggedpresentations.html",
+                              context,
+                              context_instance=RequestContext(request))
+

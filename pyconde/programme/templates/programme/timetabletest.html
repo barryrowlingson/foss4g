@@ -38,7 +38,7 @@ Goto: <ul class="daymenu">
 </ul>
 
 <h2><a id="events"></a>Today's Events</h2>
-<dl>
+<ul>
 {% for w in specials %}
 <li>{{w.name}}
 <p>{{w.details|safe}}</p>
@@ -49,5 +49,9 @@ Goto: <ul class="daymenu">
 </ul>
 
 
+{% endblock %}
+
+{% block extra_foot %}
+Some icons by <a href="http://p.yusukekamiyamane.com">Yusuke Kamiyamane</a>. Licensed under a Creative Commons Attribution 3.0 License.
 {% endblock %}
 

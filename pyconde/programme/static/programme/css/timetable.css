@@ -46,3 +46,7 @@ h1.sessiontitle {font-size: 1em; margin:0; padding: 0.2em 0 0.2em 0; line-height
 
 ul.daymenu {display:inline; margin-left: 0}
 ul.daymenu li {display: inline}
+
+span.tag {display: none}
+span.tag.academic {display: inline}
+span.tag.newbie {display:inline}

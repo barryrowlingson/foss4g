@@ -2,6 +2,7 @@ from models import Presentation,PSession,Person,PlenarySession,CWorkshop,GlobalE
 
 from timetabling import TimeTable
 from collections import defaultdict
+import taggit
 
 import datetime
 
@@ -23,6 +24,12 @@ def time1(day, grain=30):
     Phash = defaultdict(list)
     for p in presses:
         Phash[p.insession].append(p)
+
+    alltags = taggit.models.TaggedItem.objects.filter(presentation__in=presses).select_related("tag","content_object")
+    Taghash = defaultdict(list)
+    for t in alltags:
+        Taghash[t.object_id].append(t.tag)
+
     globalevents = GlobalEvent.objects.filter(start__contains=day)
     plenaries = PlenarySession.objects.filter(start__contains=day)
     #sessions = filter(lambda x: x.start.date() == day, sessions)
@@ -49,6 +56,7 @@ def time1(day, grain=30):
 
     for s in sessions:
         for p in Phash[s]: 
+            p.xtags=Taghash[p.pk]
             slot = p.start
             while slot < p.end:
                 t.addItem(s.location,slot,p)

@@ -269,7 +269,13 @@ def timetabletest(request,daynumber):
     if daynumber < 1 or daynumber > num_days:
         raise Http404,"Day not found"
     day = all_days[daynumber-1]
-    t = timetables.time1(day,30) # 30 minute resolution timetable
+
+    if request.COOKIES.has_key("faves"):
+        faves = request.COOKIES['faves']
+        faves = csmembers(faves)
+    else:
+        faves = []
+    t = timetables.time1(day,30, faves) # 30 minute resolution timetable
     specials = SpecialEvent.objects.filter(start=day)
     freews = CWorkshop.objects.filter(start__contains=day).order_by("start")
     context = {'t':t,
@@ -297,14 +303,12 @@ def taggedpresentations(request,slug):
 
 def favourites(request):
     if request.COOKIES.has_key("faves"):
-        print "got the faves cookie"
         faves = request.COOKIES['faves']
-        print faves
         faves = csmembers(faves)
-        print "returning ",faves
+        presses = Presentation.objects.filter(pk__in=faves)
     else:
-        faves = None
-    presses = Presentation.objects.filter(pk__in=faves)
+        presses = None
+
     context = {'faves': presses}
     return render_to_response("programme/favourites.html",
                               context,
@@ -318,9 +322,7 @@ def favourite(request,presentation_pk):
         cs = request.COOKIES['faves']
         cs = addmember(cs,presentation_pk)
     context = {'faves':csmembers(cs)}
-    response = render_to_response("programme/favourites.html",
-                                  context,
-                                  context_instance=RequestContext(request))
+    response = HttpResponse("faved!")
     response.set_cookie('faves',cs)
     return response
    
@@ -328,10 +330,24 @@ def unfave(request,presentation_pk):
     if request.COOKIES.has_key("faves"):
         cs = request.COOKIES['faves']
         cs = delmember(cs,presentation_pk)
-    response =  HttpResponse("Thanks")
-    response.set_cookie('faves',cs)
+    response =  HttpResponse("Unfaved!")
+    if len(cs)==0:
+        response.delete_cookie('faves')
+    else:
+        response.set_cookie('faves',cs)
     return response
        
+def togglefave(request,presentation_pk):
+    if request.COOKIES.has_key("faves"):
+        cs = togglemember(request.COOKIES['faves'],presentation_pk)
+    else:
+        cs = str(presentation_pk)
+    response=HttpResponse("toggled")
+    if len(cs)==0:
+        response.delete_cookie('faves')
+    else:
+        response.set_cookie('faves',cs)
+    return response
 
 def csmembers(cs):
     v = cs.split(",")
@@ -339,6 +355,13 @@ def csmembers(cs):
         return []
     else:
         return v
+
+def togglemember(cs,v):
+    current = csmembers(cs)
+    if v in current:
+        return delmember(cs,v)
+    else:
+        return addmember(cs,v)
 
 def addmember(cs,v):
     s = list(set(csmembers(cs) + [v]))

@@ -9,6 +9,26 @@
 <link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
 {% endaddtoblock %}
 
+{% addtoblock "js" %}
+<script type="text/javascript">
+jQuery(document).ready(function ($) {
+$(".togglefave").click(function(event){
+event.preventDefault();
+$.ajax({
+ url:$(this).attr("href"),
+ success: function(response){}
+ });
+
+span=$(this).find("span");
+span.toggleClass("True");
+span.toggleClass("False");
+return false;
+});
+
+});
+</script>
+{% endaddtoblock %}
+
 Goto: <ul class="daymenu">
 {% for dayT in all_days %}
 <li><a href="{% url 'view-timetable' daynumber=forloop.counter %}">{{dayT|date:"l"}}</a></li>
@@ -16,6 +36,9 @@ Goto: <ul class="daymenu">
 </ul>
 <p>
 Jump to <a href="#freews">Free Workshops</a>, <a href="#events">Events</a>
+</p>
+<p>
+See <a href="{% url 'favourites' %}">your favourites</a>
 </p>
 
 <h1>{{day|date:"l jS F "}}</h1>

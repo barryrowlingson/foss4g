@@ -47,14 +47,19 @@ h1.sessiontitle {font-size: 1em; margin:0; padding: 0.2em 0 0.2em 0; line-height
 ul.daymenu {display:inline; margin-left: 0}
 ul.daymenu li {display: inline}
 
-span.like {
-    text-indent: 100%;
+span.like, span.unlike {
+    text-indent: 100%; vertical-align: bottom;
     white-space: nowrap;
     overflow: hidden;
     display: inline-block;
     width: 16px;
     height:16px;
-    background-image: url(../img/star-blank.png);
+}
+span.like.False {
+    background-image: url(../img/star-empty.png);
+}
+span.like.True {
+    background-image: url(../img/star.png);
 }
 span.tag { display: none}
 span.tag.academic,span.tag.newbie,span.tag.science,span.tag.government,

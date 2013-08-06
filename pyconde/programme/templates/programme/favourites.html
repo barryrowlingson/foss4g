@@ -4,6 +4,10 @@
 {% block content %}
 
 <h1>Favourites</h1>
+<p>Favourites are kept as cookies on your device, so are specific to this device and this web browser. I think
+the cookie has a two-week lifespan but I'll up that.</p>
+<p>Eventually I'll tidy this page up, ajaxify the unfave buttons, and provide a link to download a calendar file...</p>
+<h2>Your favourites</h2>
 <ul>
 {% for fave in faves %}
 <li><a href="{% url 'view-presentation' presentation_pk=fave.pk %}">{{fave}}</a> 

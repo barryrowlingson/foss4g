@@ -12,7 +12,7 @@ def daterange(start_datetime, end_datetime, delta):
         yield current
         current = current + delta
 
-def time1(day, grain=30):
+def time1(day, grain=30, faves=[]):
     #presentations = Presentation.objects.all()
 
     #1 add the global events
@@ -58,6 +58,7 @@ def time1(day, grain=30):
     for s in sessions:
         for p in Phash[s]: 
             p.xtags=Taghash[p.pk]
+            p.faved = str(p.pk) in faves
             slot = p.start
             while slot < p.end:
                 t.addItem(s.location,slot,p)

@@ -295,3 +295,56 @@ def taggedpresentations(request,slug):
                               context,
                               context_instance=RequestContext(request))
 
+def favourites(request):
+    if request.COOKIES.has_key("faves"):
+        print "got the faves cookie"
+        faves = request.COOKIES['faves']
+        print faves
+        faves = csmembers(faves)
+        print "returning ",faves
+    else:
+        faves = None
+    presses = Presentation.objects.filter(pk__in=faves)
+    context = {'faves': presses}
+    return render_to_response("programme/favourites.html",
+                              context,
+                              context_instance=RequestContext(request))
+
+def favourite(request,presentation_pk):
+    if not request.COOKIES.has_key("faves"):
+        request.COOKIES['faves']=presentation_pk
+        cs = request.COOKIES['faves']
+    else:
+        cs = request.COOKIES['faves']
+        cs = addmember(cs,presentation_pk)
+    context = {'faves':csmembers(cs)}
+    response = render_to_response("programme/favourites.html",
+                                  context,
+                                  context_instance=RequestContext(request))
+    response.set_cookie('faves',cs)
+    return response
+   
+def unfave(request,presentation_pk):
+    if request.COOKIES.has_key("faves"):
+        cs = request.COOKIES['faves']
+        cs = delmember(cs,presentation_pk)
+    response =  HttpResponse("Thanks")
+    response.set_cookie('faves',cs)
+    return response
+       
+
+def csmembers(cs):
+    v = cs.split(",")
+    if len(v)==0:
+        return []
+    else:
+        return v
+
+def addmember(cs,v):
+    s = list(set(csmembers(cs) + [v]))
+    return ",".join(s)
+
+def delmember(cs,v):
+    m = csmembers(cs)
+    if v in m: m.remove(v)
+    return ",".join(m)

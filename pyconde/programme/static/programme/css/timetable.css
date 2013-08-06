@@ -47,6 +47,15 @@ h1.sessiontitle {font-size: 1em; margin:0; padding: 0.2em 0 0.2em 0; line-height
 ul.daymenu {display:inline; margin-left: 0}
 ul.daymenu li {display: inline}
 
+span.like {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 16px;
+    height:16px;
+    background-image: url(../img/star-blank.png);
+}
 span.tag { display: none}
 span.tag.academic,span.tag.newbie,span.tag.science,span.tag.government,
 span.tag.business,span.tag.cloud,span.tag.education,span.tag.mobile,

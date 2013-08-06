@@ -50,5 +50,9 @@ urlpatterns = patterns('',
                        url(r'^timetest/(?P<daynumber>\d+)/$',views.timetabletest,name='view-timetable'),
 
                        url(r'^tags/(?P<slug>[-\w]+)/$', views.taggedpresentations, name='tagged-pres'),
+
+                       url(r'^favourites/$', views.favourites,name='favourites'),
+                       url(r'^favourite/(?P<presentation_pk>\d+)/', views.favourite, name='favourite'),
+                       url(r'^unfave/(?P<presentation_pk>\d+)/', views.unfave, name='unfave'),
                        )
 

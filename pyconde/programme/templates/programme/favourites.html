@@ -1,0 +1,16 @@
+{% extends "base_programme.html" %}
+{% load url from future %}
+
+{% block content %}
+
+<h1>Favourites</h1>
+<ul>
+{% for fave in faves %}
+<li><a href="{% url 'view-presentation' presentation_pk=fave.pk %}">{{fave}}</a> 
+<a href="{% url 'unfave' presentation_pk=fave.pk %}">unfave</a></li>
+{% empty %}
+<li>None</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

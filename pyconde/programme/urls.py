@@ -55,5 +55,6 @@ urlpatterns = patterns('',
                        url(r'^favourite/(?P<presentation_pk>\d+)/', views.favourite, name='favourite'),
                        url(r'^unfave/(?P<presentation_pk>\d+)/', views.unfave, name='unfave'),
                        url(r'^togglefave/(?P<presentation_pk>\d+)/', views.togglefave, name='togglefave'),
+                       url(r'^preslist/', views.preslist, name='preslist'),
                        )
 

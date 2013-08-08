@@ -1,0 +1,6 @@
+presenters
+{% for presenter in presenters %}{{ presenter.name }}	{{ presenter.email }}	{{presenter.affiliation}}
+{% endfor %}
+copresenters
+{% for cop in cops %}{{ cop.name }}	{{ cop.email }}	{{cop.affiliation}}
+{% endfor %}

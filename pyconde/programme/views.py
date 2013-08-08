@@ -1,5 +1,6 @@
 
 from django.shortcuts import render_to_response, redirect
+from django.template.loader import render_to_string
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.template import RequestContext
@@ -14,6 +15,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from taggit.models import Tag
 
 import datetime
+import locale
 
 def index(request):
     context = {}
@@ -183,7 +185,6 @@ def nameindex(request):
         p.pres = sorted(list(set(p.pres)))
         p.copres = sorted(list(set(p.copres)))
         p.sum=len(p.pres)+len(p.copres)
-    import locale
     locale.setlocale(locale.LC_ALL, "")
     people=sorted(people,key=lambda x: x.lastname, cmp=locale.strcoll)
     people = filter(lambda x: x.sum>0, people)
@@ -371,3 +372,29 @@ def delmember(cs,v):
     m = csmembers(cs)
     if v in m: m.remove(v)
     return ",".join(m)
+
+# more management views
+# a list for Claire:
+
+@staff_member_required
+def preslist(request):
+    # all the scheduled presentations
+    presses = Presentation.objects.filter(insession__isnull=False).select_related("presenter","copresenter")
+
+    presenters = list(set([p.presenter for p in presses]))
+    presenters=sorted(presenters,key=lambda x: x.name, cmp=locale.strcoll)
+    cops = [p.copresenter.all() for p in presses]
+    
+    cops = [item for sublist in cops for item in sublist]
+    cops = list(set(cops))
+    cops = list(set(cops).difference(set(presenters)))
+    cops=sorted(cops,key=lambda x: x.name, cmp=locale.strcoll)
+    
+    context = {'presenters': presenters,
+               'cops': cops}
+
+    response = HttpResponse(content_type='text/tsv')
+    response['Content-Disposition'] = 'attachment; filename="presenterlist.tsv"'
+    s = render_to_string("programme/preslist.txt",{'presenters': presenters, 'cops':cops})
+    response.write(s)
+    return response

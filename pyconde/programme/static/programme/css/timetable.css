@@ -107,3 +107,5 @@ span.tag.mobile{
 span.tag.lighthearted{
     background-image: url(../img/smiley-lol.png);
 }
+
+div.cancelled span {color: grey; text-decoration: line-through;}

@@ -2,7 +2,7 @@
 <h1><a href="{% url 'view-plenary' pk=plenary.pk%}">Plenary: {{plenary.title}}</a></h1>
 <ol>
 {% for item in plenary.plenaryitem_set.all %}
-<li>{{item}} ({{item.duration}} minutes)</li>
+<li>{{item}}</li>
 {% endfor %}
 </ol>
 

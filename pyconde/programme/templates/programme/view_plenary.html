@@ -6,6 +6,7 @@
 <div class="plenary" >
 <h1>{{plenary.title}}</h1>
 <h2>{{plenary.start|date:"l jS N H:i"}} - {{plenary.end|date:"H:i"}}</h2>
+<p>Item lengths are approximate</p>
 <ol>
 {% for item in plenary.plenaryitem_set.all %}
 <li>{{item}} ({{item.duration}} minutes)</li>

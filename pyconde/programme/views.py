@@ -398,3 +398,27 @@ def preslist(request):
     s = render_to_string("programme/preslist.txt",{'presenters': presenters, 'cops':cops})
     response.write(s)
     return response
+
+@staff_member_required
+def wspreslist(request):
+    ws = booking_models.Workshop.objects.select_related(depth=4).order_by("item__start")
+
+    presenters = {}
+    copresenters = {}
+    for w in ws:
+        name = u"%s %s" % (w.item.speaker.user.first_name, w.item.speaker.user.last_name)
+        email = w.item.speaker.user.email
+        aff = w.item.speaker.affiliation
+        presenters[w.item.speaker] = {'name':name, 'email':email, 'affiliation': aff}
+        for cop in w.item.additional_speakers.all():
+            name = u"%s %s" % (cop.user.first_name, cop.user.last_name)
+            email = cop.user.email
+            aff = cop.affiliation
+
+            copresenters[cop] = {'name':name, 'email':email, 'affiliation': aff}
+
+    response = HttpResponse(content_type='text/tsv')
+    response['Content-Disposition'] = 'attachment; filename="wspresenterlist.tsv"'
+    s = render_to_string("programme/preslist.txt",{'presenters': presenters.values(), 'cops':copresenters.values()})
+    response.write(s)   
+    return response

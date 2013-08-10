@@ -1,18 +1,16 @@
 {% extends "base_wide.html" %}
 
 {% block headcontent %}
-       <div class="row-fluid heading" id="intro">
 	 <div class="span3 hidden-print" id="logo">
-	   <img src="{{ STATIC_URL }}booking/images/foss4g2013-white-300.png" />
+	   <a href="/"><img src="{{ STATIC_URL }}booking/images/foss4g2013-white-300.png" /></a>
 	 </div>
 	 <div class="span9" id="blurb">
-	   <h1>FOSS4G2013 Live Programme</h1>
+	   <h1>Programme</h1>
 <ul>
 <li><a href="{% url programme-index %}">Main Programme</a></li>
 <li><a href="{% url workshop-index %}">Workshops</a></li>
 </ul>
 	 </div>
-       </div>
 {% endblock %}
 
 {% block content %}

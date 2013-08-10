@@ -52,6 +52,7 @@ urlpatterns = patterns('',
                        url(r'^tags/(?P<slug>[-\w]+)/$', views.taggedpresentations, name='tagged-pres'),
 
                        url(r'^favourites/$', views.favourites,name='favourites'),
+                       url(r'^favourites/calendar$', views.favouritescalendar,name='favouritescalendar'),
                        url(r'^favourite/(?P<presentation_pk>\d+)/', views.favourite, name='favourite'),
                        url(r'^unfave/(?P<presentation_pk>\d+)/', views.unfave, name='unfave'),
                        url(r'^togglefave/(?P<presentation_pk>\d+)/', views.togglefave, name='togglefave'),

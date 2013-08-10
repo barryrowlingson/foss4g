@@ -26,7 +26,11 @@ return false;
 });
 </script>
 {% endaddtoblock %}
-
+{% if messages %}
+    {% for message in messages %}
+    <div{% if message.tags %} class="alert {{ message.tags }}"{% endif %}>{{ message }}</div>
+    {% endfor %}
+{% endif %}
 <h1>Favourites</h1>
 <p>Favourites are kept as cookies on your device, so are specific to this device and this web browser.</p>
 
@@ -40,5 +44,7 @@ return false;
 <li>None</li>
 {% endfor %}
 </ul>
+
+<p>Download as <a href="{% url 'favouritescalendar' %}">ics file</a> for calendar applications</p>
 
 {% endblock %}

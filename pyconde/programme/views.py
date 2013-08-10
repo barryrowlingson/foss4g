@@ -1,12 +1,16 @@
 
 from django.shortcuts import render_to_response, redirect
 from django.template.loader import render_to_string
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
+from django.contrib import messages
 
 from pyconde.booking import models as booking_models
 from pyconde.conference import models as conference_models
+
+from pyconde.programme import calendar
 
 from models import Presentation,PSession,Person,PlenarySession,CWorkshop, SpecialEvent
 
@@ -314,6 +318,20 @@ def favourites(request):
     return render_to_response("programme/favourites.html",
                               context,
                               context_instance=RequestContext(request))
+
+def favouritescalendar(request):
+    if not request.COOKIES.has_key("faves"):
+        messages.add_message(request,messages.INFO,'You have no favourites')
+        return redirect(reverse('favourites'))
+    faves = request.COOKIES['faves']
+    faves = csmembers(faves)
+    presses = Presentation.objects.filter(pk__in=faves)
+    cc = calendar.calFromEvents(presses)
+    content = cc.to_ical()
+    response = HttpResponse(content, content_type='text/calendar')
+    response['Content-Disposition'] = 'attachment; filename=foss4gfaves.ics'
+    return response
+    
 
 def favourite(request,presentation_pk):
     if not request.COOKIES.has_key("faves"):

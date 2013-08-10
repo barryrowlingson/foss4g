@@ -11,7 +11,7 @@
 <h2>Presenting</h2>
 <ul>
 {% endif %}
-<li><a href="{% url 'view-presentation' presentation_pk=p.pk %}">{{p.title}}</a></li>
+<li><a href="{% url 'view-presentation' presentation_pk=p.pk %}">{{p.title}}</a> {% if p.cancelled %} (cancelled) {% endif %}</li>
 {% if forloop.last %}</ul>{% endif %}
 {% empty %}
 {% endfor %}
@@ -21,7 +21,7 @@
 <h2>Co-Presenting</h2>
 <ul>
 {% endif %}
-<li><a href="{% url 'view-presentation' presentation_pk=p.pk %}">{{p}}</a></li>
+<li><a href="{% url 'view-presentation' presentation_pk=p.pk %}">{{p}}</a>{% if p.cancelled %} (cancelled) {% endif %}</li>
 {% if forloop.last %}</ul>{% endif %}
 {% empty %}
 {% endfor %}

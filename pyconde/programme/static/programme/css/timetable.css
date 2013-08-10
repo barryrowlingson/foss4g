@@ -109,3 +109,5 @@ span.tag.lighthearted{
 }
 
 div.cancelled span {color: grey; text-decoration: line-through;}
+
+span.cancelled {color: grey; text-decoration: line-through;}

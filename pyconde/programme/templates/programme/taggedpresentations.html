@@ -1,11 +1,20 @@
 {% extends "base_programme.html" %}
+{% load sekizai_tags %}
+
 {% load url from future %}
 
 {% block content %}
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
+
 <h1>Presentations tagged {{tag.name}}</h1>
 <ul>
 {% for pres in presentations %}
-<li><a href="{% url 'view-presentation' presentation_pk=pres.pk %}">{{pres}}</a></li>
+<li>
+{% if pres.cancelled %}<span class="cancelled">{% endif %}
+<a href="{% url 'view-presentation' presentation_pk=pres.pk %}">{{pres}}</a>
+{% if pres.cancelled %}</span>(cancelled){% endif %}</li>
 {% empty %}
 <li>None</li>
 {% endfor %}

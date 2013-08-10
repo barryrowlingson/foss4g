@@ -10,7 +10,7 @@ the cookie has a two-week lifespan but I'll up that.</p>
 <h2>Your favourites</h2>
 <ul>
 {% for fave in faves %}
-<li><a href="{% url 'view-presentation' presentation_pk=fave.pk %}">{{fave}}</a> 
+<li><a href="{% url 'view-presentation' presentation_pk=fave.pk %}">{{fave}}</a>{% if fave.cancelled %} (cancelled) {% endif %} 
 <a href="{% url 'unfave' presentation_pk=fave.pk %}">unfave</a></li>
 {% empty %}
 <li>None</li>

@@ -2,5 +2,5 @@
 {% if not pres.cancelled %}
 <a href={% url 'view-presentation' presentation_pk=pres.pk %}>{{ pres }}</a>
 {% else %}
-Cancelled: <a href={% url 'view-presentation' presentation_pk=pres.pk %}>{{ pres }}</a>
+<span class="cancelled"><a href={% url 'view-presentation' presentation_pk=pres.pk %}>{{ pres }}</a></span> (cancelled)
 {% endif %}

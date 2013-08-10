@@ -31,7 +31,7 @@ with {% for cop in cops %}<a href="{% url 'view-person' person_pk=cop.pk%}">{{co
 {% endwith %}
 </h2>
 {% if pres.cancelled %}
-<h3 class="cancelled">This presentation has been cancelled</h3>
+<div class="alert alert-danger">This presentation has been <strong>cancelled</strong></div>
 {% else %}
 {% if pres.insession %}
 <h3>{{pres.start.time|date:"H:i"}} on {{pres.start|date:"l jS F"}} (in <a href="{% url 'view-psession' psession_pk=pres.insession.pk %}">{{pres.insession.title}}</a>, starting at {{pres.insession.start.time}}, <a href="{% url 'view-location' location_slug=pres.insession.location.slug %}">{{pres.insession.location}}</a>)</h3>

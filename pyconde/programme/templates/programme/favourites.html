@@ -1,17 +1,41 @@
 {% extends "base_programme.html" %}
+{% load sekizai_tags %}
 {% load url from future %}
 {% block title %}Favourites{% endblock %}
 {% block content %}
 
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
+{% addtoblock "js" %}
+<script type="text/javascript">
+jQuery(document).ready(function ($) {
+$(".togglefave").click(function(event){
+event.preventDefault();
+$.ajax({
+ url:$(this).attr("href"),
+ success: function(response){}
+ });
+
+span=$(this).find("span");
+span.toggleClass("True");
+span.toggleClass("False");
+return false;
+});
+
+});
+</script>
+{% endaddtoblock %}
+
 <h1>Favourites</h1>
-<p>Favourites are kept as cookies on your device, so are specific to this device and this web browser. I think
-the cookie has a two-week lifespan but I'll up that.</p>
-<p>Eventually I'll tidy this page up, ajaxify the unfave buttons, and provide a link to download a calendar file...</p>
+<p>Favourites are kept as cookies on your device, so are specific to this device and this web browser.</p>
+
 <h2>Your favourites</h2>
 <ul>
-{% for fave in faves %}
-<li><a href="{% url 'view-presentation' presentation_pk=fave.pk %}">{{fave}}</a>{% if fave.cancelled %} (cancelled) {% endif %} 
-<a href="{% url 'unfave' presentation_pk=fave.pk %}">unfave</a></li>
+{% for pres in faves %}
+<li>{% include "programme/pres_link.html" %}
+<a class="togglefave" href="{% url 'togglefave' presentation_pk=pres.pk %}"><span class="like True">like</span></a>
+</li>
 {% empty %}
 <li>None</li>
 {% endfor %}

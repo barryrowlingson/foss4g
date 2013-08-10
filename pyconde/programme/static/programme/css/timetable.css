@@ -111,3 +111,7 @@ span.tag.lighthearted{
 div.cancelled span {color: grey; text-decoration: line-through;}
 
 span.cancelled {color: grey; text-decoration: line-through;}
+
+div.special {padding-left: 1em;border-bottom: 1px solid grey; line-height: 110%}
+
+div.special h3 {font-size: 120%; line-height: 110%;}

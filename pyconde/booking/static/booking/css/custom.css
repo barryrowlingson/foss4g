@@ -69,7 +69,7 @@ margin-bottom: 1em;background-color: white;
 }
 
 div.workshop {border: 1px solid black; padding: 0.5em; margin: 0.5em; color: black}
-div.workshop h1,h2,h3,h4,h5,h6 {font-size: 100%; padding: 0; margin: 0;}
+div.workshop h1,div.workshop h1,div.workshop  h2,div.workshop h3,div.workshop h4,div.workshop h5,div.workshop h6 {font-size: 100%; padding: 0; margin: 0;}
 
 span.open-open {color: green}
 span.open-full {color: red}

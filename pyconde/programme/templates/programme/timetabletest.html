@@ -3,7 +3,7 @@
 {% load url from future %}
 
 {% block title %}{{day|date:"l"}} Timetable{% endblock %}
-
+{% block tophead %}{{day|date:"l jS F "}}{% endblock %}
 {% block content %}
 
 {% addtoblock "css" %}
@@ -42,8 +42,18 @@ Jump to <a href="#freews">Free Workshops</a>, <a href="#events">Events</a>
 See <a href="{% url 'favourites' %}">your favourites</a>
 </p>
 
-<h1>{{day|date:"l jS F "}}</h1>
-<h2>Main Timetable</h2>
+<h2 class="subhead"><a id="events"></a>Today's Special Events</h2>
+{% for w in specials %}
+<div class="special">
+<h3>{{w.name}}</h3>
+{{w.details|safe}}
+</div>
+{% empty %}
+<p>None</p>
+{% endfor %}
+
+
+<h2 class="subhead">Main Timetable</h2>
 {{t.plaintable|safe}}
 
 Goto: <ul class="daymenu">
@@ -52,7 +62,7 @@ Goto: <ul class="daymenu">
 {% endfor %}
 </ul>
 
-<h2><a id="freews"></a>Today's Free Workshops</h2>
+<h2 class="subhead"><a id="freews"></a>Today's Free Workshops</h2>
 <ul>
 {% for w in freews %}
 <li>{{w.start|date:"H:i"}} to {{w.end|date:"H:i"}} <a href="{% url 'freeworkshop' pk=w.pk %}">{{w.title}}</a> in {{w.location}}</li>
@@ -61,16 +71,6 @@ Goto: <ul class="daymenu">
 {% endfor %}
 </ul>
 
-<h2><a id="events"></a>Today's Events</h2>
-<ul>
-{% for w in specials %}
-<li>{{w.name}}
-<p>{{w.details|safe}}</p>
-</li>
-{% empty %}
-<li>None</li>
-{% endfor %}
-</ul>
 
 
 {% endblock %}

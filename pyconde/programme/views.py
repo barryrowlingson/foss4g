@@ -324,7 +324,7 @@ def favourite(request,presentation_pk):
         cs = addmember(cs,presentation_pk)
     context = {'faves':csmembers(cs)}
     response = HttpResponse("faved!")
-    response.set_cookie('faves',cs)
+    response.set_cookie('faves',cs, max_age=250*24*60*60) # 250 days
     return response
    
 def unfave(request,presentation_pk):
@@ -335,7 +335,7 @@ def unfave(request,presentation_pk):
     if len(cs)==0:
         response.delete_cookie('faves')
     else:
-        response.set_cookie('faves',cs)
+        response.set_cookie('faves',cs, max_age=250*24*60*60 )
     return response
        
 def togglefave(request,presentation_pk):
@@ -347,7 +347,7 @@ def togglefave(request,presentation_pk):
     if len(cs)==0:
         response.delete_cookie('faves')
     else:
-        response.set_cookie('faves',cs)
+        response.set_cookie('faves',cs,max_age=250*24*60*60 )
     return response
 
 def csmembers(cs):

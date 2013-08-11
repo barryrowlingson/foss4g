@@ -3,6 +3,7 @@
 {% load url from future %}
 
 {% block title %}{{psesh.title}}{% endblock %}
+{% block tophead %}{{psesh.title}}{% endblock %}
 
 {% block content %}
 {% addtoblock "css" %}
@@ -10,9 +11,9 @@
 {% endaddtoblock %}
 
 <div class="psession" >
-<h1>{{psesh.title}}{% if user.is_staff %}
+{% if user.is_staff %}<h1>
 <a class="btn btn-warning btn-mini" href="{% url 'admin:programme_psession_change' psesh.pk %}" target="_edit">edit</a>
-{% endif %}</h1>
+</h1>{% endif %}
 <h2>Chair:
 {% if psesh.chair %}
 <a href="{% url 'view-person' person_pk=psesh.chair.pk%}">{{psesh.chair}}</a>

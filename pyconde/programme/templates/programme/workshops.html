@@ -1,9 +1,11 @@
 {% extends "base_programme.html" %}
-{% load url from future %}
+{% load url from future %}{% load sekizai_tags %}
 {% block title %}Workshops{% endblock %}
+{% block tophead %}Workshop Programme{% endblock %}
 {% block content %}
-
-<h1>Workshop Programme</h1>
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
 
 <p>Workshops are now full. If you have already registered 
 you can still use the <a href="{% url 'booking-index' %}">Workshop Reservation</a> system to check availability and add or change your reservations.</p>

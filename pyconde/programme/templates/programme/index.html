@@ -1,21 +1,28 @@
 {% extends "base_programme.html" %}
+{% load sekizai_tags %}
+{% load url from future %}
 
-{% block title %}Timetable{% endblock %}
+{% block title %}Programme Overview{% endblock %}
+{% block tophead %}Programme Overview{% endblock %}
 
 {% block content %}
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
 
-<h1>Timetable</h1>
-
-<p>
-This is where the timetable of presentations, plenaries, and parties will appear.
-</p>
-
-<p>
-Until then, use the <a href="/timetable">provisional timetable</a> which is 
-subject to minor change.
-</p>
-
-<p>The <a href="{% url workshop-index %}">Workshop Timetable</a> is current.</p>
-
+<table class="overview">
+<thead>
+<tr><th>Date</th><th>Early</th><th>Daytime</th><th>Later</th></tr>
+</thead>
+<tbody>
+<tr class="odds"><td>Tuesday 17th</td><td></td><td><a href="{% url 'workshop-index' %}">Pre-booked Workshops</a> and <a href="http://2013.foss4g.org/geohack/">GeoHack</a></td><td></td></tr>
+<tr class="evens"><td>Wednesday 18th</td><td></td><td><a href="{% url 'workshop-index' %}">Pre-booked Workshops</a> and <a href="http://2013.foss4g.org/geohack/">GeoHack</a></td><td><a href="http://2013.foss4g.org/programme/entertainment/">IceBreaker</a></td></tr>
+<tr class="odds"><td>Thursday 19th</td><td></td>
+<td><a href="{% url 'view-timetable' daynumber=1 %}">Main Programme</a> and <a href="{% url 'freeworkshop-index' %}">Free Workshops</a> (pm)</td><td><a href="http://2013.foss4g.org/programme/entertainment/">Gala Event</a></td></tr>
+<tr class="evens"><td>Friday 20th</td><td>Birds of a Feather</td><td><a href="{% url 'view-timetable' daynumber=2 %}">Main Programme</a>, <a href="{% url 'freeworkshop-index' %}">Free Workshops</a> and Unconference</td><td><a href="http://2013.foss4g.org/programme/entertainment/">Optional Excursion</a></td></tr>
+<tr class="odds"><td>Saturday 21st</td><td>Birds of a Feather</td><td><a href="{% url 'view-timetable' daynumber=3 %}">Main Programme</a>, <a href="{% url 'freeworkshop-index' %}">Free Workshops (am)</a> and OSGeo AGM</td><td><a href="http://2013.foss4g.org/programme/entertainment/">Closing Party</a></td></tr>
+<tr class="evens"><td>Sunday 22nd</td><td></td><td><a href="http://2013.foss4g.org/programme/code-sprint/">Code Sprint</a></td><td></td></tr>
+</tbody>
+</table>
 
 {% endblock %}

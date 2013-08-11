@@ -125,3 +125,28 @@ span.abslabel {font-weight: bold; font-size: 140%}
 
 div.evens {background-color: #EFE; padding: 0.25em 0 0.25em 0.5em}
 div.odds {background-color: white; padding: 0.25em 0 0.25em 0.5em}
+
+table.overview {font-size: 150%;line-height: 120%}
+table.overview th {text-align: center;font-weight: bold;height: 1.5em;background-color: green; color: white;
+border-left: 2px solid white; border-right: 2px solid white;
+}
+table.overview td {
+background-color: #CFC;
+color: #272;
+width: 25%; height: 3em; padding: 0.5em 0.5em; border-left: 2px solid white; border-right: 2px solid white;}
+
+table.overview tr.odds td{background-color: #CEC;}
+table.overview tr.evens td {background-color: #EFE;}
+
+ul.topmenu li {display: inline; margin-right: 1em; padding: 0.25em 0.5em; background-color: #cec;}
+
+@media (max-width: 767px){
+h2 {font-size: 120%;line-height: 120%}
+h3 {font-size: 105%;line-height: 120%}
+table.overview {font-size: 100%;line-height: 120%}
+}
+@media (max-width: 511px){
+h2 {font-size: 100%;line-height: 120%}
+h3 {font-size: 100%;line-height: 120%}
+table.overview {font-size: 80%;line-height: 120%}
+}

@@ -2,6 +2,9 @@
 {% load url from future %}
 {% load sekizai_tags %}
 {% block title %}{{person}}{% endblock %}
+{% block tophead %}Person{% endblock %}
+
+
 {% block content %}
 {% addtoblock "css" %}
 <link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">

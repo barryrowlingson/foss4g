@@ -1,8 +1,16 @@
 {% extends "base_programme.html" %}
+{% load sekizai_tags %}
 {% load admin_urls %}
 {% load url from future %}
 
+{% block title %}Free Workshops{% endblock %}
+{% block tophead %}Free Workshops{% endblock %}
+
+
 {% block content %}
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
 
 {% for fwork in fworkshops %}
 <div class="fwork">
@@ -25,9 +33,9 @@ with {% for cop in cops %}<a href="{% url 'view-person' person_pk=cop.pk%}">{{co
 <li>Start: {{fwork.start}}</li>
 <li>End: {{fwork.end}}</li>
 <li>Location: {{fwork.location}}</li>
-<li>Max Delegates: {{fwork.maxdelegates}}</li>
+<!--li>Max Delegates: {{fwork.maxdelegates}}</li>
 <li>Roomsize: {{fwork.location.capacity}}</li>
-<li>Capacity: {{fwork.capacity}}</li>
+<li>Capacity: {{fwork.capacity}}</li-->
 </ul>
 <p>
 {{fwork.desc}}

@@ -1,4 +1,5 @@
 {% extends "base_wide.html" %}
+{% load url from future %}
 
 {% block headcontent %}
 	 <div class="span3 hidden-print" id="logo">
@@ -6,9 +7,13 @@
 	 </div>
 	 <div class="span9" id="blurb">
 	   <h1>{% block tophead %}Programme{% endblock %}</h1>
-<ul>
-<li><a href="{% url programme-index %}">Main Programme</a></li>
-<li><a href="{% url workshop-index %}">Workshops</a></li>
+<ul class="topmenu">
+<li><a href="{% url 'programme-index' %}">Overview</a></li>
+<li><a href="{% url 'view-timetable' daynumber=1 %}">Thursday</li>
+<li><a href="{% url 'view-timetable' daynumber=2 %}">Friday</li>
+<li><a href="{% url 'view-timetable' daynumber=3 %}">Saturday</li>
+<li><a href="{% url 'workshop-index' %}">Workshops</a></li>
+<li><a href="{% url 'freeworkshop-index' %}">Free Workshops</a></li>
 </ul>
 	 </div>
 {% endblock %}

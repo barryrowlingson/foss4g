@@ -15,6 +15,9 @@
 <li><a href="{% url 'workshop-index' %}">Workshops</a></li>
 <li><a href="{% url 'freeworkshop-index' %}">Free Workshops</a></li>
 </ul>
+<form class="form-inline" method="get" action="{% url 'haystack_search' %}">
+<input type="text" name="q" id="id_q2"><input type="submit" value="Presentation Search">
+</form>
 	 </div>
 {% endblock %}
 

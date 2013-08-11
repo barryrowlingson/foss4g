@@ -31,11 +31,10 @@ Unassigned
 <h2>Starting at: {{psesh.start.time}} on {{psesh.start|date:"l jS F"}}</h2>
 <h2>Talks last: {{psesh.talkduration}}m</h2>
 
-<ul>
 {% for pres in presses %}
-<li>{% include "programme/pres_link.html" %}</li>
+<div class="{% cycle 'odds' 'evens' %}">{% include "programme/pres_link.html" %}</li></div>
 {% endfor %}
-</ul>
+
 
 </div>
 

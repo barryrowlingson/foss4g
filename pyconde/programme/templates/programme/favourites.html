@@ -35,15 +35,15 @@ return false;
 <p>Favourites are kept as cookies on your device, so are specific to this device and this web browser.</p>
 
 <h2>Your favourites</h2>
-<ul>
+
 {% for pres in faves %}
-<li>{% include "programme/pres_link.html" %}
+<div class="{% cycle 'odds' 'evens' %}">
+{% include "programme/pres_link.html" %}
 <a class="togglefave" href="{% url 'togglefave' presentation_pk=pres.pk %}"><span class="like True">like</span></a>
-</li>
+</div>
 {% empty %}
-<li>None</li>
+<div>None</div>
 {% endfor %}
-</ul>
 
 <p>Download as <a href="{% url 'favouritescalendar' %}">ics file</a> for calendar applications</p>
 

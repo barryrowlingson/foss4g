@@ -9,15 +9,16 @@
 {% endaddtoblock %}
 
 <h1>Presentations tagged {{tag.name}}</h1>
-<ul>
+
 {% for pres in presentations %}
-<li>
+<div class="{% cycle 'odds' 'evens' %}">
 {% if pres.cancelled %}<span class="cancelled">{% endif %}
 <a href="{% url 'view-presentation' presentation_pk=pres.pk %}">{{pres}}</a>
-{% if pres.cancelled %}</span>(cancelled){% endif %}</li>
+{% if pres.cancelled %}</span>(cancelled){% endif %}
+</div>
 {% empty %}
-<li>None</li>
+<div>None</div>
 {% endfor %}
-</ul>
+
 
 {% endblock %}

@@ -1,7 +1,11 @@
 {% extends "base_programme.html" %}
 {% load url from future %}
+{% load sekizai_tags %}
 {% block title %}{{person}}{% endblock %}
 {% block content %}
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
 
 <h1>{{person}}</h1>
 
@@ -9,20 +13,18 @@
 {% for p in person.presenter.all %}
 {% if forloop.first %}
 <h2>Presenting</h2>
-<ul>
 {% endif %}
-<li><a href="{% url 'view-presentation' presentation_pk=p.pk %}">{{p.title}}</a> {% if p.cancelled %} (cancelled) {% endif %}</li>
-{% if forloop.last %}</ul>{% endif %}
+<div  class="{% cycle 'odds' 'evens' %}"><a href="{% url 'view-presentation' presentation_pk=p.pk %}">{{p.title}}</a> {% if p.cancelled %} (cancelled) {% endif %}</div>
 {% empty %}
 {% endfor %}
 
 {% for p in person.presentation_set.all %}
 {% if forloop.first %}
 <h2>Co-Presenting</h2>
-<ul>
 {% endif %}
-<li><a href="{% url 'view-presentation' presentation_pk=p.pk %}">{{p}}</a>{% if p.cancelled %} (cancelled) {% endif %}</li>
-{% if forloop.last %}</ul>{% endif %}
+<div  class="{% cycle 'odds' 'evens' %}">
+<a href="{% url 'view-presentation' presentation_pk=p.pk %}">{{p}}</a>{% if p.cancelled %} (cancelled) {% endif %}
+</div>
 {% empty %}
 {% endfor %}
 
@@ -31,20 +33,19 @@
 <h2>Chairing</h2>
 <ul>
 {% endif %}
-<li><a href="{% url 'view-psession' psession_pk=p.pk %}">{{p}}</a></li>
-{% if forloop.last %}</ul>{% endif %}
+<div  class="{% cycle 'odds' 'evens' %}">
+<a href="{% url 'view-psession' psession_pk=p.pk %}">{{p}}</a>
+</div>
 {% empty %}
 {% endfor %}
 
 {% for p in person.helper.all %}
 {% if forloop.first %}
 <h2>Helping</h2>
-<ul>
 {% endif %}
-<li><a href="{% url 'view-psession' psession_pk=p.pk %}">{{p}}</a></li>
-{% if forloop.last %}
-</ul>
-{% endif %}
+<div  class="{% cycle 'odds' 'evens' %}">
+<a href="{% url 'view-psession' psession_pk=p.pk %}">{{p}}</a>
+</div>
 {% empty %}
 {% endfor %}
 

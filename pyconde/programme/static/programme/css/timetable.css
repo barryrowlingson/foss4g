@@ -115,3 +115,10 @@ span.cancelled {color: grey; text-decoration: line-through;}
 div.special {padding-left: 1em;border-bottom: 1px solid grey; line-height: 110%}
 
 div.special h3 {font-size: 120%; line-height: 110%;}
+
+/*  from view_presentation */
+
+div.description {margin: 2em 0 ;}
+span.desclabel {font-weight: bold; font-size: 120%}
+div.abstract {}
+span.abslabel {font-weight: bold; font-size: 140%}

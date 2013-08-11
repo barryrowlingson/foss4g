@@ -1,16 +1,14 @@
 {% extends "base_programme.html" %}
+{% load sekizai_tags %}
 {% load url from future %}
 
 {% block title %}{{pres.title}}{% endblock %}
 
 {% block content %}
 
-<style>
-div.description {margin: 2em 0 ;}
-span.desclabel {font-weight: bold; font-size: 120%}
-div.abstract {}
-span.abslabel {font-weight: bold; font-size: 140%}
-</style>
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
 
 <div class="presentation {% if pres.cancelled %}cancelled{% endif %}" >
 <h1>{{pres.title}}</h1>{% if user.is_staff %}

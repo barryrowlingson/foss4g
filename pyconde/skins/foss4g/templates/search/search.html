@@ -1,39 +1,44 @@
-{% extends 'base.html' %}
-{% load search_tags url_tags %}
+{% extends "base_programme.html" %}
+{% load sekizai_tags %}
+{% load url from future %}
 
-{% block page_title %}Search Results{% endblock %}
+{% block title %}Search{% endblock %}
 
 {% block content %}
-    {% if query %}
-    <div id="results">
-        {% if page.object_list %}
-            <p>Your search for &quot;<strong>{{ query }}</strong>&quot; returned {{ page.paginator.count }} match{{ page.paginator.count|pluralize:"es" }}.</p>
-            <ol class="result-list" start="{{ page.start_index }}">
-                {% for result in page.object_list %}
-                    {% if result.content_type == 'schedule.session' %}{% include 'search/resulttypes/session.html' %}{% endif %}
-                    {% if result.content_type == 'speakers.speaker' %}{% include 'search/resulttypes/speaker.html' %}{% endif %}
-                    {% if result.content_type == 'cms.page' %}{% include 'search/resulttypes/page.html' %}{% endif %}
-                {% endfor %}
-            </ol>
-        {% else %}
-            <p>Your search for &quot;<strong>{{ query }}</strong>&quot; returned no matches.</p>
-        {% endif %}
-        {% if page.has_previous or page.has_next %}
-            <div class="pagination">
-                {% if page.has_previous %}<a class="prev" href="{% qs_set page=page.previous_page_number %}">&laquo; Previous Page</a>
-                {% else %}<span class="prev">&laquo; Next Page</span>{% endif %}
-                <span class="pageinfo">Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
-                {% if page.has_next %}<a class="next" href="{% qs_set page=page.next_page_number %}">Next Page &raquo;</a>
-                {% else %}<span class="next">Next Page &raquo;</span>{% endif %}
-            </div>
-        {% endif %}
-    </div>
-    {% endif %}
-{% endblock %}
-{% block sidebar %}
-    {% show_facet facets.fields.django_ct "Type" "django_ct" %}
-    {% show_facet facets.fields.session_kind "Session Kind" "session_kind" %}
-    {% show_facet facets.fields.track "Track" "track" %}
-    {% show_facet facets.fields.tags "Tags" "tags" %}
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
 
+    <h2>Presentation Search</h2>
+
+    <form method="get" action=".">
+
+<input type="text" name="q" id="id_q"> <input type="submit" value="Search">
+
+        {% if query %}
+            <h3>{{page.paginator.count}} Results (with scores)</h3>
+
+            {% for result in page.object_list %}
+                <div class="{% cycle 'odds' 'evens' %}">
+{% with pres=result.pk %}
+<a href="{% url 'view-presentation' presentation_pk=pres %}">{{ result.mytitle }} ({{result.presenter}})</a> ({{result.score|floatformat:"1"}})
+{% endwith %}
+                </div>
+            {% empty %}
+                <p>No results found.</p>
+            {% endfor %}
+
+            {% if page.has_previous or page.has_next %}
+                <div>
+                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                    |
+                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+<p>Search presentation titles, presenters, and descriptions here.</p>
+            {# Show some example queries to run, maybe query syntax, something else? #}
+        {% endif %}
+    </form>
 {% endblock %}
+

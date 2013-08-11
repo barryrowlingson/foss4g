@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
@@ -58,5 +58,7 @@ urlpatterns = patterns('',
                        url(r'^togglefave/(?P<presentation_pk>\d+)/', views.togglefave, name='togglefave'),
                        url(r'^preslist/', views.preslist, name='preslist'),
                        url(r'^wspreslist/', views.wspreslist, name='wspreslist'),
+
+                       url(r'^search/', include('haystack.urls')),
                        )
 

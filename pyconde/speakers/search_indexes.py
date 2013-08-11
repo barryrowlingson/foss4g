@@ -37,7 +37,7 @@ class SpeakerIndex(SearchIndex, Indexable):
     def index_queryset(self, using=None):
         c = connection.cursor()
         c.execute('''
-            SELECT distinct(s.*)
+            SELECT distinct s.*
             FROM
                 schedule_session as session,
                 speakers_speaker as s
@@ -46,7 +46,7 @@ class SpeakerIndex(SearchIndex, Indexable):
 
             UNION
 
-            SELECT distinct(s.*)
+            SELECT distinct s.*
             FROM
                 schedule_session_additional_speakers as session,
                 speakers_speaker as s

@@ -260,8 +260,11 @@ HAYSTACK_CONNECTIONS = {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
         'PATH': os.path.join(PROJECT_ROOT, 'whoosh_index'),
         'STORAGE': 'file',
-        'INCLUDE_SPELLING': True,
+        'INCLUDE_SPELLING': False,
         'BATCH_SIZE': 100,
+        'EXCLUDED_INDEXES': ['pyconde.search.search_indexes.PageIndex',
+                             'pyconde.schedule.search_indexes.SessionIndex',
+                             'pyconde.speakers.search_indexes.SpeakerIndex',],
     }
 }
 

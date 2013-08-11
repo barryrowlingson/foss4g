@@ -30,11 +30,6 @@ return false;
 </script>
 {% endaddtoblock %}
 
-Goto: <ul class="daymenu">
-{% for dayT in all_days %}
-<li><a href="{% url 'view-timetable' daynumber=forloop.counter %}">{{dayT|date:"l"}}</a></li>
-{% endfor %}
-</ul>
 <p>
 Jump to <a href="#freews">Free Workshops</a>, <a href="#events">Events</a>
 </p>

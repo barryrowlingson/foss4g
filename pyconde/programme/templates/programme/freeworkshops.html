@@ -13,9 +13,10 @@
 {% endaddtoblock %}
 
 {% for fwork in fworkshops %}
+{% ifchanged fwork.start.date %}<h1>{{fwork.start.date}}</h1>{% endifchanged %}
 <div class="fwork">
-<h2>{{fwork.title}}</h2>
-<h3><a href="{% url 'view-person' person_pk=fwork.presenter.pk%}">{{fwork.presenter}}</a>
+<h3>{{fwork.title}}</h3>
+<h4><a href="{% url 'view-person' person_pk=fwork.presenter.pk%}">{{fwork.presenter}}</a>
 {% with aff=fwork.presenter.affiliation %}
 {% if aff %}
 ({{aff}})
@@ -28,10 +29,9 @@ with {% for cop in cops %}<a href="{% url 'view-person' person_pk=cop.pk%}">{{co
 {% if copaff %}({{copaff}}){% endif %}{% endwith %}{% if forloop.revcounter0 > 0 %}, {%endif %}{% endfor %}
 {% endif %}
 {% endwith %}
-</h3>
+</h4>
 <ul>
-<li>Start: {{fwork.start}}</li>
-<li>End: {{fwork.end}}</li>
+<li>{{fwork.start|date:"P"}} to {{fwork.end|date:"P"}}</li>
 <li>Location: {{fwork.location}}</li>
 <!--li>Max Delegates: {{fwork.maxdelegates}}</li>
 <li>Roomsize: {{fwork.location.capacity}}</li>

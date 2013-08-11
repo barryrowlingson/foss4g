@@ -1,7 +1,12 @@
 {% extends "base_programme.html" %}
+{% load sekizai_tags %}
 {% load url from future %}
 {% block title %}{{plenary.title}}{% endblock %}
+{% block tophead %}Plenary Session{% endblock %}
 {% block content %}
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
 
 <div class="plenary" >
 <h1>{{plenary.title}}</h1>

@@ -53,7 +53,7 @@ def view_workshop(request, workshop_pk):
                               context_instance=RequestContext(request))
 
 def freeworkshops(request):
-    fws = CWorkshop.objects.all()
+    fws = CWorkshop.objects.all().order_by("start")
     context = {'fworkshops': fws}
     return render_to_response("programme/freeworkshops.html",
                               context,

@@ -312,3 +312,8 @@ import string
 import random
 OBSCURE = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(20))
 
+# foss4g local code, should probably go in settings...
+import datetime
+FIRST_DAY = datetime.date(2013,9,19)
+NUM_DAYS = 3
+ALL_DAYS = [FIRST_DAY + datetime.timedelta(days=x) for x in range(NUM_DAYS)]

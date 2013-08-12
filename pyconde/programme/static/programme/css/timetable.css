@@ -144,6 +144,8 @@ ul.topmenu li {display: inline; margin-right: 1em; padding: 0.25em 0.5em; backgr
 input#id_q2 {max-height: 1em;margin-right: 0.2em}
 input#id_q {max-height: 1em; margin:0}
 
+td.feature div.prescell {outline: 15px solid rgba(255,255,0,0.5);}
+
 @media (max-width: 767px){
 h2 {font-size: 120%;line-height: 120%}
 h3 {font-size: 105%;line-height: 120%}
@@ -154,3 +156,4 @@ h2 {font-size: 100%;line-height: 120%}
 h3 {font-size: 100%;line-height: 120%}
 table.overview {font-size: 80%;line-height: 120%}
 }
+

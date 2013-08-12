@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.conf import settings
 
 from pyconde.booking import models as booking_models
 from pyconde.conference import models as conference_models
@@ -261,9 +262,9 @@ def presenterdetails(request):
 import timetables
 
 # foss4g local code, should probably go in settings...
-first_day = datetime.date(2013,9,19)
-num_days = 3
-all_days = [first_day + datetime.timedelta(days=x) for x in range(num_days)]
+#first_day = datetime.date(2013,9,19)
+#num_days = 3
+#all_days = [first_day + datetime.timedelta(days=x) for x in range(num_days)]
 
 def timetabletest(request,daynumber):
 
@@ -271,20 +272,26 @@ def timetabletest(request,daynumber):
         daynumber=int(daynumber)
     except:
         raise Http404,"Day number not found"
-    if daynumber < 1 or daynumber > num_days:
+    if daynumber < 1 or daynumber > settings.NUM_DAYS:
         raise Http404,"Day not found"
-    day = all_days[daynumber-1]
+    day = settings.ALL_DAYS[daynumber-1]
 
     if request.COOKIES.has_key("faves"):
         faves = request.COOKIES['faves']
         faves = csmembers(faves)
     else:
         faves = []
-    t = timetables.time1(day,30, faves) # 30 minute resolution timetable
+
+    if request.GET.has_key("show"):
+        show = [request.GET['show']]
+    else:
+        show = []
+    
+    t = timetables.time1(day,30, faves, show) # 30 minute resolution timetable
     specials = SpecialEvent.objects.filter(start=day)
     freews = CWorkshop.objects.filter(start__contains=day).order_by("start")
     context = {'t':t,
-               'all_days': all_days,
+               'all_days': settings.ALL_DAYS,
                'day': day,
                'specials': specials,
                'freews': freews}

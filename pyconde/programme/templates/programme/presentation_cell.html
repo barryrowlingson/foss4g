@@ -1,24 +1,24 @@
 {% load url from future %}
 
 {% if not pres.cancelled %}
-
+<div class="prescell">
 <a class="togglefave" href="{% url 'togglefave' presentation_pk=pres.pk %}"><span class="like {{pres.faved}}">like</span></a>
 
-<a href="{% url 'view-presentation' presentation_pk=pres.pk %}">
+<a id="p{{pres.pk}}"></a><a href="{% url 'view-presentation' presentation_pk=pres.pk %}">
 <span class="prestitle">{{pres.title}}:</span>
 </a>  <a href="{% url 'view-person' person_pk=pres.presenter.pk %}"><span class="presname">{{pres.presenter.name}}</span></a>
 
 {% for tag in pres.xtags %}
 <a href="{% url 'tagged-pres' slug=tag.slug %}"><span title="{{tag.name}}" class="tag {{tag.name}}">{{tag.name}}</span></a>
 {% endfor %}
-
+</div>
 {% else %}
 
-<div class="cancelled" title="cancelled">
+<div class="cancelled prescell" title="cancelled">
 
 <a class="togglefave" href="{% url 'togglefave' presentation_pk=pres.pk %}"><span class="like {{pres.faved}}">like</span></a>
 
-<a href="{% url 'view-presentation' presentation_pk=pres.pk %}">
+<a id="p{{pres.pk}}"><a href="{% url 'view-presentation' presentation_pk=pres.pk %}">
 <span class="prestitle">{{pres.title}}:</span>
 </a>  <a href="{% url 'view-person' person_pk=pres.presenter.pk %}"><span class="presname">{{pres.presenter.name}}</span></a>
 

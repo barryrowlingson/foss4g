@@ -72,6 +72,8 @@ class Presentation(models.Model):
             klass="first"
         else:
             klass="next"
+        if self.show:
+            klass = klass + " feature"
         return {'content':"%s" % contents,
                 'class':"presentation %s" % klass
                 }

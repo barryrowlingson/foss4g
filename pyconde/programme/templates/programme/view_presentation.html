@@ -1,5 +1,6 @@
 {% extends "base_programme.html" %}
 {% load sekizai_tags %}
+{% load programme_tags %}
 {% load url from future %}
 
 {% block title %}{{pres.title}}{% endblock %}
@@ -34,6 +35,8 @@ with {% for cop in cops %}<a href="{% url 'view-person' person_pk=cop.pk%}">{{co
 {% else %}
 {% if pres.insession %}
 <h3>{{pres.start.time|date:"H:i"}} on {{pres.start|date:"l jS F"}} (in <a href="{% url 'view-psession' psession_pk=pres.insession.pk %}">{{pres.insession.title}}</a>, starting at {{pres.insession.start.time}}, <a href="{% url 'view-location' location_slug=pres.insession.location.slug %}">{{pres.insession.location}}</a>)</h3>
+<h3><a href="{% url 'view-timetable' daynumber=pres|get_day %}?show={{pres.pk}}#p{{pres.pk}}">Show in Timetable</a></h3>
+
 {% else %}
 <h3>Unscheduled</h3>
 {% endif %}

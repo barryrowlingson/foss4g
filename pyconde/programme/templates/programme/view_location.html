@@ -1,7 +1,12 @@
 {% extends "base_programme.html" %}
+{% load sekizai_tags %}
+
 {% block title %}{{loc.name}}{% endblock %}
 {% block tophead %}{{loc.name}}{% endblock %}
 {% block content %}
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
 
 <p>
 Directions and information about {{loc.name}} will appear here.

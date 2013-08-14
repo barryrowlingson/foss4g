@@ -1,13 +1,9 @@
 {% extends "base_programme.html" %}
-{% load sekizai_tags %}
 {% load url from future %}
 
 {% block title %}Search{% endblock %}
-
+{% block tophead %}Search{% endblock %}
 {% block content %}
-{% addtoblock "css" %}
-<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
-{% endaddtoblock %}
 
     <h2>Presentation Search</h2>
 

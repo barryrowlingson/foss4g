@@ -8,9 +8,18 @@
 <div class="workshop">
 
 <h3>Lead Presenter: {{w.item.speaker}} {% if w.item.speaker.affiliation %}({{w.item.speaker.affiliation}}){% endif %}</h3>
-{% if w.item.additional_speakers.all %}
-<h3 title="additional presenter">with {{w.item.additional_speakers.all|join:", "}}</h3>
-{% endif %}
+
+{% with adds=w.item.additional_speakers.all %}
+ {% if adds %}
+ <h3 title="additional presenter">with 
+ {% for additional in adds %}
+  {{additional}} {% if additional.affiliation %}({{additional.affiliation}}){% endif %}
+  {% if forloop.last %}{% else %},{% endif %}
+ {% endfor %}
+ </h3>
+ {% endif %}
+{% endwith %}
+
 <p><a href="{% url 'view-location' location_slug=w.item.location.slug %}">{{w.item.location}}</a> - {{w.item.start}} to {{w.item.end}}</p>
 
 <p>

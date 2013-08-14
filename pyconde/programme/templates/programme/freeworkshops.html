@@ -28,7 +28,7 @@ with {% for cop in cops %}<a href="{% url 'view-person' person_pk=cop.pk%}">{{co
 </h4>
 <ul>
 <li>{{fwork.start|date:"P"}} to {{fwork.end|date:"P"}}</li>
-<li>Location: {{fwork.location}}</li>
+<li>Location: <a href="{% url 'view-location' location_slug=fwork.location.slug %}">{{fwork.location}}</a></li>
 <!--li>Max Delegates: {{fwork.maxdelegates}}</li>
 <li>Roomsize: {{fwork.location.capacity}}</li>
 <li>Capacity: {{fwork.capacity}}</li-->

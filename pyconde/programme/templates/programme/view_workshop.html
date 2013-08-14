@@ -1,14 +1,10 @@
 {% extends "base_programme.html" %}
-{% load sekizai_tags %}
 {% load url from future %}
 
 {% block title %}{{w.item.title}}{% endblock %}
 {% block tophead %}{{w.item.title}}{% endblock %}
 
 {% block content %}
-{% addtoblock "css" %}
-<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
-{% endaddtoblock %}
 <div class="workshop">
 
 <h3>Lead Presenter: {{w.item.speaker}} {% if w.item.speaker.affiliation %}({{w.item.speaker.affiliation}}){% endif %}</h3>

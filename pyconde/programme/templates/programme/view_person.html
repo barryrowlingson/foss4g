@@ -1,17 +1,13 @@
 {% extends "base_programme.html" %}
 {% load url from future %}
-{% load sekizai_tags %}
+
 {% block title %}{{person}}{% endblock %}
 {% block tophead %}Person{% endblock %}
 
 
 {% block content %}
-{% addtoblock "css" %}
-<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
-{% endaddtoblock %}
 
 <h1>{{person}}</h1>
-
 
 {% for p in person.presenter.all %}
 {% if forloop.first %}

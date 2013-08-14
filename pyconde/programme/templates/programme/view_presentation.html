@@ -1,5 +1,4 @@
 {% extends "base_programme.html" %}
-{% load sekizai_tags %}
 {% load programme_tags %}
 {% load url from future %}
 
@@ -7,11 +6,6 @@
 {% block tophead %}Presentation{% endblock %}
 
 {% block content %}
-
-{% addtoblock "css" %}
-<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
-{% endaddtoblock %}
-
 <div class="presentation {% if pres.cancelled %}cancelled{% endif %}" >
 <h1>{{pres.title}}</h1>{% if user.is_staff %}
 <a class="btn btn-warning btn-mini" href="{% url 'admin:programme_presentation_change' pres.pk %}" target="_edit">edit</a>

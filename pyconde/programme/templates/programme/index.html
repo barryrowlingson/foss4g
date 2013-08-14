@@ -1,14 +1,10 @@
 {% extends "base_programme.html" %}
-{% load sekizai_tags %}
 {% load url from future %}
 
 {% block title %}Programme Overview{% endblock %}
 {% block tophead %}Programme Overview{% endblock %}
 
 {% block content %}
-{% addtoblock "css" %}
-<link href="{{STATIC_URL}}/programme/css/timetable.css" type="text/css" rel="stylesheet">
-{% endaddtoblock %}
 
 <table class="overview">
 <thead>

@@ -27,7 +27,7 @@ return false;
 {% endaddtoblock %}
 
 <p>
-Jump to <a href="#freews">Free Workshops</a>, <a href="#events">Events</a>
+Jump to <a href="#events">Events</a>, <a href="#main">Main Timetable</a>, <a href="#freews">Free Workshops</a>.
 </p>
 <p>
 See <a href="{% url 'favourites' %}">your favourites</a>
@@ -44,7 +44,7 @@ See <a href="{% url 'favourites' %}">your favourites</a>
 {% endfor %}
 
 
-<h2 class="subhead">Main Timetable</h2>
+<h2 class="subhead"><a id="main"></a>Main Timetable</h2>
 {{t.plaintable|safe}}
 
 Goto: <ul class="daymenu">
@@ -62,6 +62,9 @@ Goto: <ul class="daymenu">
 {% endfor %}
 </ul>
 
+<p>
+Jump to <a href="#events">Events</a>, <a href="#main">Main Timetable</a>, <a href="#freews">Free Workshops</a>.
+</p>
 
 
 {% endblock %}

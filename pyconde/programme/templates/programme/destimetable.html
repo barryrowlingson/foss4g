@@ -19,14 +19,15 @@ div.presentation {background-color: white; padding: 1em; margin-bottom: 1em; bor
 <div class="session">
 <h2 style="border-bottom: 1px solid black">{{s.title}}</h2>
 
-{% for p in s.presentation_set.all %}
+{% for p in s.presentation_set.all|posorder %}
 <div>
 {% with pres=Phash|get_item:p.pk %}
+{{s.title|slice:"8:"}}.{{pres.position}} {{pres.title}}
+<i>{{pres.presenter}}</i>
 {% if pres.newb %}
-<strong>N</strong>
+<br/><strong>N</strong>
 {% endif %}
-{{pres.title}}
-<strong>{{pres.presenter}}</strong>
+
 {% endwith %}
 </div>
 {% endfor %}

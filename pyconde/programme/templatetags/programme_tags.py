@@ -11,3 +11,7 @@ def get_day(event):
     day = (event.start.date() - settings.FIRST_DAY).days + 1
     return day
 
+@register.filter
+def posorder(preslist):
+    return preslist.order_by("position")
+

@@ -16,7 +16,7 @@ div.presentation {background-color: white; padding: 1em; margin-bottom: 1em; bor
 <div class="session">
 <h2 style="border-bottom: 1px solid black">{{s.title}}, {{s.location}}</h2>
 <h2>{{s.start|date:"l dS, H:i"}} to {{s.end|date:"H:i"}}</h2>
-{% for p in s.presentation_set.all %}
+{% for p in s.presentation_set.all|posorder %}
 <div class="presentation">
 {% with pres=Phash|get_item:p.pk %}
 <h3 style="border-bottom: 1px solid black; line-height: 110%;">{{pres.title}}</h3>

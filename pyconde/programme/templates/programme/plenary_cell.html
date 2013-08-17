@@ -1,7 +1,8 @@
 {% load url from future %}
+{% load programme_tags %}
 <h1><a href="{% url 'view-plenary' pk=plenary.pk%}">Plenary: {{plenary.title}}</a></h1>
 <ol>
-{% for item in plenary.plenaryitem_set.all %}
+{% for item in plenary.plenaryitem_set.all|posorder %}
 <li>{{item}}</li>
 {% endfor %}
 </ol>

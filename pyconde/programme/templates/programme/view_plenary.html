@@ -1,4 +1,5 @@
 {% extends "base_programme.html" %}
+{% load programme_tags %}
 {% load url from future %}
 {% block title %}{{plenary.title}}{% endblock %}
 {% block tophead %}Plenary Session{% endblock %}
@@ -8,7 +9,7 @@
 <h2>{{plenary.start|date:"l jS N H:i"}} - {{plenary.end|date:"H:i"}}</h2>
 <p>Item lengths are approximate</p>
 <ol>
-{% for item in plenary.plenaryitem_set.all %}
+{% for item in plenary.plenaryitem_set.all|posorder %}
 <li>{{item}} ({{item.duration}} minutes)</li>
 {% endfor %}
 </ol>

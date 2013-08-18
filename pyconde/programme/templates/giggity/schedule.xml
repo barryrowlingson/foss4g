@@ -1,0 +1,29 @@
+{% load programme_tags %}
+<schedule>
+ <conference>
+  <title>FOSS4G 2013</title>
+  <subtitle>Free and Open Source Geospatial</subtitle>
+  <start>2013-09-19</start>
+  <end>2013-09-21</end>
+  <days>3</days>
+  <timeslot_duration>00:15</timeslot_duration>
+ </conference>
+{% regroup S by day as Sdays %}
+{% for Sday in Sdays %}
+<day date="{{Sday.list.1.start|date:"Y-m-d"}}" index="{{Sday.grouper}}">{% regroup Sday.list by location as Srooms %}{% for room in Srooms %}
+ <room name="{{room.grouper}}">{% for sesh in room.list %}{% for p in sesh.presentation_set.all %}{% with pres=Phash|get_item:p.pk %}
+  <event id="{{pres.pk}}">
+    <start>{{pres.start|date:"H:i"}}</start>
+    <duration>00:{{pres.duration}}</duration>
+    <room>{{sesh.location}}</room>
+    <title>{{pres.title}}</title>
+    <abstract>{{pres.desc}}</title>
+    <description>{{pres.abstract}}</description>
+    <persons>
+      <person id="{{pres.presenter.pk}}">{{pres.presenter}}</person>{% for cop in pres.copresenter.all %}
+      <person id="{{cop.pk}}">{{cop}}</person>{% endfor %}
+    </persons>
+  </event>{% endwith %}{% endfor %}{% endfor %}
+ </room>{% endfor %}
+</day>{% endfor %}
+</schedule>

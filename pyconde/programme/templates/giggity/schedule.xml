@@ -17,7 +17,7 @@
     <duration>00:{{pres.duration}}</duration>
     <room>{{sesh.location}}</room>
     <title>{{pres.title}}</title>
-    <abstract>{{pres.desc}}</title>
+    <abstract>{{pres.desc}}</abstract>
     <description>{{pres.abstract}}</description>
     <persons>
       <person id="{{pres.presenter.pk}}">{{pres.presenter}}</person>{% for cop in pres.copresenter.all %}
@@ -26,4 +26,38 @@
   </event>{% endwith %}{% endfor %}{% endfor %}
  </room>{% endfor %}
 </day>{% endfor %}
+{% for plenary in plenaries %}
+<day date="{{plenary.start|date:'Y-m-d'}}" index="{{plenary.day}}">
+<room name="Auditorium">
+<event id="{{plenary.pid}}">
+<start>{{plenary.start|date:"H:i"}}</start>
+<duration>{{plenary.duration}}</duration>
+<title>Plenary: {{plenary.title}}</title>
+<room>Auditorium</room>
+<abstract>
+{% for item in plenary.items %}
+{{item.title}}
+{{item.details}}
+{% endfor %}
+</abstract>
+</event>
+</room>
+</day>
+<day date="{{plenary.start|date:'Y-m-d'}}" index="{{plenary.day}}">
+<room name="Banqueting Suite">
+<event id="{{plenary.pid}}">
+<start>{{plenary.start|date:"H:i"}}</start>
+<duration>{{plenary.duration}}</duration>
+<title>Plenary: {{plenary.title}}</title>
+<room>Banqueting Suite</room>
+<abstract>
+{% for item in plenary.items %}
+{{item.title}}
+{{item.details}}
+{% endfor %}
+</abstract>
+</event>
+</room>
+</day>
+{% endfor %}
 </schedule>

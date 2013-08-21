@@ -7,12 +7,19 @@
 <div class="plenary" >
 <h1>{{plenary.title}}</h1>
 <h2>{{plenary.start|date:"l jS N H:i"}} - {{plenary.end|date:"H:i"}}</h2>
-<p>Item lengths are approximate</p>
-<ol>
+<p>Plenaries take place in the Auditorium and overflow into the Banqueting Suite. Item lengths are approximate.</p>
 {% for item in plenary.plenaryitem_set.all|posorder %}
-<li>{{item}} ({{item.duration}} minutes)</li>
+<h3>
+{% if item.link %}
+<a href="{{ item.link }}">{{item}}</a>
+{% else %}
+{{item}}
+{% endif %}
+({{item.duration}} minutes)
+</h3>
+{% if item.details %}
+{{item.details|safe}}
+{% endif %}
 {% endfor %}
-</ol>
-<p>Plenaries take place in the Auditorium and overflow into the Banqueting Suite.</p>
 </div>
 {% endblock %}

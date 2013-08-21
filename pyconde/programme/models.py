@@ -157,7 +157,7 @@ class SpecialEvent(models.Model):
     """ These are highlighted on the day of the programme, eg unconference, map gallery """
     name = models.CharField(max_length=200)
     details = tinymce_models.HTMLField(blank=True, null=True)
-    link = models.URLField("Link if NO details",blank=True,null=True)
+    link = models.URLField("Optional Main Link",blank=True,null=True)
     start = models.DateField() # give full timing details in link or details
     location = models.CharField(max_length=200) # could be anywhere...
     def __unicode__(self):

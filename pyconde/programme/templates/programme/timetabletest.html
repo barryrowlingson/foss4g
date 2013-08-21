@@ -36,7 +36,11 @@ See <a href="{% url 'favourites' %}">your favourites</a>
 <h2 class="subhead"><a id="events"></a>Today's Special Events</h2>
 {% for w in specials %}
 <div class="special">
+{% if w.link %}
+<h3><a href="{{w.link}}">{{w.name}}</a></h3>
+{% else %}
 <h3>{{w.name}}</h3>
+{% endif %}
 {{w.details|safe}}
 </div>
 {% empty %}

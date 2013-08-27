@@ -1,11 +1,63 @@
 {% extends "base_programme.html" %}
+{% load sekizai_tags %}
 
 {% block title %}{{loc.name}}{% endblock %}
 {% block tophead %}{{loc.name}}{% endblock %}
+
+{% block extra_head %}
+
+<link rel="stylesheet" href="{{STATIC_URL}}/programme/css/leaflet.css" />
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="{{STATIC_URL}}/programme/css/leaflet.ie.css" />
+<![endif]-->
+
+<link rel="stylesheet" href="{{STATIC_URL}}/programme/css/leaflet.label.css">
+
+<script src="{{STATIC_URL}}/programme/js/leaflet.js"></script>
+<script src="{{STATIC_URL}}/programme/js/leaflet.label.js"></script>
+
+{% endblock %}
+
 {% block content %}
 
 <p>
 Directions and information about {{loc.name}} will appear here.
 </p>
+<div style="height: 400px" id="map">
+</div>
+
+<script>
+// create a map in the "map" div, set the view to a given place and zoom
+var map = L.map('map').setView([52.93897891360789,  -1.1993229389190674], 16);
+var locations=[
+ ["EMCC",[52.93882049885128,  -1.2034669518470764]],
+ ["Sir Clive Granger", [52.93976774580243, -1.1945512890815735]],
+ ["Trent Building", [52.93689037860634, -1.1963242292404175]],
+ ["Hallward Library",[52.93890778868687,  -1.1974722146987915]],
+ ["Cavendish Hall", [52.93603036430675, -1.2056529521942139]],
+ ["Ancaster Hall", [52.93577817642184, -1.2078416347503662]],
+ ["Rutland Hall", [52.940026376178444, -1.2033784389495847]],
+ ["Orchard Hotel", [52.93937333150273,  -1.2021446228027344]]
+];
+// add an OpenStreetMap tile layer
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+var i = 0,
+    len = locations.length;
+
+var myIcon = L.divIcon({className: 'my-div-icon'});
+// you can set .my-div-icon styles in CSS
+
+//L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);
+
+for(;i<len;i++){
+// add a marker in the given location, attach some popup content to it and open the popup
+L.marker(locations[i][1]).bindLabel(locations[i][0], { 'noHide': true, direction: 'auto' }).addTo(map);
+}
+
+//    .openPopup();
+</script>
 
 {% endblock %}

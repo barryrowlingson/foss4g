@@ -21,14 +21,15 @@
 {% block content %}
 
 <p>
-Directions and information about {{loc.name}} will appear here.
+{{ loc.notes|safe }}
 </p>
 <div style="height: 35em" id="map">
 </div>
-
+{{loc.directions|safe}}
 <script>
 // create a map in the "map" div, set the view to a given place and zoom
-var map = L.map('map').setView([52.93897891360789,  -1.1993229389190674], 16);
+var map = L.map('map');
+var xy = [52.93897891360789,  -1.1993229389190674];
 var talks=[
  ["EMCC",[52.93882049885128,  -1.2034669518470764]],
  ["Sir Clive Granger", [52.93976774580243, -1.1945512890815735]],
@@ -41,6 +42,22 @@ var accom = [
  ["Rutland Hall", [52.940026376178444, -1.2033784389495847]],
  ["Orchard Hotel", [52.93937333150273,  -1.2021446228027344]]
 ];
+
+var entrances = [
+ ["West Entrance", [52.933831753817586, -1.2043333053588867]],
+ ["South Entrance", [52.939082367829776,  -1.1890554428100586]],
+ ["North Entrance", [52.94327205595876, -1.190493106842041]]
+];
+
+var building=$("#mapinfo").data("building");
+
+var i =0,len=entrances.length;
+for(;i<len;i++){
+c = new L.CircleMarker(entrances[i][1],{'color': "red"});
+c.setRadius(12).bindLabel(entrances[i][0]);
+c.addTo(map);
+}
+
 // add an OpenStreetMap tile layer
 baseLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -53,7 +70,17 @@ var i = 0,len = talks.length;
 var group = L.layerGroup();
 for(;i<len;i++){
 // add a marker in the given location with a label
-group.addLayer(L.marker(talks[i][1]).bindLabel(talks[i][0], { 'noHide': true, direction: 'auto' }));
+if(building){
+var hide = talks[i][0]==building;
+if(talks[i][0]==building){
+	 xy = talks[i][1];
+};
+
+}else{
+var hide=true;
+}
+m = new L.marker(talks[i][1]).bindLabel(talks[i][0], { 'noHide': hide, direction: 'auto' });
+group.addLayer(m);
 }
 group.addTo(map);
 
@@ -61,13 +88,15 @@ var i = 0,len = accom.length;
 var agroup = L.layerGroup();
 for(;i<len;i++){
 // add a marker in the given location with a label
-agroup.addLayer(L.marker(accom[i][1]).bindLabel(accom[i][0], { 'noHide': true, direction: 'auto' }));
+agroup.addLayer(L.marker(accom[i][1]).bindLabel(accom[i][0], { 'noHide': false, direction: 'auto' }));
 }
 agroup.addTo(map)
 
 var layer1 = {'Conference Locations': group, 'Residences': agroup};
 
 L.control.layers(null,layer1).addTo(map);
+
+map.setView(xy, 16);
 </script>
 
 {% endblock %}

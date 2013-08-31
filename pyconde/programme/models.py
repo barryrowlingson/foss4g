@@ -175,3 +175,29 @@ class Keynote(models.Model):
     def __unicode__(self):
         return u"%s (%s)" % (self.title, self.speaker)
 
+
+class Volunteering(models.Model):
+    """ Records volunteer activities except session helping/chairing """
+    title = models.CharField(max_length=200)
+    start = models.DateTimeField("Start time")
+    needed = models.IntegerField("How many needed?")
+    duration = models.IntegerField("Duration in minutes")                             
+    description = models.TextField("Describe the activity",blank=True)
+    notes = models.TextField("Committee use only",blank=True)
+    volunteer = models.ManyToManyField(Person,related_name="volunteer")
+
+    def end(self):
+        return self.start + datetime.timedelta(minutes=self.duration)
+
+    def totalvolunteers(self):
+        return self.volunteer.count()
+    def state(self):
+        n = self.volunteer.count()
+        needed = self.needed
+        if n == needed:
+            return "Complete"
+        if n < needed:
+            return "Need more"
+        return "Overfull"
+    def __unicode__(self):
+        return u"%s" % self.title

@@ -73,5 +73,14 @@ class SpecialEventAdmin(admin.ModelAdmin):
     list_display=('pk','name','start','link')
     list_editable=('name','start','link')
 
+class VolunteeringAdmin(admin.ModelAdmin):
+    list_display=('pk','title','start','end','duration','needed','totalvolunteers','state')
+    list_editable=('title','start','duration','needed')
+    search_fields=('title','description')
+    filter_horizontal = ('volunteer',)
+    pass
+
+admin.site.register(models.Volunteering, VolunteeringAdmin)
+
 admin.site.register(models.GlobalEvent, GlobalEventAdmin)
 admin.site.register(models.SpecialEvent, SpecialEventAdmin)

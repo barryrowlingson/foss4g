@@ -6,6 +6,7 @@ from django.contrib.auth import forms
 from django.contrib.auth import views as auth_views
 
 from . import views
+from . import volunteerviews
 
 # / - main timetable
 # /workshops - workshop timetable with booking info
@@ -60,5 +61,15 @@ urlpatterns = patterns('',
                        url(r'^wspreslist/', views.wspreslist, name='wspreslist'),
 
                        url(r'^search/', include('haystack.urls')),
+
+                       url(r'volunteer/events/',volunteerviews.events,name="volunteerevents"),
+                       url(r'volunteer/event/(?P<vid>\d+)/',volunteerviews.forevent,name="volunteerevent"),
+                       url(r'volunteer/person/(?P<pid>\d+)/',volunteerviews.forperson,name="volunteerperson"),
+                       url(r'volunteer/sessions/(?P<daynumber>\d+)/',volunteerviews.forday,name="volunteersessions"),
+                       url(r'volunteer/workshops/',volunteerviews.workshops,name="volunteerworkshops"),
+                       url(r'volunteer/roster/',volunteerviews.volunteers,name="volunteerroster"),
+
+                       
+                       
                        )
 

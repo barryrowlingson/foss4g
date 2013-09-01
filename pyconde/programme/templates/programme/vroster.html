@@ -1,0 +1,29 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <title>Volunteer Roster</title>
+<style>
+body {font-family: helvetica}
+div.person {border-bottom: 1px dotted black; padding-left: 3em;}
+th {text-align: right;}
+li.volist {display: inline; margin-right: 4em;}
+</style>
+</head>
+<body>
+<h1>Volunteer Roster</h1>
+
+{% for person in vdata %}
+<div class="person">
+<h2>{{person.0}}</h2>
+
+<table>
+{% for activity in person.1 %}
+<tr><th>{{activity.start}}</th><td>{{activity.title}} {% if activity.location %}({{activity.location}}){%endif%}</td></tr>
+{% endfor %}
+</table>
+
+</div>
+{% endfor %}
+
+</body>
+</html>

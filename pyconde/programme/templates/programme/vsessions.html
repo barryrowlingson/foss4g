@@ -1,0 +1,36 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8">
+    <title>Volunteer Session Details</title>
+<style>
+body {font-family: helvetica}
+div.session {border-bottom: 1px dotted black; padding-left: 3em;}
+th {text-align: right;}
+li.volist {display: inline; margin-right: 4em;}
+</style>
+</head>
+<body>
+<h1>Sessions for {{day|date:"l"}}</h1>
+
+{% regroup sessions by start as session_list %}
+{% for start in session_list %}
+
+<h2>Starting at {{start.grouper|date:"P"}}</h2>
+{% for session in start.list %}
+<div class="session">
+<h3>{{session.title}}</h3>
+<table>
+<tr><th>Place:</th><td>{{session.location}}</td></tr>
+<tr><th>Chair:</th><td>{{session.chair}}</td></tr>
+<tr><th>Help:</th><td>{{session.helper}}</td></tr>
+<tr><th>Start:</th><td>{{session.start}}</td></tr>
+<tr><th>End:</th><td>{{session.end}}</td></tr>
+</table>
+</div>
+{% endfor %}
+{% endfor %}
+
+
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+<h1>{{vevent.title}}</h1>
+<table>
+<tr><th>Time:</th><td>{{vevent.start}} to {{vevent.end}} ({{vevent.duration}}m)</td></tr>
+<tr><th>Needs:</th><td>{{vevent.needed}}</td></tr>
+<tr><th>Has:</th><td>{{vevent.totalvolunteers}}</td></tr>
+</table>
+<h2>Volunteers</h2>
+<ol class="volist">
+{% for vol in vevent.volunteer.all %}
+<li class="volist">{{forloop.counter}}. {{vol}}</li>
+{% endfor %}
+</ol>
+<h2>Description</h2>
+{{vevent.description}}
+
+<h2>Notes</h2>
+{{vevent.notes}}

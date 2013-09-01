@@ -7,6 +7,10 @@ body {font-family: helvetica}
 div.person {border-bottom: 1px dotted black; padding-left: 3em;}
 th {text-align: right;}
 li.volist {display: inline; margin-right: 4em;}
+@media print
+{
+div.person {page-break-after:always}
+}
 </style>
 </head>
 <body>
@@ -18,7 +22,7 @@ li.volist {display: inline; margin-right: 4em;}
 
 <table>
 {% for activity in person.1 %}
-<tr><th>{{activity.start}}</th><td>{{activity.title}} {% if activity.location %}({{activity.location}}){%endif%}</td></tr>
+<tr><th>{{activity.start|date:"l jS P"}}</th><td>{{activity.title}} {% if activity.location %}({{activity.location}}){%endif%}</td></tr>
 {% endfor %}
 </table>
 

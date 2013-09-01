@@ -114,3 +114,8 @@ def volunteerdata():
     vs.sort(key=lambda x:x[0].name)
     return vs
     
+@staff_member_required
+def index(request):
+    return render_to_response("programme/volindex.html",
+                              {},
+                              context_instance=RequestContext(request))

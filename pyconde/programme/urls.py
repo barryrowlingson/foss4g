@@ -68,6 +68,7 @@ urlpatterns = patterns('',
                        url(r'volunteer/sessions/(?P<daynumber>\d+)/',volunteerviews.forday,name="volunteersessions"),
                        url(r'volunteer/workshops/',volunteerviews.workshops,name="volunteerworkshops"),
                        url(r'volunteer/roster/',volunteerviews.volunteers,name="volunteerroster"),
+                       url(r'volunteer/',volunteerviews.index,name="volunteerindex"),
 
                        
                        

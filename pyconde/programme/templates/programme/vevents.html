@@ -4,7 +4,7 @@
     <title>Volunteer Event Details</title>
 <style>
 body {font-family: helvetica}
-div.event {border-bottom: 1px dotted black;}
+div.event {border-bottom: 1px dotted black;padding-left: 3em;padding-bottom: 1em;}
 th {text-align: right;}
 li.volist {display: inline; margin-right: 4em;}
 </style>
@@ -12,6 +12,7 @@ li.volist {display: inline; margin-right: 4em;}
 <body>
 <h1>All Volunteer Events By Date</h1>
 <p>Does not include chairing/helping presentations and workshops.</p>
+
 {% for vevent in vevents %}
 <div class="event">
 {% include "programme/vevent_show.html" %}

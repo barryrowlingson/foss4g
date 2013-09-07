@@ -15,3 +15,10 @@ def get_day(event):
 def posorder(preslist):
     return preslist.order_by("position")
 
+from ..utils import nice_repr
+
+@register.filter(name='timedelta')
+def timedelta(value, display="long"):
+    if value is None:
+        return value
+    return nice_repr(value, display)

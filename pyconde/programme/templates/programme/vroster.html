@@ -1,4 +1,5 @@
 <!doctype html>
+{% load programme_tags %}
 <head>
     <meta charset="utf-8">
     <title>Volunteer Roster</title>
@@ -18,7 +19,7 @@ div.person {page-break-after:always}
 
 {% for person in vdata %}
 <div class="person">
-<h2>{{person.0}}</h2>
+<h2>{{person.0}} working {{person.0.helptime|timedelta}}</h2>
 {% if person.0.notes %}
 <h3>Notes</h3>
 <pre>
@@ -28,7 +29,7 @@ div.person {page-break-after:always}
 <h3>Activities</h3>
 <table>
 {% for activity in person.1 %}
-<tr><th>{{activity.start|date:"l jS P"}}</th><td>{{activity.title}} {% if activity.location %}({{activity.location}}){%endif%}</td></tr>
+<tr><th>{{activity.start|date:"l jS P"}}</th><td>{{activity.title}} ({% if activity.location %}{{activity.location}}, {% endif %}{{activity.duration|timedelta}})</td></tr>
 {% endfor %}
 </table>
 

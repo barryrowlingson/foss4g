@@ -65,7 +65,8 @@ def workshops(request):
 def seshdata(s,doing):
     return {'start': s.start,
             'location': s.location,
-            'title': doing}
+            'title': doing,
+            'duration': s.end()-s.start}
 
 def cwsdata(cws):
     return seshdata(cws,"Helping %s" % cws.title)
@@ -93,6 +94,7 @@ def volunteerdata():
     
     vs = defaultdict(list)
     for s in sessions:
+        s.duration = s.end() - s.start
         vs[s.helper].append(seshdata(s,"Helping %s" % s.title))
         vs[s.chair].append(seshdata(s,"Chairing %s" % s.title))
         
@@ -112,6 +114,12 @@ def volunteerdata():
     # sort the records by person's name
     vs = [(k,v) for k,v in vs.iteritems()]
     vs.sort(key=lambda x:x[0].name)
+
+    for (p,v) in vs:
+        p.helptime = datetime.timedelta(0,0)
+        for e in v:
+            p.helptime = p.helptime + e['duration']
+
     return vs
     
 @staff_member_required

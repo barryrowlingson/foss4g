@@ -19,6 +19,8 @@ class PresInline(admin.StackedInline):
     extra = 0
 
 class PSessionAdmin(admin.ModelAdmin):
+    list_display=('title','start','location','chair','helper')
+    list_editable=('chair','helper')
     inlines = [ 
         PresInline,
         ]

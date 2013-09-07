@@ -19,7 +19,13 @@ div.person {page-break-after:always}
 {% for person in vdata %}
 <div class="person">
 <h2>{{person.0}}</h2>
-
+{% if person.0.notes %}
+<h3>Notes</h3>
+<pre>
+{{person.0.notes}}
+</pre>
+{% endif %}
+<h3>Activities</h3>
 <table>
 {% for activity in person.1 %}
 <tr><th>{{activity.start|date:"l jS P"}}</th><td>{{activity.title}} {% if activity.location %}({{activity.location}}){%endif%}</td></tr>

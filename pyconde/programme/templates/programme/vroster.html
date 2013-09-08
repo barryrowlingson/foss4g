@@ -7,11 +7,14 @@
 body {font-family: helvetica}
 div.person {border-bottom: 1px dotted black; padding-left: 3em;}
 th {text-align: right;}
+th.total {text-align:left; padding-left: 1em}
 li.volist {display: inline; margin-right: 4em;}
+tr.total th{border-top: 1px solid black; padding-top: 0.5em;}
 @media print
 {
 div.person {page-break-after:always}
 }
+td{padding-left: 1em}
 </style>
 </head>
 <body>
@@ -19,7 +22,7 @@ div.person {page-break-after:always}
 
 {% for person in vdata %}
 <div class="person">
-<h2>{{person.0}} working {{person.0.helptime|timedelta}}</h2>
+<h2>{{person.0}}</h2>
 {% if person.0.notes %}
 <h3>Notes</h3>
 <pre>
@@ -31,6 +34,7 @@ div.person {page-break-after:always}
 {% for activity in person.1 %}
 <tr><th>{{activity.start|date:"l jS P"}}</th><td>{{activity.title}} ({% if activity.location %}{{activity.location}}, {% endif %}{{activity.duration|timedelta}})</td></tr>
 {% endfor %}
+<tr class="total"><th>Total</th><th class="total">{{person.0.helptime|timedelta}}</th></tr>
 </table>
 
 </div>

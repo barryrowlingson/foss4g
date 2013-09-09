@@ -1,0 +1,54 @@
+{% extends "base_wide.html" %}
+{% load sekizai_tags %}
+{% load likes_inclusion_tags %}
+{% block title %}
+Map Gallery
+{% endblock %}
+{% block headcontent %}
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/mapgallery/css/gallery.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
+	 <div class="span3 hidden-print" id="logo">
+	   <a href="/"><img src="{{ STATIC_URL }}booking/images/foss4g2013-white-300.png" /></a>
+	 </div>
+	 <div class="span9" id="blurb">
+	   <h1>{% block tophead %}Map Gallery{% endblock %}</h1>
+	 </div>
+{% endblock %}
+
+{% block content %}
+
+<div id="container" class="jsx-masonry">
+{% for map in maps %}
+<div class="map {% cycle 'c1' 'c2' %}">
+<h1><a href="#">{{map.title}}</a></h1>
+<h2>{{map.author}}{% if map.org %} ({{map.org}}){% endif %}</h2>
+<a href="#"><img src="{{STATIC_URL}}/mapgallery/maps/{{map.row}}/thumb.png" /></a>
+<p>{{map.tellus|truncatewords:50}}</p>
+{% likes map template='maplikes/inclusion_tags/likes.html' %}
+</div>
+{% endfor %}
+</div>
+
+
+<script src="{{ STATIC_URL }}js/masonry.pkgd.min.js"></script>
+<script>
+$( window ).load(function() {
+$('#container').masonry({});
+});
+$('a.liker').live('click', function(event){
+    event.preventDefault();
+    var el = $(this);
+    var replace_selector = el.attr('replace_selector');
+    if (!replace_selector)
+        var replace_target = el.parents('.likes:first');
+    else
+        var replace_target = $(replace_selector);
+    $.get(el.attr('href'), {}, function(data){
+        replace_target.html('<div class="likes">Voted</div>'); 
+    });
+});
+</script>
+
+
+{% endblock %}

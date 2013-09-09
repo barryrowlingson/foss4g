@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^programme/', include('pyconde.programme.urls')),
     url(r'^pledge/', include('pyconde.pledge.urls')),
     url(r'^likes/', include('likes.urls')),
+    url(r'^gallery/', include('pyconde.mapgallery.urls')),
     #url(r'^',include('cms.urls')),
 )
 

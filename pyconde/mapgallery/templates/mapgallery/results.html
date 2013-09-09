@@ -1,0 +1,34 @@
+{% extends "base_wide.html" %}
+{% load sekizai_tags %}
+{% load likes_inclusion_tags %}
+{% block title %}
+Map Gallery Results
+{% endblock %}
+{% block headcontent %}
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/mapgallery/css/gallery.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
+	 <div class="span3 hidden-print" id="logo">
+	   <a href="/"><img src="{{ STATIC_URL }}booking/images/foss4g2013-white-300.png" /></a>
+	 </div>
+	 <div class="span9" id="blurb">
+	   <h1>{% block tophead %}Map Gallery Results{% endblock %}</h1>
+	 </div>
+{% endblock %}
+
+{% block content %}
+
+<table>
+<tr><th>id</th><th>Map</th><th>Author</th><th>Title</th><th>Category</th><th>Votes</th></tr>
+{% for map in maps %}
+<tr class="{% cycle 'c1' 'c2' %}">
+<td>{{map.row}}</td>
+<td><img src="{{STATIC_URL}}/mapgallery/maps/{{map.row}}/thumb.png" /></td>
+<td>{{map.author}}</td>
+<td>{{map.title}}</td>
+<td>{{map.category}}</td>
+<td>{{map.vote_total}}</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

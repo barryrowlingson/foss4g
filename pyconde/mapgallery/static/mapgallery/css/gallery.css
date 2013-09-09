@@ -1,0 +1,20 @@
+div.map {width: 220px;
+	 overflow: hidden;
+	 padding: 1em;border-radius: 20px;
+	 margin: 0.5em;
+	 border: 1px solid gray;
+}
+
+
+
+.c1 { background-color: white;}
+.c2 {background-color: #ddffdd; }
+
+div.map h1 {font-size: 100%; line-height: 100%}
+div.map h2 {font-size: 80%; color: gray; line-height: 100%}
+
+div.map img {width: 50%; float: left; margin:0 10px;}
+
+td {border: 1px solid black; padding:0 1em;}
+td img {width: 100px;}
+th {font-weight: bold}

@@ -131,6 +131,9 @@ INSTALLED_APPS = [
     'secretballot',
     'likes',
 
+    # gallery app
+    'pyconde.mapgallery',
+
 ]
 
 MIDDLEWARE_CLASSES = [

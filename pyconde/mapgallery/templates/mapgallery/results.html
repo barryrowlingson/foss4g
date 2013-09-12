@@ -22,11 +22,11 @@ Map Gallery Results
 <tr><th>id</th><th>Map</th><th>Author</th><th>Title</th><th>Category</th><th>Votes</th></tr>
 {% for map in maps %}
 <tr class="{% cycle 'c1' 'c2' %}">
-<td>{{map.row}}</td>
+<td>{{map.sID}}</td>
 <td><img src="{{STATIC_URL}}/mapgallery/maps/{{map.row}}/thumb.png" /></td>
 <td>{{map.author}}</td>
 <td>{{map.title}}</td>
-<td>{{map.category}}</td>
+<td>{{map.competition}}</td>
 <td>{{map.vote_total}}</td>
 </tr>
 {% endfor %}

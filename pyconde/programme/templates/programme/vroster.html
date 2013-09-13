@@ -23,6 +23,7 @@ td{padding-left: 1em}
 {% for person in vdata %}
 <div class="person">
 <h2>{{person.0}}</h2>
+<!-- show notes {{showNotes}} -->
 {% if showNotes %}
 {% if person.0.notes %}
 <h3>Notes</h3>

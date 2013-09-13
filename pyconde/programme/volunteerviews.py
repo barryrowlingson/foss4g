@@ -77,8 +77,13 @@ def evdata(ev):
 
 @staff_member_required
 def volunteers(request):
+    showNotes = request.GET.get("notes",None)
+    if showNotes:
+        showNotes=True
+    else:
+        showNotes=False
     vdata = volunteerdata()
-    context = {'vdata': vdata}
+    context = {'vdata': vdata, 'showNotes': showNotes}
     return render_to_response("programme/vroster.html",
                               context,
                               context_instance=RequestContext(request))

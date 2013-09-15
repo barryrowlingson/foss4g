@@ -26,7 +26,7 @@ Map Gallery
 
 <div id="container" class="jsx-masonry">
 {% for map in maps %}
-<div class="map {% cycle 'c1' 'c2' %}">
+<div class="map {{ classes|random }}">
 <h1><a class="fancybox fancybox.ajax" href="{% url 'mapmodal' idcode=map.id %}">{{map.title}}</a></h1>
 <a class="fancybox fancybox.ajax" href="{% url 'mapmodal' idcode=map.id %}"><img src="{{archive}}{{map.directory}}/thumb.jpg" /></a>
 <h2>{{map.author}}</h2>

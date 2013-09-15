@@ -1,6 +1,6 @@
 {% load likes_inclusion_tags %}
 <div class="popup">
-<h1>{% likes map template='maplikes/inclusion_tags/likes.html' %}<a title="View {{map.format}}" href="{{map.linkto}}" target="_blank">{{map.title}} - {{map.author}}</a>
+<h1>{% if map.competition != "None" %}{% likes map template='maplikes/inclusion_tags/likes.html' %}{% endif %}<a title="View {{map.format}}" href="{{map.linkto}}" target="_blank">{{map.title}} - {{map.author}}</a>
 </h1>
 <a title="View {{map.format}}" href="{{map.linkto}}" target="_blank">
 <img src="{{archive}}{{map.directory}}/fullsize.jpg" />

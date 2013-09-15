@@ -19,6 +19,7 @@ ARCHIVE=LOCAL
 def gallery(request):
     maps = Map.objects.all().order_by("?")
     context={'maps': maps,
+             'classes': ['c1','c2'],
              'archive':ARCHIVE}
     return render_to_response("mapgallery/index.html",
                               context,

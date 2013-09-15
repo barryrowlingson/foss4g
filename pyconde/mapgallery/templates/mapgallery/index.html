@@ -42,7 +42,10 @@ $('#container').isotope({ itemSelector : '.map',
   layoutMode : 'masonry'});
 });
 $('a.liker').live('click', function(event){
-    event.preventDefault();
+event.preventDefault();
+var r=confirm("Register vote? (Cannot be undone)");
+if (r==true)
+  {
     var el = $(this);
     var replace_selector = el.attr('replace_selector');
     if (!replace_selector)
@@ -52,6 +55,7 @@ $('a.liker').live('click', function(event){
     $.get(el.attr('href'), {}, function(data){
         replace_target.html('<div class="likes" title="Vote Registered!"><span class="voted">Voted</span></div>'); 
     });
+};
 });
 
 $(document).ready(function() {

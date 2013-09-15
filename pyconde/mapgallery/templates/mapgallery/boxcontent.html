@@ -1,0 +1,12 @@
+{% load likes_inclusion_tags %}
+<div class="popup">
+<h1>
+<a href="{{map.linkto}}" target="_blank">
+{{map.title}} - {{map.author}}</a>
+
+ {% likes map template='maplikes/inclusion_tags/likes.html' %}
+</h1>
+<a href="{{map.linkto}}" target="_blank">
+<img src="{{archive}}{{map.directory}}/fullsize.jpg" />
+</a>
+</div>

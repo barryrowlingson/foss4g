@@ -8,8 +8,6 @@ div.map {
 	 width: 220px;
 }
 
-
-
 .c1 { background-color: white;}
 .c2 {background-color: #ddffdd; }
 
@@ -60,3 +58,28 @@ th {font-weight: bold}
        -o-transition-duration: 0s;
           transition-duration: 0s;
 }
+
+div.popup h1 {text-align: center}
+
+
+
+span.voted {
+    background: url(voted32.png) 0 0 no-repeat;
+    height: 32px;
+    width: 32px;
+    text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	display:inline-block;
+}
+span.notvoted {
+    background: url(vote32.png) 0 0 no-repeat;
+    height: 32px;
+    width: 32px;
+    text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	display: inline-block;
+}
+
+div.likes {display: inline}

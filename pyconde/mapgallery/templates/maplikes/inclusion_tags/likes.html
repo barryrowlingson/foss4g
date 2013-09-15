@@ -1,12 +1,14 @@
 {% if likes_enabled %}
 {% with tot=content_obj.vote_total|default:0 %}
 <div class="likes" title="Voting">
-
-{% if can_vote %}            
-<a class="liker" title="Click To Vote" href="{% url like content_type content_obj.id 1 %}" rel="nofollow">Vote
+{% if can_vote %}
+<a class="liker" title="Click To Vote - votes cannot be undone!" href="{% url like content_type content_obj.id 1 %}" rel="nofollow">
+<span class="notvoted">
+Vote
+</span>
 </a>
 {% else %}
-<span title="Vote registered">Voted</span>
+<span class="voted" title="Vote registered">Voted</span>
 {% endif %}
     </div>
 {% endwith %}

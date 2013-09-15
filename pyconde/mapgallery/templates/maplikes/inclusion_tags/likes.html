@@ -2,7 +2,7 @@
 {% with tot=content_obj.vote_total|default:0 %}
 <div class="likes" title="Voting">
 {% if can_vote %}
-<a class="liker" title="Click To Vote - votes cannot be undone!" href="{% url like content_type content_obj.id 1 %}" rel="nofollow">
+<a class="liker" title="{{map.competition}} Award - Click To Vote - votes cannot be undone!" href="{% url like content_type content_obj.id 1 %}" rel="nofollow">
 <span class="notvoted">
 Vote
 </span>

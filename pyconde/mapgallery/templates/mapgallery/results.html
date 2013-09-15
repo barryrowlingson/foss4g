@@ -23,7 +23,7 @@ Map Gallery Results
 {% for map in maps %}
 <tr class="{% cycle 'c1' 'c2' %}">
 <td>{{map.sID}}</td>
-<td><img src="{{STATIC_URL}}/mapgallery/maps/{{map.row}}/thumb.png" /></td>
+<td><img src="{{archive}}{{map.directory}}/thumb.jpg" /></td>
 <td>{{map.author}}</td>
 <td>{{map.title}}</td>
 <td>{{map.competition}}</td>

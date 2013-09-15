@@ -59,9 +59,9 @@ th {font-weight: bold}
           transition-duration: 0s;
 }
 
-div.popup h1 {text-align: center}
+div.popup h1 {text-align: center; font-size: 150%}
 
-
+div.popup h1  a.liker:hover {text-decoration: none}
 
 span.voted {
     background: url(voted32.png) 0 0 no-repeat;

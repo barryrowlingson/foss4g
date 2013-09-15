@@ -29,7 +29,7 @@ def gallery(request):
 def results(request):
     maps = list(Map.objects.all())
     maps.sort(key = lambda x:-x.vote_total)
-    context={'maps': maps}
+    context={'maps': maps,'archive':ARCHIVE}
     return render_to_response("mapgallery/results.html",
                               context,
                               context_instance=RequestContext(request))

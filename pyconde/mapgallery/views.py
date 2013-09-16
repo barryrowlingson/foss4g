@@ -14,7 +14,7 @@ from .models import Map
 
 LOCAL="http://localhost:8080/mapgallery/"
 REMOTE="http://www.rowlingson.com/FOSS4G/mapgallery/"
-ARCHIVE=LOCAL
+ARCHIVE=REMOTE
 
 def gallery(request):
     maps = Map.objects.all().order_by("?")

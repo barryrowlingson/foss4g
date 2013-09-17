@@ -26,7 +26,7 @@ urlpatterns = patterns('',
 
                        url(r'^freeworkshops$', views.freeworkshops, name="freeworkshop-index"),
                        url(r'^freeworkshops/(?P<pk>\d+)/$', views.freeworkshop, name="freeworkshop"),
-                       
+                       url(r'^freeworkshoplist$', views.freeworkshoplist,name="freeworkshoplist"),
 
                        url(r'^plenary/(?P<pk>\d+)/$', views.view_plenary, name='view-plenary'),
                        url(r'^presentations/(?P<presentation_pk>\d+)/$', views.view_presentation, name='view-presentation'),

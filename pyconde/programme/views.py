@@ -71,6 +71,14 @@ def freeworkshop(request,pk):
                               context_instance=RequestContext(request))
 
 
+def freeworkshoplist(request):
+    fws=CWorkshop.objects.all().order_by("start")
+    context={'fworkshops': fws}
+    return render_to_response("programme/freeworkshoplist.html",
+                              context,
+                              context_instance=RequestContext(request))
+    
+
 def view_presentation(request, presentation_pk):
     try:
         pres = Presentation.objects.select_related(depth=2).get(pk = presentation_pk)

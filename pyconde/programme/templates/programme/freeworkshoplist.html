@@ -1,0 +1,43 @@
+<html>
+<head><title>matts's list</title></head>
+<body>
+
+
+{% for fwork in fworkshops %}
+<div class="fwork">
+<h3>{{fwork.title}}</h3>
+<h3>{{fwork.start}}</h3>
+<h3>{{fwork.location}}</h3>
+<h4><a href="{% url 'view-person' person_pk=fwork.presenter.pk%}">{{fwork.presenter}}</a>
+{% with aff=fwork.presenter.affiliation %}
+{% if aff %}
+({{aff}})
+{% endif %}
+{% endwith %}
+{% with cops=fwork.copresenter.all %}
+{% if cops %}
+with {% for cop in cops %}<a href="{% url 'view-person' person_pk=cop.pk%}">{{cop}}</a>
+{% with copaff=cop.affiliation %}
+{% if copaff %}({{copaff}}){% endif %}{% endwith %}{% if forloop.revcounter0 > 0 %}, {%endif %}{% endfor %}
+{% endif %}
+{% endwith %}
+</h4>
+<ul>
+<li>{{fwork.start|date:"P"}} to {{fwork.end|date:"P"}}</li>
+<li>Location: {{fwork.location}}</li>
+<li>Roomsize: {{fwork.location.capacity}}</li>
+</ul>
+<p>
+{{fwork.desc}}
+</p>
+<ol>
+<script>
+for(i=0;i<={{fwork.location.capacity}};i++){
+document.write("<li></li>");
+}
+</script>
+</ol>
+</div>
+{% endfor %}
+</body>
+</html>

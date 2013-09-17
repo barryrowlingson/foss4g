@@ -6,6 +6,7 @@
 {% for w in workshops %}
 <div class="workshop">
 <h3>{{w.item.title}} : {{w.item.speaker}}</h3>
+<h3>{{w.item.location}}</h3>
 {% with adds=w.item.additional_speakers.all %}
 {% if adds %}
 <h2>With: {{adds|join:", "}}</h2>

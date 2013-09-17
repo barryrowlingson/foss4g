@@ -8,7 +8,7 @@
 <h3>{{fwork.title}}</h3>
 <h3>{{fwork.start}}</h3>
 <h3>{{fwork.location}}</h3>
-<h4><a href="{% url 'view-person' person_pk=fwork.presenter.pk%}">{{fwork.presenter}}</a>
+<h4>{{fwork.presenter}}
 {% with aff=fwork.presenter.affiliation %}
 {% if aff %}
 ({{aff}})
@@ -16,7 +16,7 @@
 {% endwith %}
 {% with cops=fwork.copresenter.all %}
 {% if cops %}
-with {% for cop in cops %}<a href="{% url 'view-person' person_pk=cop.pk%}">{{cop}}</a>
+with {% for cop in cops %}{{cop}}
 {% with copaff=cop.affiliation %}
 {% if copaff %}({{copaff}}){% endif %}{% endwith %}{% if forloop.revcounter0 > 0 %}, {%endif %}{% endfor %}
 {% endif %}

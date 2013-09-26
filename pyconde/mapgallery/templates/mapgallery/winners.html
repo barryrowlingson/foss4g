@@ -1,0 +1,61 @@
+{% extends "base_wide.html" %}
+{% load sekizai_tags %}
+{% load likes_inclusion_tags %}
+{% load url from future %}
+{% block title %}
+Map Gallery
+{% endblock %}
+{% block headcontent %}
+{% addtoblock "css" %}
+<link href="{{STATIC_URL}}/mapgallery/css/gallery.css" type="text/css" rel="stylesheet">
+{% endaddtoblock %}
+{% addtoblock "js" %}
+<link rel="stylesheet" href="{{STATIC_URL}}/mapgallery/lightbox/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="{{STATIC_URL}}/mapgallery/lightbox/jquery.fancybox.pack.js?v=2.1.5"></script>
+{% endaddtoblock %}
+	 <div class="span3 hidden-print" id="logo">
+	   <a href="/"><img src="{{ STATIC_URL }}booking/images/foss4g2013-white-300.png" /></a>
+	 </div>
+	 <div class="span9" id="blurb">
+	   <h1>{% block tophead %}Map Gallery{% endblock %}</h1>
+	   <p>All entries for &ldquo;Opening Up The Map&rdquo; are here. Select any to view in more detail and get a vote button. Select again to go to the linked PDF, web site, movie, or image.</p><p>Most maps are entered in the "People's Map" contest - vote for your favourite.</p><p>All imagery and files are copyrighted by their owners, used here by permission, and not to be copied or
+  redistributed in any way. Unless stated otherwise here or elsewhere, no permission is given to use these map images,
+  files, or data in any way.</p>
+	 </div>
+{% endblock %}
+
+{% block content %}
+
+{% for p in prizes %}
+{% if p.winner %}
+<div>
+<h2><a id="prize{{p.id}}winner"></a>{{p.title}}</h2>
+<h3>Winner: 
+{% with map=p.winner %}
+ {{map.title}}, {{map.author}}</h3>
+<a class="fancybox fancybox.ajax" href="{% url 'mapmodal' idcode=map.id %}">
+<img src="{{archive}}{{map.directory}}/thumb.jpg" class="thumb" />
+<img class="trophy" src="{{STATIC_URL}}/mapgallery/goldtrophy.png">
+</a>
+
+{% endwith %}
+{% if p.runnerup %}
+{% with map=p.runnerup %}
+<h3><a id="prize{{p.id}}second"></a>Runner-up: {{map.title}}, {{map.author}}</h3>
+<a class="fancybox fancybox.ajax" href="{% url 'mapmodal' idcode=map.id %}"><img src="{{archive}}{{map.directory}}/thumb.jpg" class="thumb" />
+<img class="trophy" src="{{STATIC_URL}}/mapgallery/silvertrophy.png">
+</a>
+{% endwith %}
+{% endif %}
+</div>
+{% endif %}
+{% endfor %}
+<script>
+$(document).ready(function() {
+		$(".fancybox").fancybox();
+	});
+</script>
+
+
+
+{% endblock %}

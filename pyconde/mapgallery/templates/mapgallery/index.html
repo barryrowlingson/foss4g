@@ -21,6 +21,9 @@ Map Gallery
 	   <p>All entries for &ldquo;Opening Up The Map&rdquo; are here. Select any to view in more detail and get a vote button. Select again to go to the linked PDF, web site, movie, or image.</p><p>Most maps are entered in the "People's Map" contest - vote for your favourite.</p><p>All imagery and files are copyrighted by their owners, used here by permission, and not to be copied or
   redistributed in any way. Unless stated otherwise here or elsewhere, no permission is given to use these map images,
   files, or data in any way.</p>
+{% if not VOTING %}
+<p>See <a href="{% url 'winners'%}">List of Winners</a> (voting is now closed)</p>
+{% endif %}
 	 </div>
 {% endblock %}
 
@@ -28,11 +31,27 @@ Map Gallery
 
 <div id="container" class="jsx-masonry">
 {% for map in maps %}
+{% with wins=map.winner.all seconds=map.runnerup.all %}
 <div class="map {{ classes|random }}">
+{% if wins %}
+{% for win in wins %}
+<a href="{% url 'winners' %}#prize{{win.id}}winner">
+<img class="trophyicon" src="{{STATIC_URL}}/mapgallery/trophy.png" title="Winner: {{win.title}}">
+</a>
+{% endfor %}
+{% endif %}
+{% if seconds %}
+{% for second in seconds %}
+<a href="{% url 'winners' %}#prize{{second.id}}second">
+<img class="trophyicon" src="{{STATIC_URL}}/mapgallery/trophy-silver.png" title="Runner-up: {{second.title}}">
+</a>
+{% endfor %}
+{% endif %}
 <h1><a class="fancybox fancybox.ajax" href="{% url 'mapmodal' idcode=map.id %}">{{map.title}}</a></h1>
 <a class="fancybox fancybox.ajax" href="{% url 'mapmodal' idcode=map.id %}"><img src="{{archive}}{{map.directory}}/thumb.jpg" /></a>
 <h2>{{map.author}}</h2>
 </div>
+{% endwith %}
 {% endfor %}
 </div>
 
@@ -66,4 +85,8 @@ $(document).ready(function() {
 </script>
 
 
+{% endblock %}
+
+{% block extra_foot %}
+Some icons by <a href="http://p.yusukekamiyamane.com">Yusuke Kamiyamane</a>. Licensed under a Creative Commons Attribution 3.0 License.
 {% endblock %}

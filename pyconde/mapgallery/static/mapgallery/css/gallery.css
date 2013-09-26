@@ -1,3 +1,8 @@
+img.trophyicon {
+    float: left;
+    padding: 0 2px;
+}
+
 div.map {
 	 padding: 1em 1em 0 1em;
 	 border-radius: 20px;
@@ -83,3 +88,17 @@ span.notvoted {
 }
 
 div.likes {display: inline}
+
+img.trophy {
+z-index:99;
+right: 40px;
+top: 35px;
+position: relative;
+}
+
+img.thumb {
+z-index:1
+}
+
+
+

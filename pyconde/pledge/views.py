@@ -20,6 +20,17 @@ def pledgelist(request):
                               context_instance=RequestContext(request)
                               )
 
+def pledgeall(request):
+    """ show all pledges for after closing date """
+    pledges = models.Pledge.objects.filter(status="ACC")
+    context={'pledges': pledges}
+    return render_to_response("pledge/pledgeall.html",
+                              context,
+                              context_instance=RequestContext(request)
+                              )
+   
+
+
 from django.core.urlresolvers import reverse
 from . import models
 from django.contrib import messages

@@ -31,6 +31,7 @@ Map Gallery
 
 <div id="container" class="jsx-masonry">
 {% for map in maps %}
+{% if map.format != "HIDE" %}
 {% with wins=map.winner.all seconds=map.runnerup.all %}
 <div class="map {{ classes|random }}">
 {% if wins %}
@@ -52,6 +53,7 @@ Map Gallery
 <h2>{{map.author}}</h2>
 </div>
 {% endwith %}
+{% endif %}
 {% endfor %}
 </div>
 

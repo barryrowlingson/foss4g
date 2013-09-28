@@ -27,9 +27,11 @@ Map Gallery
 {% block content %}
 
 {% for p in prizes %}
-{% if p.winner %}
+
 <div>
 <h2><a id="prize{{p.id}}winner"></a>{{p.title}}</h2>
+
+{% if p.winner %}
 <h3>Winner: 
 {% with map=p.winner %}
  {{map.title}}, {{map.author}}</h3>
@@ -37,8 +39,9 @@ Map Gallery
 <img src="{{archive}}{{map.directory}}/thumb.jpg" class="thumb" />
 <img class="trophy" src="{{STATIC_URL}}/mapgallery/goldtrophy.png">
 </a>
-
 {% endwith %}
+{% endif %}
+
 {% if p.runnerup %}
 {% with map=p.runnerup %}
 <h3><a id="prize{{p.id}}second"></a>Runner-up: {{map.title}}, {{map.author}}</h3>
@@ -47,8 +50,9 @@ Map Gallery
 </a>
 {% endwith %}
 {% endif %}
+
 </div>
-{% endif %}
+
 {% endfor %}
 <script>
 $(document).ready(function() {

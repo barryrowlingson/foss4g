@@ -77,8 +77,3 @@ originating in Symposion are:
 
 * conference
 * sponsorship
-
-Testing
---------
-
-1 2 3

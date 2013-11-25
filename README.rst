@@ -1,6 +1,10 @@
 FOSS4G Flavour of PyConDE Conference System
 ===========================================
  
+What follows is mostly the original installation instructions. Don't expect it to work on the existing code base. 
+You may be better off starting with the latest pycon-de codebase and working with that, pulling out anything from here that might be useful.
+
+ 
 Installation
 ------------
 
